@@ -1,0 +1,19 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {% if errorRequest %}
+        Request Error
+    {% endif %}
+    {% if errorSearch %}
+        Search Error
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if errorRequest %}
+        Requested Page Not Found!
+    {% endif %}
+    {% if errorSearch %}
+        Searched Item Not Found!
+    {% endif %}
+{% endblock %}

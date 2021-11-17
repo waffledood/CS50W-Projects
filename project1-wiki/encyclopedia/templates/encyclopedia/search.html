@@ -1,0 +1,11 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Search Results
+{% endblock %}
+
+{% block body %}
+    {% for item in result %}
+        <li><a href="{% url 'wiki:entry' item %}">{{ item }}</a></li>
+    {% endfor %}
+{% endblock %}
