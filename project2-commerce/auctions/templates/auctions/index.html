@@ -1,0 +1,34 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% if user.is_authenticated %}
+    
+        <br>
+        
+        <h2>Active Listings</h2>
+        
+        {% for auction in auctions %}
+            <div class="media">
+                <img src="{{ auction.picture }}" class="align-self-start mr-3" alt="">
+                <div class="media-body">
+                <h5 class="mt-0"><a href="{% url 'auctions:listing' auction.id %}">{{ auction.title }}</a></h5>
+                <p>{{ auction.description }}</p>
+                <p></p>
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+
+
+    {% endif %}
+
+    
+{% endblock %}
+
+
+<!--
+
+    <li> <a href="{% url 'auctions:listing' auction.id %}">Auction {{ auction.id }}:</a> {{ auction.title }} by {{ auction.user }} for SGD${{ auction.price }} </li>
+
+-->

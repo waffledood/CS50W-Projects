@@ -1,0 +1,124 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            Incorrect bid placed
+        </div>
+    {% endif %}
+
+    Title: {{ listing.title }}
+
+    <br>
+    <br>
+
+    User: {{ listing.user }}
+
+    <br>
+
+    Description: {{ listing.description }}
+
+    <br>
+
+    {% if not listing.bid %}
+        Price: {{ listing.price }}
+    {% else %}
+        Price: {{ listing.bid }}
+    {% endif %}
+
+    {% if listing_owner and listing.active %}
+        <h2>Close the auction</h2>
+        <form action="{% url 'auctions:closeListing' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="hidden" name="close" value=True>
+                <input type="hidden" name="listingID" value="{{listing.id}}">
+                <input type="hidden" name="user" value="{{listing.user.id}}">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Close Auction">
+        </form>
+    {% else %}
+        {% if listing.active %}
+            <form action="{% url 'auctions:bid' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="Bid" value="">
+                    <input type="hidden" name="listingID" value="{{listing.id}}">
+                    <input type="hidden" name="user" value="{{listing.user.id}}">
+                </div>
+                <input class="btn btn-primary" type="submit" value="Bid">
+            </form>
+        {% else %}
+            <h2>Listing closed</h2>
+            Auction won by: {{ listing.bidder }}
+        {% endif %}
+    {% endif %}
+
+    
+
+    <br>
+
+    <img src={{listing.picture}} alt="img">
+
+    {% if in_watchlist %}
+        <h3>Remove from watchlist</h3>
+
+        <form action="{% url 'auctions:watchlist_remove' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="hidden" name="listingID" value="{{listing.id}}">
+                <input type="hidden" name="user" value="{{user.id}}">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Remove From Watchlist">
+        </form>
+    {% else %}
+        <h3>Add to watchlist</h3>
+        
+        <form action="{% url 'auctions:watchlist_add' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="hidden" name="listingID" value="{{listing.id}}">
+                <input type="hidden" name="user" value="{{user.id}}">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Add To Watchlist">
+        </form>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <h3>Make a comment!</h3>
+        <form action="{% url 'auctions:comment' %}" method="post">
+            {% csrf_token %}
+            {{ comment_form }}
+            <div class="form-group">
+                <input type="hidden" name="listingID" value="{{listing.id}}">
+                <input type="hidden" name="user" value="{{user.id}}">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Make Comment">
+        </form>
+    {% endif %}
+    
+    {% for comment in comments %}
+        <p>{{ comment }}</p>
+    {% endfor %}
+    
+
+
+{% endblock %}
+
+<!-- https://docs.djangoproject.com/en/3.1/howto/static-files/ --> 
+
+<!--
+    https://getbootstrap.com/docs/4.5/components/media-object/
+
+    {% if listing.comment %}
+        {% for comments in listing.comment %}
+            {{ listing.comment }}
+        {% endfor %}
+    {% endif %}
+
+    {% if bool %}
+        yess
+    {% endif %}
+
+-->
