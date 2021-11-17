@@ -1,0 +1,8 @@
+username: haikal@gmail.com
+password: abc123
+
+username: user@gmail.com
+password: abc123
+
+superuser: master (master@gmail.com)
+password: abc123
