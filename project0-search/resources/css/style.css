@@ -4,6 +4,11 @@ nav {
     color: rgba(0,0,0,.87);
 }
 
+a {
+
+    text-decoration: none;
+}
+
 .logo-container {
     text-align: center;
     height: 92px;
