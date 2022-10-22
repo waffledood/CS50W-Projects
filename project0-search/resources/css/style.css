@@ -2,6 +2,7 @@ nav {
     text-align: right;
     font-family: arial,sans-serif;
     color: rgba(0,0,0,.87);
+    padding: 6px;
 }
 
 a {
@@ -12,6 +13,7 @@ a {
 .logo-container {
     text-align: center;
     height: 92px;
+    padding-top: 20px;
 }
 
 .google-logo {
