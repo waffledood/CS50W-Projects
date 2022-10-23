@@ -9,6 +9,7 @@ body{
     font-size: 13px;
     height: 25px;
     padding: 1px 8px;
+    width: 100%;
 }
 
 .adv-search-header {
@@ -29,6 +30,11 @@ body{
 .left {
     min-width: 167px;
     width: 16%;
+}
+
+.right {
+    min-width: 167px;
+    width: 50%;
 }
 
 .column-cell {
