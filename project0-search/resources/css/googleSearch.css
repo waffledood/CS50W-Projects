@@ -6,7 +6,7 @@ body {
 
 nav {
     text-align: right;
-    font-family: arial,sans-serif;
+    font-size: 13px;
     color: rgba(0,0,0,.87);
     padding: 6px;
 }
