@@ -10,6 +10,7 @@ body{
     height: 25px;
     padding: 1px 8px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .adv-search-header {
