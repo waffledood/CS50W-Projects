@@ -39,6 +39,10 @@ body{
     color: #333;
 }
 
+label {
+    font-size: 13px;
+}
+
 .adv-search-button {
     background-color: #f8f9fa;
     border: 1px solid #f8f9fa;
