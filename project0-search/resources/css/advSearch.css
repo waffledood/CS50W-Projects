@@ -51,16 +51,20 @@ label {
 }
 
 .adv-search-button {
-    background-color: #f8f9fa;
-    border: 1px solid #f8f9fa;
-    border-radius: 4px;
-    color: #3c4043;
-    font-size: 14px;
-    margin: 11px 4px;
-    padding: 0px 16px;
-    line-height: 27px;
-    height: 36px;
-    min-width: 54px;
+    height: 30px;
+    min-width: 120px;
+    margin: 10px 0;
+    padding: 0 12px;
+    box-shadow: none;
+    background-color: #4d90fe;
+    border: 1px solid #3079ed;
+    color: #fff;
+    border-radius: 2px;
+    cursor: default;
+    font-size: 11px;
+    font-weight: bold;
     text-align: center;
-    cursor: pointer;
+
+    float: right;
+    /* margin-right: 0; */
 }
