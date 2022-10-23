@@ -2,7 +2,8 @@
 <html>
     <head>
         <title>Advanced Search</title>
-        <link rel="stylesheet" href="./resources/css/style.css">
+        <link rel="stylesheet" href="./resources/css/googleSearch.css">
+        <link rel="stylesheet" href="./resources/css/advSearch.css">
     </head>
     <body>
         <nav>
@@ -10,5 +11,60 @@
             <a href="./advancedSearch.html">Advanced Search</a>
             <a href="./imageSearch.html">Image Search</a>
         </nav>
+        <div class="logo-container">
+            <img src="./resources/images/googleLogo.png" class="google-logo">
+        </div>
+        <div class="adv-search-header">
+            Advanced Search
+        </div>
+        <form action="https://google.com/search" class="adv-search-bar">
+            <!-- Left Column -->
+            <div class="column left">
+                <div class="column-cell">
+                    <span id="find-pages-with">Find pages with...</span>
+                </div>
+                <div class="column-cell">
+                    <label for="as_q">all these words:</label>
+                </div>
+                <div class="column-cell">
+                    <label for="as_epq">this exact word or phrase:</label>
+                </div>
+                <div class="column-cell">
+                    <label for="as_oq">any of these words:</label>
+                </div>
+                <div class="column-cell">
+                    <label for="as_eq">none of these words:</label>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="column right">
+                <!-- empty div to align other  -->
+                <div class="column-cell">
+                    &nbsp;
+                </div>
+                <!-- "all these words" section -->
+                <div class="column-cell">
+                    <input type="text" name="as_q" id="as_q" class="all-these-words textinput">
+                </div>
+                <!-- "this exact word or phrase" section -->
+                <div class="column-cell">
+                    <input type="text" name="as_epq" id="as_epq" class="exact-phrase-word textinput">
+                </div>
+                <!-- "any of these words" section -->
+                <div class="column-cell">
+                    <input type="text" name="as_oq" id="as_oq" class="any-words textinput">
+                </div>
+                <!-- "none of these words" section -->
+                <div class="column-cell">
+                    <input type="text" name="as_eq" id="as_eq" class="none-words textinput">
+                </div>
+                <!-- Advanced Search button -->
+                <div class="column-cell">
+                    <input type="submit" value="Advanced Search" class="adv-search-button">
+                </div>
+            </div>
+
+        </form>
     </body>
 </html>

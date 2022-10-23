@@ -1,0 +1,70 @@
+body{
+    font-family: arial,sans-serif;
+}
+
+.textinput {
+    border-radius: 1px;
+    border: 1px solid #d9d9d9;
+    border-top: 1px solid #c0c0c0;
+    font-size: 13px;
+    height: 29px;
+    padding: 1px 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.adv-search-header {
+    margin: 25px 45px;
+    color: #d93025;
+    font-size: 20px;
+}
+
+.adv-search-bar {
+    display: flex;
+    margin: 40px 0px 0px 45px;
+}
+
+.column {
+    justify-content: start;
+}
+
+.left {
+    min-width: 167px;
+    width: 16%;
+}
+
+.right {
+    min-width: 167px;
+    width: 50%;
+}
+
+.column-cell {
+    height: 42px;
+}
+
+#find-pages-with {
+    color: #333;
+}
+
+label {
+    font-size: 13px;
+}
+
+.adv-search-button {
+    height: 30px;
+    min-width: 120px;
+    margin: 10px 0;
+    padding: 0 12px;
+    box-shadow: none;
+    background-color: #4d90fe;
+    border: 1px solid #3079ed;
+    color: #fff;
+    border-radius: 2px;
+    cursor: default;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+
+    float: right;
+    /* margin-right: 0; */
+}
