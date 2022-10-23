@@ -34,6 +34,11 @@ body{
 .column-cell {
     height: 42px;
 }
+
+#find-pages-with {
+    color: #333;
+}
+
 .adv-search-button {
     background-color: #f8f9fa;
     border: 1px solid #f8f9fa;
