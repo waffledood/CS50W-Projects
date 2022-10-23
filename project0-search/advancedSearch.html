@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Advanced Search</title>
-        <link rel="stylesheet" href="./resources/css/style.css">
+        <link rel="stylesheet" href="./resources/css/googleSearch.css">
         <link rel="stylesheet" href="./resources/css/advSearch.css">
     </head>
     <body>
@@ -14,10 +14,10 @@
         <div class="logo-container">
             <img src="./resources/images/googleLogo.png" class="google-logo">
         </div>
-        <div>
+        <div class="adv-search-header">
             Advanced Search
         </div>
-        <form action="https://google.com/search" class="search-bar">
+        <form action="https://google.com/search" class="adv-search-bar">
             <!-- Left Column -->
             <div class="column left">
                 <div>
@@ -41,22 +41,22 @@
             <div class="column right">
                 <!-- "all these words" section -->
                 <div>
-                    <input type="text" name="as_q" id="as_q" class="all-these-words">
+                    <input type="text" name="as_q" id="as_q" class="all-these-words textinput">
                 </div>
                 <!-- "this exact word or phrase" section -->
                 <div>
-                    <input type="text" name="as_epq" id="as_epq" class="exact-phrase-word">
+                    <input type="text" name="as_epq" id="as_epq" class="exact-phrase-word textinput">
                 </div>
                 <!-- "any of these words" section -->
                 <div>
-                    <input type="text" name="as_oq" id="as_oq" class="any-words">
+                    <input type="text" name="as_oq" id="as_oq" class="any-words textinput">
                 </div>
                 <!-- "none of these words" section -->
                 <div>
-                    <input type="text" name="as_eq" id="as_eq" class="none-words">
+                    <input type="text" name="as_eq" id="as_eq" class="none-words textinput">
                 </div>
                 <!-- Advanced Search button -->
-                <input type="submit" value="Advanced Search" class="adv-search-button">
+                <input type="submit" value="Advanced Search" class="adv-search-button textinput">
             </div>
 
         </form>
