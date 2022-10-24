@@ -28,3 +28,18 @@ This is a Markdown file to track my learnings & insights during the course of co
      ...
      ```
    - [source](https://discuss.codecademy.com/t/can-you-apply-multiple-stylesheets-to-a-single-page/369792)
+
+5. The `<body>` element may sometimes not cover the entire page, because another element that lies within the body may have issues.
+   - [source](https://stackoverflow.com/questions/59547744/cannot-get-body-element-to-cover-entire-page)
+
+6. Positioning an element at the center bottom of its parent div
+   - ```css
+      #somelement {
+         position: absolute;
+         left: 50%;
+         bottom: 0px;
+         -webkit-transform: translateX(-50%);
+         transform: translateX(-50%)
+      }
+     ```
+   - [source](https://stackoverflow.com/a/45968877/15781733)
