@@ -2,6 +2,9 @@ body {
     font-size: 14px;
     font-family: arial,sans-serif;
     color: #202124;
+    margin: 0px;
+    padding: 0px;
+    height: 100vh;
 }
 
 nav {
