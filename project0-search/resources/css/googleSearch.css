@@ -17,11 +17,23 @@ a {
 
 .logo-container {
     text-align: center;
-    height: 92px;
+    min-height: 92px;
+    height: 290px;
     padding-top: 20px;
+    position: relative;
+}
+
+.wrapper-div {
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%)
 }
 
 .google-logo {
+    width: 272px;
+    height: auto;
     max-width: 100%;
     max-height: 100%;
 }
