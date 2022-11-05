@@ -9,8 +9,14 @@ def index(request):
     })
 
 def entry(request, title):
-    return render(request, "encyclopedia/entry.html", {
-        "title": title,
-        "entryContents": util.get_entry(title)
-    })
+    entryContents = util.get_entry(title)
+    # if the entry doesn't exist, generate the error page
+    if entryContents == None:
+        return render(request, "encyclopedia/error.html")
+    # else generate the Wiki entry's page
+    else:
+        return render(request, "encyclopedia/entry.html", {
+            "title": title,
+            "entryContents": entryContents
+        })
 
