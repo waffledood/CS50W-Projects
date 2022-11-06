@@ -1,0 +1,23 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block body %}
+
+    <h1>Search Results</h1>
+
+    {% if entryContents|length > 0 %}
+
+        {% for entry in entryContents %}
+            <li><a href="{% url 'entry' title=entry %}">{{ entry }}</a></li>
+        {% endfor %}
+
+    {% else %}
+
+        No results were found.
+
+    {% endif %}
+
+{% endblock %}
