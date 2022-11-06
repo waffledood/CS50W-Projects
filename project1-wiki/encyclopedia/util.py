@@ -35,3 +35,13 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+def check_entry_exists(title):
+    """
+    Checks if a encyclopedia entry with a similar title (case insensitive)
+    already exists.
+    """
+    wikiEntries = list_entries()
+    if title.lower() in (entry.lower() for entry in wikiEntries):
+        return True
+    return False
