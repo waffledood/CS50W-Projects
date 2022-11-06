@@ -36,17 +36,15 @@ def entry(request, title):
 
 def search(request):
     if request.method == "POST":
-        # retrieve the current list of Wiki entries
-        wikiEntries = util.list_entries()
         # retrieve the query keyword
         query = request.POST['q']
 
         # check if the query keyword exactly matches any of the Wiki entries (case insensitive)
-        if query.lower() in (entry.lower() for entry in wikiEntries):
+        if util.check_entry_exists(query):
             return entry(request, query)
 
         # else find entries that match or contain the query string (case insensitive)
-        entriesContainingQuery = [entry for entry in wikiEntries if query.lower() in entry.lower()]
+        entriesContainingQuery = [entry for entry in util.list_entries() if query.lower() in entry.lower()]
         # generate the search page with matching Wiki entries
         return render(request, "encyclopedia/search.html", {
             "entryContents": entriesContainingQuery,
@@ -60,8 +58,6 @@ def search(request):
 
 def add(request):
     if request.method == "POST":
-        # retrieve the current list of Wiki entries
-        wikiEntries = util.list_entries()
         # create a NewEntryForm from the POST request
         form = NewEntryForm(request.POST)
         if form.is_valid():
@@ -69,7 +65,7 @@ def add(request):
             title = form.cleaned_data["title"]
             content = form.cleaned_data["content"]
             # check if the query keyword exactly matches any of the Wiki entries (case insensitive)
-            if title.lower() in (entry.lower() for entry in wikiEntries):
+            if util.check_entry_exists(title):
                 return render(request, "encyclopedia/add.html", {
                     "error": True ,
                     "form": form
