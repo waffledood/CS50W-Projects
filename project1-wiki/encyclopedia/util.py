@@ -45,3 +45,10 @@ def check_entry_exists(title):
     if title.lower() in (entry.lower() for entry in wikiEntries):
         return True
     return False
+
+def check_entries_contain_query(query):
+    """
+    Checks if any of the existing encyclopedia entries' titles 
+    contain the query String
+    """
+    return [entry for entry in list_entries() if query.lower() in entry.lower()]
