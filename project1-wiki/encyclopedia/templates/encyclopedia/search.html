@@ -1,0 +1,25 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block body %}
+
+    <h1>Search Results</h1>
+
+    {% if default %}
+
+        Looking for a Wiki entry? Enter a query in the "Search Encyclopedia" field.
+
+    {% else %}
+
+        {% for entry in entryContents %}
+            <li><a href="{% url 'entry' title=entry %}">{{ entry }}</a></li>
+        {% empty %}
+            No results were found.
+        {% endfor %}
+
+    {% endif %}
+
+{% endblock %}
