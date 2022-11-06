@@ -1,6 +1,17 @@
+from django import forms
 from django.shortcuts import render
 
 from . import util
+
+class NewEntryForm(forms.Form):
+    title = forms.CharField(
+            label="Title of Wiki Entry:",
+            widget=forms.TextInput(attrs={'placeholder': 'Enter the title for your new Wiki entry...'})
+        )
+    content = forms.CharField(
+            label="Content of Wiki Entry:",
+            widget=forms.TextInput(attrs={'placeholder': 'Enter the Markdown content for your new Wiki entry...'})
+        )
 
 
 def index(request):
@@ -46,3 +57,6 @@ def search(request):
         })
 
 def add(request):
+    return render(request, "encyclopedia/add.html", {
+        "form": NewEntryForm()
+    })
