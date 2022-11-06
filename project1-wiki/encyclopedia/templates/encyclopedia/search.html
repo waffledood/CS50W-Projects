@@ -14,6 +14,15 @@
 
     {% else %}
 
+        You searched for "{{ query }}".
+
+        <br>
+
+        The matching Wiki entries are:
+
+        <br>
+        <hr>
+
         {% for entry in entryContents %}
             <li><a href="{% url 'entry' title=entry %}">{{ entry }}</a></li>
         {% empty %}

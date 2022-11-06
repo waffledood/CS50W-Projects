@@ -1,0 +1,31 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Add a New Wiki Entry
+{% endblock %}
+
+{% block body %}
+
+    <h1>Add a New Wiki Entry</h1>
+
+    Fill out the fields below to create a new Wiki entry.
+
+    {% if error %}
+
+        <div class="alert alert-warning" role="alert">
+            A Wiki entry with a similar title already exists!
+        </div>
+
+    {% endif %}
+
+    <hr>
+
+    <form action="{% url 'add' %}" method="POST">
+        {% csrf_token %}
+        
+        {{ form }}
+
+        <input type="submit" value="Save">
+    </form>
+
+{% endblock %}
