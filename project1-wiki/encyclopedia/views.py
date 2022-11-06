@@ -9,6 +9,7 @@ def index(request):
     })
 
 def entry(request, title):
+    # retrieve the Wiki entry's contents
     entryContents = util.get_entry(title)
     # if the entry doesn't exist, generate the error page
     if entryContents == None:
