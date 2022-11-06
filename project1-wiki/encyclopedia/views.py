@@ -1,5 +1,7 @@
 from django import forms
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from . import util
 
@@ -57,6 +59,27 @@ def search(request):
         })
 
 def add(request):
+    if request.method == "POST":
+        # retrieve the current list of Wiki entries
+        wikiEntries = util.list_entries()
+        # create a NewEntryForm from the POST request
+        form = NewEntryForm(request.POST)
+        if form.is_valid():
+            # retrieve the form's data
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            # check if the query keyword exactly matches any of the Wiki entries (case insensitive)
+            if title.lower() in (entry.lower() for entry in wikiEntries):
+                return render(request, "encyclopedia/add.html", {
+                    "error": True ,
+                    "form": form
+                })
+            util.save_entry(title, content)
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            return render(request, "encyclopedia/add.html", {
+                "form": form
+            })
     return render(request, "encyclopedia/add.html", {
         "form": NewEntryForm()
     })
