@@ -40,7 +40,7 @@ def search(request):
         query = request.POST['q']
 
         # check if the query keyword exactly matches any of the Wiki entries (case insensitive)
-        if util.check_entry_exists(query):
+        if util.check_entry_match_title(query):
             return entry(request, query)
 
         # else find entries that match or contain the query string (case insensitive)
@@ -65,7 +65,7 @@ def add(request):
             title = form.cleaned_data["title"]
             content = form.cleaned_data["content"]
             # check if the query keyword exactly matches any of the Wiki entries (case insensitive)
-            if util.check_entry_exists(title):
+            if util.check_entry_match_title(title):
                 return render(request, "encyclopedia/add.html", {
                     "error": True ,
                     "form": form

@@ -36,7 +36,7 @@ def get_entry(title):
     except FileNotFoundError:
         return None
 
-def check_entry_exists(title):
+def check_entry_match_title(title):
     """
     Checks if a encyclopedia entry with a similar title (case insensitive)
     already exists.
