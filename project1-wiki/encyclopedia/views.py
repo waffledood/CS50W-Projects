@@ -36,7 +36,8 @@ def search(request):
         entriesContainingQuery = [entry for entry in wikiEntries if query.lower() in entry.lower()]
         # generate the search page with matching Wiki entries
         return render(request, "encyclopedia/search.html", {
-            "entryContents": entriesContainingQuery
+            "entryContents": entriesContainingQuery,
+            "query": query
         })
     # if the search page was reached through a GET method
     else:
