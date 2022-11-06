@@ -8,15 +8,17 @@
 
     <h1>Search Results</h1>
 
-    {% if entryContents|length > 0 %}
+    {% if default %}
 
-        {% for entry in entryContents %}
-            <li><a href="{% url 'entry' title=entry %}">{{ entry }}</a></li>
-        {% endfor %}
+        Looking for a Wiki entry? Enter a query in the "Search Encyclopedia" field.
 
     {% else %}
 
-        No results were found.
+        {% for entry in entryContents %}
+            <li><a href="{% url 'entry' title=entry %}">{{ entry }}</a></li>
+        {% empty %}
+            No results were found.
+        {% endfor %}
 
     {% endif %}
 

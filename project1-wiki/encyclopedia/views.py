@@ -34,11 +34,12 @@ def search(request):
 
         # else find entries that match or contain the query string (case insensitive)
         entriesContainingQuery = [entry for entry in wikiEntries if query.lower() in entry.lower()]
-        print(f"entriesContainingQuery = {entriesContainingQuery}")
         # generate the search page with matching Wiki entries
         return render(request, "encyclopedia/search.html", {
             "entryContents": entriesContainingQuery
         })
     # if the search page was reached through a GET method
     else:
-        return render(request, "encyclopedia/search.html")
+        return render(request, "encyclopedia/search.html", {
+            "default": True
+        })
