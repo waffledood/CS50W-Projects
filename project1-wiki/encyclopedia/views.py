@@ -44,3 +44,5 @@ def search(request):
         return render(request, "encyclopedia/search.html", {
             "default": True
         })
+
+def add(request):
