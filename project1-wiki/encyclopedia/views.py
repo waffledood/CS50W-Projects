@@ -44,7 +44,7 @@ def search(request):
             return entry(request, query)
 
         # else find entries that match or contain the query string (case insensitive)
-        entriesContainingQuery = [entry for entry in util.list_entries() if query.lower() in entry.lower()]
+        entriesContainingQuery = util.check_entries_contain_query(query)
         # generate the search page with matching Wiki entries
         return render(request, "encyclopedia/search.html", {
             "entryContents": entriesContainingQuery,
