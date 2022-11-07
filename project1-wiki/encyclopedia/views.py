@@ -81,11 +81,23 @@ def add(request):
     })
 
 def edit(request):
-    if request.method == "POST":
-        title = request.POST["title"]
+    if request.method == "GET":
+        title = request.GET["title"]
         content = util.get_entry(title)
         return render(request, "encyclopedia/edit.html", {
             "title": title,
             "form": NewEntryForm(initial={"title": title, "content": content})
+        })
+    elif request.method == "POST":
+        form = NewEntryForm(request.POST)
+        if form.is_valid():
+            # retrieve the form's data
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            util.save_entry(title, content)
+            return HttpResponseRedirect(reverse('index'))
+        return render(request, "encyclopedia/edit.html", {
+            "title": title,
+            "form": form
         })
     return render(request, "encyclopedia/edit.html")
