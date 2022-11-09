@@ -71,7 +71,7 @@ def add(request):
                     "form": form
                 })
             util.save_entry(title, content)
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('entry', kwargs={'title':title}))
         else:
             return render(request, "encyclopedia/add.html", {
                 "form": form
@@ -95,7 +95,7 @@ def edit(request):
             title = form.cleaned_data["title"]
             content = form.cleaned_data["content"]
             util.save_entry(title, content)
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('entry', kwargs={'title':title}))
         return render(request, "encyclopedia/edit.html", {
             "title": title,
             "form": form
