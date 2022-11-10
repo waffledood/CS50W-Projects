@@ -2,6 +2,8 @@ from django import forms
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from random import choice
+from markdown2 import markdown
 
 from . import util
 
@@ -31,7 +33,7 @@ def entry(request, title):
     else:
         return render(request, "encyclopedia/entry.html", {
             "title": title,
-            "entryContents": entryContents
+            "entryContents": markdown(entryContents)
         })
 
 def search(request):
@@ -101,3 +103,8 @@ def edit(request):
             "form": form
         })
     return render(request, "encyclopedia/edit.html")
+
+def random(request):
+    allWikiEntries = util.list_entries()
+    randomWikiEntry = choice(allWikiEntries)
+    return HttpResponseRedirect(reverse('entry', kwargs={'title':randomWikiEntry}))
