@@ -2,6 +2,7 @@ from django import forms
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from random import choice
 
 from . import util
 
@@ -101,3 +102,8 @@ def edit(request):
             "form": form
         })
     return render(request, "encyclopedia/edit.html")
+
+def random(request):
+    allWikiEntries = util.list_entries()
+    randomWikiEntry = choice(allWikiEntries)
+    return HttpResponseRedirect(reverse('entry', kwargs={'title':randomWikiEntry}))
