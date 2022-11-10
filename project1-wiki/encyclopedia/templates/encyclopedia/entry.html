@@ -9,4 +9,12 @@
 
     {{ entryContents }}
 
+    <br>
+
+    <form action="{% url 'edit' %}" method="GET">
+        {% csrf_token %}
+        <input name="title" value="{{ title }}" type="hidden">
+        <button type="submit">Edit</button>
+    </form>
+
 {% endblock %}
