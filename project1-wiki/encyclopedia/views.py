@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from random import choice
+from markdown2 import markdown
 
 from . import util
 
@@ -32,7 +33,7 @@ def entry(request, title):
     else:
         return render(request, "encyclopedia/entry.html", {
             "title": title,
-            "entryContents": entryContents
+            "entryContents": markdown(entryContents)
         })
 
 def search(request):
