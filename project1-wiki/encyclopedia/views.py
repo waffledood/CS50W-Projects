@@ -10,11 +10,21 @@ from . import util
 class NewEntryForm(forms.Form):
     title = forms.CharField(
             label="Title of Wiki Entry:",
-            widget=forms.TextInput(attrs={'placeholder': 'Enter the title for your new Wiki entry...'})
+            widget=forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter the title for your new Wiki entry...',
+                    'class': 'form-control w-75 mb-2'
+                }
+            )
         )
     content = forms.CharField(
             label="Content of Wiki Entry:",
-            widget=forms.TextInput(attrs={'placeholder': 'Enter the Markdown content for your new Wiki entry...'})
+            widget=forms.Textarea(
+                attrs={
+                    'placeholder': 'Enter the Markdown content for your new Wiki entry...',
+                    'class': 'form-control w-75'
+                }
+            )
         )
 
 
