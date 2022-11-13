@@ -13,3 +13,7 @@ class Listing(models.Model):
     description = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
 
+class Bid(models.Model):
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="bids")
+    price = models.FloatField()
