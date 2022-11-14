@@ -5,6 +5,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
+from .models import User, Listing
+
+
 class NewListingForm(forms.Form):
     name = forms.CharField(
         label="Name of Listing:",
@@ -94,5 +97,23 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
+
 def create(request):
-    pass
+    if request.method == "POST":
+        form = NewListingForm(request.POST)
+        if form.is_valid():
+            # retrieve the form's data
+            name = form.cleaned_data["name"]
+            price = form.cleaned_data["price"]
+            description = form.cleaned_data["description"]
+            # create & save the Listing object
+            listing = Listing(name=name, price=price, user=request.user, description=description)
+            listing.save()
+        else:
+            return render(request, "auctions/create.html", {
+                'form': form
+            })
+    
+    return render(request, "auctions/create.html", {
+        'form': NewListingForm()
+    })
