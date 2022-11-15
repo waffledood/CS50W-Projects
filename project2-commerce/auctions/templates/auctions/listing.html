@@ -2,6 +2,11 @@
 
 {% block body %}
     <h2>Listing: {{ listing.name }}</h2>
+    <br>
+    <h3>Listing Details</h3>
+    <p>Listed by {{ listing.user }}</p>
+    <p>{{ listing.description }}</p>
+    <p>${{ listing.price }}</p>
     <form action="{% url 'listing' listing.id %}" method="POST">
         {% csrf_token %}
 
