@@ -2,4 +2,11 @@
 
 {% block body %}
     <h2>Listing: {{ listing.name }}</h2>
+    <form action="{% url 'listing' listing.id %}" method="POST">
+        {% csrf_token %}
+
+        {{ form }}
+
+        <button type="submit" class="btn btn-primary mb-2">Place Bid</button>
+    </form>
 {% endblock %}

@@ -157,9 +157,21 @@ def create(request):
         'form': NewListingForm()
     })
 
+
 def listing(request, listId):
     listing = Listing.objects.get(pk=listId)
-    return render(request, "auctions/listing.html", {
+    if request.method == "POST":
+        form = NewBidForm(data=request.POST, listingPrice=listing.price)
+        if form.is_valid():
+            # retrieve the form's data
+            bid = form.cleaned_data["bid"]
+            listingWithNewBid = Listing.objects.get(pk=listId)
+            listingWithNewBid.bid = bid
+            listingWithNewBid.save()
+            return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
+        return render(request, "auctions/listing.html", {
+            'form': form
+        })
     return render(request, "auctions/listing.html", {
         'listing': listing,
         'form': NewBidForm(listingPrice=listing.price)
