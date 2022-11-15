@@ -42,6 +42,42 @@ class NewListingForm(forms.Form):
     )
 
 
+class NewBidForm(forms.Form):
+    # bid = forms.FloatField(
+    #     label="Enter your bid:",
+    #     widget=forms.NumberInput(
+    #         attrs={
+    #             'placeholder': Listing.price + 1.0,
+    #             'class': 'form-control w-75 mb-2'
+    #         }
+    #     )
+    # )
+
+    # def __init__(self,*args,**kwargs):
+    #     self.listingPrice = kwargs.pop('listingPrice')
+    #     super(NewBidForm,self).__init__(*args,**kwargs)
+    #     self.fields['bid'].widget = forms.NumberInput(
+    #         attrs={
+    #             'placeholder': listingPrice + 1.0,
+    #             'class': 'form-control w-75 mb-2'
+    #         }
+    #     )
+
+    def __init__(self, *, listingPrice, **kwargs):
+        super().__init__(**kwargs)
+        self.fields['bid'].widget = forms.NumberInput(
+            attrs={
+                'placeholder': listingPrice + 1.0,
+                'value': listingPrice + 1.0,
+                'min': listingPrice + 1.0,
+                'step': 0.01,
+                'class': 'form-control w-25 mb-2'
+            }
+        )
+
+    bid = forms.FloatField()
+
+
 def index(request):
     listings = Listing.objects.all()
     return render(request, "auctions/index.html", {
