@@ -18,6 +18,7 @@
                     <div class="card-footer">
                         <small class="text-muted">Listed {{ listing.date }}</small>
                     </div>
+                    <a href="{% url 'listing' listing.id %}" class="stretched-link"></a>
                 </div>
             </div>
         {% empty %}
