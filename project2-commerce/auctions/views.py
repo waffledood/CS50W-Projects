@@ -180,17 +180,38 @@ def listing(request, listId):
         comments = None
 
     if request.method == "POST":
-        form = NewBidForm(data=request.POST, listingPrice=listing.price)
-        if form.is_valid():
-            # retrieve the form's data
-            bid = form.cleaned_data["bid"]
-            listingWithNewBid = Listing.objects.get(pk=listId)
-            listingWithNewBid.bid = bid
-            listingWithNewBid.save()
-            return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
-        return render(request, "auctions/listing.html", {
-            'form': form
-        })
+        # if the POST request is for a bid
+        if "bid" in request.POST:
+            form = NewBidForm(data=request.POST, listingPrice=listing.price)
+            if form.is_valid():
+                # retrieve the form's data
+                bid = form.cleaned_data["bid"]
+                listingWithNewBid = Listing.objects.get(pk=listId)
+                listingWithNewBid.price = bid
+                listingWithNewBid.save()
+                return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
+            # return the same page, with the incorrect form
+            return render(request, "auctions/listing.html", {
+                'form': form,
+                'comments': comments,
+                'commentForm': NewCommentForm()
+            })
+        # if the POST request is for a comment
+        if "commentDetails" in request.POST:
+            commentForm = NewCommentForm(data=request.POST)
+            if commentForm.is_valid():
+                # retrieve the form's data
+                commentDetails = commentForm.cleaned_data["commentDetails"]
+                newComment = Comment(user=request.user, description=commentDetails, listing=listing)
+                newComment.save()
+                return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
+            # return the same page, with incorrect form
+            return render(request, "auctions/listing.html", {
+                'form': NewBidForm(listingPrice=listing.price),
+                'comments': comments,
+                'commentForm': commentForm
+            })
+        
     return render(request, "auctions/listing.html", {
         'listing': listing,
         'form': NewBidForm(listingPrice=listing.price),
