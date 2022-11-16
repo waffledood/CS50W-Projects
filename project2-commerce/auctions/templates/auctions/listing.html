@@ -14,4 +14,22 @@
 
         <button type="submit" class="btn btn-primary mb-2">Place Bid</button>
     </form>
+    <br>
+    <h3>Comments</h3>
+    <div class="card w-25" style="width: 18rem;">
+        <ul class="list-group list-group-flush">
+            {% for comment in comments %}
+                <li class="list-group-item">{{ comment }}</li>
+            {% empty %}
+                No comments here, be the first to leave a comment.
+            {% endfor %}
+        </ul>
+    </div>
+    <form action="{% url 'listing' listing.id %}" method="POST">
+        {% csrf_token %}
+
+        {{ commentForm }}
+
+        <button type="submit" class="btn btn-primary mb-2">Comment</button>
+    </form>
 {% endblock %}
