@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing
+from .models import User, Listing, Comment
 
 
 class NewListingForm(forms.Form):
@@ -76,6 +76,19 @@ class NewBidForm(forms.Form):
         )
 
     bid = forms.FloatField()
+
+
+class NewCommentForm(forms.Form):
+    commentDetails = forms.CharField(
+        label="",
+        widget=forms.Textarea(
+            attrs={
+                'placeholder': 'Add a comment...',
+                'rows': 2,
+                'class': 'form-control w-25 mt-2 mb-2'
+            }
+        )
+    )
 
 
 def index(request):
