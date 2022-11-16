@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate, login, logout
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -173,6 +174,11 @@ def create(request):
 
 def listing(request, listId):
     listing = Listing.objects.get(pk=listId)
+    try:
+        comments = Comment.objects.filter(listing=listId)
+    except ObjectDoesNotExist:
+        comments = None
+
     if request.method == "POST":
         form = NewBidForm(data=request.POST, listingPrice=listing.price)
         if form.is_valid():
@@ -187,6 +193,8 @@ def listing(request, listId):
         })
     return render(request, "auctions/listing.html", {
         'listing': listing,
-        'form': NewBidForm(listingPrice=listing.price)
+        'form': NewBidForm(listingPrice=listing.price),
+        'comments': comments,
+        'commentForm': NewCommentForm()
     })
 
