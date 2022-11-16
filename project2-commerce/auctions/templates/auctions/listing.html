@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Listing: {{ listing.name }}</h2>
+    <br>
+    <h3>Listing Details</h3>
+    <p>Listed by {{ listing.user }}</p>
+    <p>{{ listing.description }}</p>
+    <p>${{ listing.price }}</p>
+    <form action="{% url 'listing' listing.id %}" method="POST">
+        {% csrf_token %}
+
+        {{ form }}
+
+        <button type="submit" class="btn btn-primary mb-2">Place Bid</button>
+    </form>
+    <br>
+    <h3>Comments</h3>
+    <div class="card w-25" style="width: 18rem;">
+        <ul class="list-group list-group-flush">
+            {% for comment in comments %}
+                <li class="list-group-item">{{ comment }}</li>
+            {% empty %}
+                No comments here, be the first to leave a comment.
+            {% endfor %}
+        </ul>
+    </div>
+    <form action="{% url 'listing' listing.id %}" method="POST">
+        {% csrf_token %}
+
+        {{ commentForm }}
+
+        <button type="submit" class="btn btn-primary mb-2">Comment</button>
+    </form>
+{% endblock %}
