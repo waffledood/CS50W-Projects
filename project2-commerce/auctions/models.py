@@ -31,3 +31,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name}: {self.description}"
+
+class Watchlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist")
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="watchlist")
