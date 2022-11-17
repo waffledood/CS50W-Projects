@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing, Comment
+from .models import User, Listing, Comment, Bid
 
 
 class NewListingForm(forms.Form):
@@ -174,10 +174,16 @@ def create(request):
 
 def listing(request, listId):
     listing = Listing.objects.get(pk=listId)
+    # get the list of Comments for the Listing
     try:
         comments = Comment.objects.filter(listing=listId)
     except ObjectDoesNotExist:
         comments = None
+    # get the list of Bids for the Listing
+    try:
+        bids = Bid.objects.filter(listing=listId)
+    except ObjectDoesNotExist:
+        bids = None
 
     if request.method == "POST":
         # if the POST request is for a bid
@@ -186,9 +192,8 @@ def listing(request, listId):
             if form.is_valid():
                 # retrieve the form's data
                 bid = form.cleaned_data["bid"]
-                listingWithNewBid = Listing.objects.get(pk=listId)
-                listingWithNewBid.price = bid
-                listingWithNewBid.save()
+                newBid = Bid(bidder=request.user, listing=listing, price=bid)
+                newBid.save()
                 return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
             # return the same page, with the incorrect form
             return render(request, "auctions/listing.html", {
@@ -214,6 +219,7 @@ def listing(request, listId):
         
     return render(request, "auctions/listing.html", {
         'listing': listing,
+        'bids': bids,
         'form': NewBidForm(listingPrice=listing.price),
         'comments': comments,
         'commentForm': NewCommentForm()
