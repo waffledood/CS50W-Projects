@@ -6,7 +6,22 @@
     <h3>Listing Details</h3>
     <p>Listed by {{ listing.user }}</p>
     <p>{{ listing.description }}</p>
-    <p>${{ listing.price }}</p>
+
+    {% if bids %}
+        <p>Current Bid: ${{ highestBid }}</p>
+    {% else %}
+        No bids so far.
+    {% endif %}
+
+    <p>Bid History</p>
+    <ul>
+        {% for bid in bids %}
+            <li>{{ bid }}</li>
+        {% empty %}
+            No bids so far.
+        {% endfor %}
+    </ul>
+
     <form action="{% url 'listing' listing.id %}" method="POST">
         {% csrf_token %}
 
