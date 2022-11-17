@@ -30,4 +30,4 @@ class Comment(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="comments")
 
     def __str__(self):
-        return f"Comment ({self.id}): By {self.user.first_name} on {self.listing.name}"
+        return f"{self.user.first_name}: {self.description}"
