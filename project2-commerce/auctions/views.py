@@ -184,6 +184,8 @@ def listing(request, listId):
         bids = Bid.objects.filter(listing=listId)
     except ObjectDoesNotExist:
         bids = None
+    # get the highest Bid for the listing, if any
+    highestBid = bids.order_by('-price').first().price if bids.exists() else listing.price
 
     if request.method == "POST":
         # if the POST request is for a bid
@@ -220,7 +222,8 @@ def listing(request, listId):
     return render(request, "auctions/listing.html", {
         'listing': listing,
         'bids': bids,
-        'form': NewBidForm(listingPrice=listing.price),
+        'highestBid': highestBid,
+        'form': NewBidForm(listingPrice=highestBid),
         'comments': comments,
         'commentForm': NewCommentForm()
     })
