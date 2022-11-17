@@ -21,7 +21,7 @@
             {% for comment in comments %}
                 <li class="list-group-item">{{ comment }}</li>
             {% empty %}
-                No comments here, be the first to leave a comment.
+                <li class="list-group-item text-muted">No comments here, be the first to leave a comment.</li>
             {% endfor %}
         </ul>
     </div>
