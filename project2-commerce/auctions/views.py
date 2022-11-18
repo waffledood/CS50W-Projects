@@ -221,7 +221,18 @@ def listing(request, listId):
                 'comments': comments,
                 'commentForm': commentForm
             })
-        
+        # if the POST request is for adding listing to watchlist
+        if "watchlist" in request.POST:
+            # if the listing is already in the user's watchlist, remove it
+            if listingWatchlistedByUser:
+                Watchlist.objects.filter(listing=listing).filter(user=request.user).delete()
+                return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
+            # if the listing is not in the user's watchlist, add it
+            else:
+                watchlist = Watchlist(user=request.user, listing=listing)
+                watchlist.save()
+                return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
+
     return render(request, "auctions/listing.html", {
         'listing': listing,
         'bids': bids,
