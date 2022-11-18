@@ -7,12 +7,6 @@
     <p>Listed by {{ listing.user }}</p>
     <p>{{ listing.description }}</p>
 
-    {% if bids %}
-        <p>Current Bid: ${{ highestBid }}</p>
-    {% else %}
-        No bids so far.
-    {% endif %}
-
     <form action="{% url 'listing' listing.id %}" method="POST">
         {% csrf_token %}
         {% if listingWatchlistedByUser %}
@@ -27,6 +21,12 @@
             <button name="watchlist" type="submit" class="btn btn-primary mb-2">Add to Watchlist</button>
         {% endif %}
     </form>
+
+    {% if bids %}
+        <p>Current Bid: ${{ highestBid }}</p>
+    {% else %}
+        No bids so far.
+    {% endif %}
 
     <p>Bid History</p>
     <ul>
