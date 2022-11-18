@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing, Comment, Bid
+from .models import User, Listing, Comment, Bid, Watchlist
 
 
 class NewListingForm(forms.Form):
@@ -184,6 +184,9 @@ def listing(request, listId):
         bids = Bid.objects.filter(listing=listId)
     except ObjectDoesNotExist:
         bids = None
+    # check if this listing is on the user's watchlist 
+    listingWatchlistedByUser = True if Watchlist.objects.filter(listing=listing).filter(user=request.user).exists() else False
+
     # get the highest Bid for the listing, if any
     highestBid = bids.order_by('-price').first().price if bids.exists() else listing.price
 
@@ -225,6 +228,7 @@ def listing(request, listId):
         'highestBid': highestBid,
         'form': NewBidForm(listingPrice=highestBid),
         'comments': comments,
-        'commentForm': NewCommentForm()
+        'commentForm': NewCommentForm(),
+        'listingWatchlistedByUser': listingWatchlistedByUser
     })
 
