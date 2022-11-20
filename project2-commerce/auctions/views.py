@@ -243,3 +243,10 @@ def listing(request, listId):
         'listingWatchlistedByUser': listingWatchlistedByUser
     })
 
+
+def watchlist(request):
+    listings = Listing.objects.filter(watchlist__in=Watchlist.objects.filter(user=request.user))
+    return render(request, "auctions/watchlist.html", {
+        'watchlist': listings
+    })
+
