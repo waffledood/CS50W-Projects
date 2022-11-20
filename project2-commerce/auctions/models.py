@@ -35,3 +35,28 @@ class Comment(models.Model):
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist")
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="watchlist")
+
+    def __str__(self):
+        return f"id: {self.id}, user: {self.user}, listing: {self.listing}"
+
+class Category(models.Model):
+    BEAUTY = 'BT'
+    AUTOMOTIVE = 'AM'
+    ELECTRONICS = 'ER'
+    KIDS = 'KD'
+    BOOKS = 'BK'
+    MISC = 'MS'
+    CATEGORY_CHOICES = [
+        (BEAUTY, 'Beauty'),
+        (AUTOMOTIVE, 'Automotive'),
+        (ELECTRONICS, 'Electronics'),
+        (KIDS, 'Kids'),
+        (BOOKS, 'Books'),
+        (MISC, 'Misc'),
+    ]
+    type = models.CharField(
+        max_length=2,
+        choices=CATEGORY_CHOICES,
+        default=MISC,
+    )
+    listing = models.ForeignKey(Listing, on_delete=models.SET_NULL, related_name="category", null=True)

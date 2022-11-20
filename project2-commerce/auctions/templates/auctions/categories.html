@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Categories</h2>
+    <h3>{{ categorySelected|default_if_none:"All" }}</h3>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Category
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for categoryValue, categoryOption in categories %}
+                <a class="dropdown-item" href="{% url 'categories' categoryValue %}">{{ categoryOption }}</a>
+            {% endfor %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'categories' %}">All</a>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for categoryListing in categoryListings %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="..." class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ categoryListing.name }}</h5>
+                        <p class="card-text">{{ categoryListing.description }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Price: ${{ categoryListing.price|floatformat:2 }}</li>
+                    </ul>
+                    <div class="card-footer">
+                        <small class="text-muted">Listed {{ categoryListing.date }}</small>
+                    </div>
+                    <a href="{% url 'listing' categoryListing.id %}" class="stretched-link"></a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

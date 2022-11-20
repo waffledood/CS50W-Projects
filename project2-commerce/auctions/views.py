@@ -6,7 +6,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing, Comment, Bid, Watchlist
+from .models import User, Listing, Comment, Bid, Watchlist, Category
+
+from . import util
 
 
 class NewListingForm(forms.Form):
@@ -38,6 +40,23 @@ class NewListingForm(forms.Form):
             attrs={
                 'placeholder': 'Enter the description for your new listing...',
                 'class': 'form-control w-75 mb-2'
+            }
+        )
+    )
+
+    category = forms.ChoiceField(
+        label="Category:",
+        choices=[
+            ('BT', 'Beauty'),
+            ('AM', 'Automotive'),
+            ('ER', 'Electronics'),
+            ('KD', 'Kids'),
+            ('BK', 'Books'),
+            ('MS', 'Misc'),
+        ],
+        widget=forms.Select(
+            attrs={
+                'class': 'form-select mb-2'
             }
         )
     )
@@ -159,9 +178,13 @@ def create(request):
             name = form.cleaned_data["name"]
             price = form.cleaned_data["price"]
             description = form.cleaned_data["description"]
+            type = form.cleaned_data["category"]
             # create & save the Listing object
             listing = Listing(name=name, price=price, user=request.user, description=description)
             listing.save()
+            # create & save the Watchlist object
+            category = Category(type=type, listing=listing)
+            category.save()
         else:
             return render(request, "auctions/create.html", {
                 'form': form
@@ -248,5 +271,22 @@ def watchlist(request):
     listings = Listing.objects.filter(watchlist__in=Watchlist.objects.filter(user=request.user))
     return render(request, "auctions/watchlist.html", {
         'watchlist': listings
+    })
+
+
+def categories(request, category=None):
+    if category != None and category not in util.CATEGORY_VALUES:
+        return render(request, "auctions/error.html")
+    if category in util.CATEGORY_VALUES:
+        categories = Category.objects.filter(type=category)
+        categoryListings = Listing.objects.filter(category__in=categories)
+        return render(request, "auctions/categories.html", {
+            'categoryListings': categoryListings,
+            'categorySelected': util.getOption(category),
+            'categories': util.CATEGORY_CHOICES
+        })
+    return render(request, "auctions/categories.html", {
+        'categorySelected': None,
+        'categories': util.CATEGORY_CHOICES
     })
 
