@@ -52,7 +52,7 @@ class Category(models.Model):
         (ELECTRONICS, 'Electronics'),
         (KIDS, 'Kids'),
         (BOOKS, 'Books'),
-        (MISC, 'MS'),
+        (MISC, 'Misc'),
     ]
     year_in_school = models.CharField(
         max_length=2,
