@@ -268,6 +268,5 @@ def watchlist(request):
     })
 
 
-def categories(request, category):
-    pass
+def categories(request, category=None):
 
