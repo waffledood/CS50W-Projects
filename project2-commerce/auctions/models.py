@@ -40,7 +40,7 @@ class Watchlist(models.Model):
         return f"id: {self.id}, user: {self.user}, listing: {self.listing}"
 
 class Category(models.Model):
-    BEAUTY = 'FR'
+    BEAUTY = 'BT'
     AUTOMOTIVE = 'AM'
     ELECTRONICS = 'ER'
     KIDS = 'KD'
