@@ -1,0 +1,28 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for listing in watchlist %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="..." class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ listing.name }}</h5>
+                        <p class="card-text">{{ listing.description }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Price: ${{ listing.price|floatformat:2 }}</li>
+                    </ul>
+                    <div class="card-footer">
+                        <small class="text-muted">Listed {{ listing.date }}</small>
+                    </div>
+                    <a href="{% url 'listing' listing.id %}" class="stretched-link"></a>
+                </div>
+            </div>
+        {% empty %}
+            No active listings.
+        {% endfor %}
+    </div>
+{% endblock %}
