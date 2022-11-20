@@ -245,5 +245,8 @@ def listing(request, listId):
 
 
 def watchlist(request):
-    pass
+    listings = Listing.objects.filter(watchlist__in=Watchlist.objects.filter(user=request.user))
+    return render(request, "auctions/watchlist.html", {
+        'watchlist': listings
+    })
 
