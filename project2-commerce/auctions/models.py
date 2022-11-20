@@ -39,3 +39,24 @@ class Watchlist(models.Model):
     def __str__(self):
         return f"id: {self.id}, user: {self.user}, listing: {self.listing}"
 
+class Category(models.Model):
+    BEAUTY = 'FR'
+    AUTOMOTIVE = 'AM'
+    ELECTRONICS = 'ER'
+    KIDS = 'KD'
+    BOOKS = 'BK'
+    MISC = 'MS'
+    CATEGORY_CHOICES = [
+        (BEAUTY, 'Beauty'),
+        (AUTOMOTIVE, 'Automotive'),
+        (ELECTRONICS, 'Electronics'),
+        (KIDS, 'Kids'),
+        (BOOKS, 'Books'),
+        (MISC, 'MS'),
+    ]
+    year_in_school = models.CharField(
+        max_length=2,
+        choices=CATEGORY_CHOICES,
+        default=MISC,
+    )
+    listing = models.ForeignKey(Listing, on_delete=models.SET_NULL, name="category", null=True)
