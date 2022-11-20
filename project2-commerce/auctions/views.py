@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
+from .models import User, Listing, Comment, Bid, Watchlist, Category
 
 from . import util
 
@@ -177,9 +178,13 @@ def create(request):
             name = form.cleaned_data["name"]
             price = form.cleaned_data["price"]
             description = form.cleaned_data["description"]
+            type = form.cleaned_data["category"]
             # create & save the Listing object
             listing = Listing(name=name, price=price, user=request.user, description=description)
             listing.save()
+            # create & save the Watchlist object
+            category = Category(type=type, listing=listing)
+            category.save()
         else:
             return render(request, "auctions/create.html", {
                 'form': form
@@ -270,6 +275,16 @@ def watchlist(request):
 
 
 def categories(request, category=None):
+    if category != None and category not in util.CATEGORY_VALUES:
+        return render(request, "auctions/error.html")
+    if category in util.CATEGORY_VALUES:
+        categories = Category.objects.filter(type=category)
+        categoryListings = Listing.objects.filter(category__in=categories)
+        return render(request, "auctions/categories.html", {
+            'categoryListings': categoryListings,
+            'categorySelected': util.getOption(category),
+            'categories': util.CATEGORY_CHOICES
+        })
     return render(request, "auctions/categories.html", {
         'categorySelected': None,
         'categories': util.CATEGORY_CHOICES
