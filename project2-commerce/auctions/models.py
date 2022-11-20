@@ -54,7 +54,7 @@ class Category(models.Model):
         (BOOKS, 'Books'),
         (MISC, 'Misc'),
     ]
-    year_in_school = models.CharField(
+    type = models.CharField(
         max_length=2,
         choices=CATEGORY_CHOICES,
         default=MISC,
