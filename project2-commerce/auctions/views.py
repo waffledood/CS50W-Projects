@@ -42,6 +42,23 @@ class NewListingForm(forms.Form):
         )
     )
 
+    category = forms.ChoiceField(
+        label="Category:",
+        choices=[
+            ('BT', 'Beauty'),
+            ('AM', 'Automotive'),
+            ('ER', 'Electronics'),
+            ('KD', 'Kids'),
+            ('BK', 'Books'),
+            ('MS', 'Misc'),
+        ],
+        widget=forms.Select(
+            attrs={
+                'class': 'form-select mb-2'
+            }
+        )
+    )
+
 
 class NewBidForm(forms.Form):
     # bid = forms.FloatField(
