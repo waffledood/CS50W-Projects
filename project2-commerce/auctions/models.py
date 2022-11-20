@@ -59,4 +59,4 @@ class Category(models.Model):
         choices=CATEGORY_CHOICES,
         default=MISC,
     )
-    listing = models.ForeignKey(Listing, on_delete=models.SET_NULL, name="category", null=True)
+    listing = models.ForeignKey(Listing, on_delete=models.SET_NULL, related_name="category", null=True)
