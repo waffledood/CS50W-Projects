@@ -267,3 +267,7 @@ def watchlist(request):
         'watchlist': listings
     })
 
+
+def categories(request, category):
+    pass
+
