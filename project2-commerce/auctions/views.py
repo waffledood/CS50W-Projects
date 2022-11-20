@@ -243,3 +243,7 @@ def listing(request, listId):
         'listingWatchlistedByUser': listingWatchlistedByUser
     })
 
+
+def watchlist(request):
+    pass
+
