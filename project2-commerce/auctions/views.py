@@ -6,7 +6,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing, Comment, Bid, Watchlist
+
+from . import util
 
 
 class NewListingForm(forms.Form):
@@ -269,4 +270,8 @@ def watchlist(request):
 
 
 def categories(request, category=None):
+    return render(request, "auctions/categories.html", {
+        'categorySelected': None,
+        'categories': util.CATEGORY_CHOICES
+    })
 
