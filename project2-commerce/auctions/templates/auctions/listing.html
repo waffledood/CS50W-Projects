@@ -23,9 +23,9 @@
     </form>
 
     <p>Bid History</p>
-    <ul>
+    <ul class="list-group">
         {% for bid in bids %}
-            <li>{{ bid }}</li>
+            <li class="list-group-item w-25 mb-2">{{ bid }}</li>
         {% empty %}
             No bids so far.
         {% endfor %}
