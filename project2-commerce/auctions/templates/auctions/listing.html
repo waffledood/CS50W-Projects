@@ -4,7 +4,7 @@
     <h2>Listing: {{ listing.name }}</h2>
     <br>
     <h3>Listing Details</h3>
-    <p>Listed by {{ listing.user }}</p>
+    <p>Listed by {{ listing.user }} for ${{ listing.price }}</p>
     <p>{{ listing.description }}</p>
 
     <form action="{% url 'listing' listing.id %}" method="POST">
@@ -21,12 +21,6 @@
             <button name="watchlist" type="submit" class="btn btn-primary mb-2">Add to Watchlist</button>
         {% endif %}
     </form>
-
-    {% if bids %}
-        <p>Current Bid: ${{ highestBid }}</p>
-    {% else %}
-        No bids so far.
-    {% endif %}
 
     <p>Bid History</p>
     <ul>
