@@ -196,7 +196,10 @@ def create(request):
 
 
 def listing(request, listId):
-    listing = Listing.objects.get(pk=listId)
+    try:
+        listing = Listing.objects.get(pk=listId)
+    except Listing.DoesNotExist:
+        return render(request, "auctions/error.html")
     # get the list of Comments for the Listing
     try:
         comments = Comment.objects.filter(listing=listId)
