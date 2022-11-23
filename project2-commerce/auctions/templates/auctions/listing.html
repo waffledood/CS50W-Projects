@@ -22,23 +22,27 @@
         {% endif %}
     </form>
 
-    <p>Bid History</p>
-    <ul class="list-group">
-        {% for bid in bids %}
-            <li class="list-group-item w-25 mb-2">{{ bid }}</li>
-        {% empty %}
-            No bids so far.
-        {% endfor %}
-    </ul>
+    {% if user.is_authenticated %}
+        <p>Bid History</p>
+        <ul class="list-group">
+            {% for bid in bids %}
+                <li class="list-group-item w-25 mb-2">{{ bid }}</li>
+            {% empty %}
+                No bids so far.
+            {% endfor %}
+        </ul>
 
-    <form action="{% url 'listing' listing.id %}" method="POST">
-        {% csrf_token %}
+        <form action="{% url 'listing' listing.id %}" method="POST">
+            {% csrf_token %}
 
-        {{ form }}
+            {{ form }}
 
-        <button type="submit" class="btn btn-primary mb-2">Place Bid</button>
-    </form>
+            <button type="submit" class="btn btn-primary mb-2">Place Bid</button>
+        </form>
+    {% endif %}
+    
     <br>
+
     <h3>Comments</h3>
     <div class="card w-25" style="width: 18rem;">
         <ul class="list-group list-group-flush">
