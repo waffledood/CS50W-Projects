@@ -39,6 +39,21 @@
 
             <button type="submit" class="btn btn-primary mb-2">Place Bid</button>
         </form>
+
+        <p>Listing Status: 
+            {% if listing.active %}
+                Active
+            {% else %}
+                Closed
+            {% endif %}
+        </p>
+        {% if listing.active and ownerOfListing %}
+            <form action="{% url 'listing' listing.id %}" method="POST">
+                {% csrf_token %}
+
+                <button name="closeListing" type="submit" class="btn btn-primary mb-2">Close</button>
+            </form>
+        {% endif  %}
     {% endif %}
     
     <br>
