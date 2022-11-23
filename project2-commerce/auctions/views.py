@@ -196,7 +196,12 @@ def create(request):
 
 
 def listing(request, listId):
-    listing = Listing.objects.get(pk=listId)
+    try:
+        listing = Listing.objects.get(pk=listId)
+    except Listing.DoesNotExist:
+        return render(request, "auctions/error.html")
+    # check if the owner of the listing is the current user
+    ownerOfListing = True if listing.user == request.user else False
     # get the list of Comments for the Listing
     try:
         comments = Comment.objects.filter(listing=listId)
@@ -255,6 +260,11 @@ def listing(request, listId):
                 watchlist = Watchlist(user=request.user, listing=listing)
                 watchlist.save()
                 return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
+        # if the POST request is for closing the listing
+        if "closeListing" in request.POST and ownerOfListing:
+            listing.active = False
+            listing.save()
+            return HttpResponseRedirect(reverse('listing', kwargs={'listId': listId}))
 
     return render(request, "auctions/listing.html", {
         'listing': listing,
@@ -263,7 +273,9 @@ def listing(request, listId):
         'form': NewBidForm(listingPrice=highestBid),
         'comments': comments,
         'commentForm': NewCommentForm(),
-        'listingWatchlistedByUser': listingWatchlistedByUser
+        'listingWatchlistedByUser': listingWatchlistedByUser,
+        'ownerOfListing': ownerOfListing,
+        'listingStatus': listing.active
     })
 
 
