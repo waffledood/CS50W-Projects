@@ -12,6 +12,7 @@ class Listing(models.Model):
     # image = models.ImageField()
     description = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"Listing ({self.id}): {self.name} of ${self.price}"
