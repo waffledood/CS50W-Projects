@@ -260,6 +260,11 @@ def listing(request, listId):
                 watchlist = Watchlist(user=request.user, listing=listing)
                 watchlist.save()
                 return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
+        # if the POST request is for closing the listing
+        if "closeListing" in request.POST and ownerOfListing:
+            listing.active = False
+            listing.save()
+            return HttpResponseRedirect(reverse('listing', kwargs={'listId': listId}))
 
     return render(request, "auctions/listing.html", {
         'listing': listing,
