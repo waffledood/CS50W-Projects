@@ -270,6 +270,7 @@ def listing(request, listId):
         'commentForm': NewCommentForm(),
         'listingWatchlistedByUser': listingWatchlistedByUser,
         'ownerOfListing': ownerOfListing,
+        'listingStatus': listing.active
     })
 
 
