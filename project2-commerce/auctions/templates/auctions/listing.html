@@ -7,20 +7,22 @@
     <p>Listed by {{ listing.user }} for ${{ listing.price }}</p>
     <p>{{ listing.description }}</p>
 
-    <form action="{% url 'listing' listing.id %}" method="POST">
-        {% csrf_token %}
-        {% if listingWatchlistedByUser %}
-            <div class="alert alert-warning w-25" role="alert">
-                In Watchlist
-            </div>
-            <button name="watchlist" type="submit" class="btn btn-primary mb-2">Remove from Watchlist</button>
-        {% else %}
-            <div class="alert alert-warning w-25" role="alert">
-                Not In Watchlist
-            </div>
-            <button name="watchlist" type="submit" class="btn btn-primary mb-2">Add to Watchlist</button>
-        {% endif %}
-    </form>
+    {% if user.is_authenticated %}
+        <form action="{% url 'listing' listing.id %}" method="POST">
+            {% csrf_token %}
+            {% if listingWatchlistedByUser %}
+                <div class="alert alert-warning w-25" role="alert">
+                    In Watchlist
+                </div>
+                <button name="watchlist" type="submit" class="btn btn-primary mb-2">Remove from Watchlist</button>
+            {% else %}
+                <div class="alert alert-warning w-25" role="alert">
+                    Not In Watchlist
+                </div>
+                <button name="watchlist" type="submit" class="btn btn-primary mb-2">Add to Watchlist</button>
+            {% endif %}
+        </form>
+    {% endif %}
 
     {% if user.is_authenticated %}
         <p>Bid History</p>
@@ -68,11 +70,14 @@
             {% endfor %}
         </ul>
     </div>
-    <form action="{% url 'listing' listing.id %}" method="POST">
-        {% csrf_token %}
 
-        {{ commentForm }}
+    {% if user.is_authenticated %}
+        <form action="{% url 'listing' listing.id %}" method="POST">
+            {% csrf_token %}
 
-        <button type="submit" class="btn btn-primary mb-2">Comment</button>
-    </form>
+            {{ commentForm }}
+
+            <button type="submit" class="btn btn-primary mb-2">Comment</button>
+        </form>
+    {% endif %}
 {% endblock %}
