@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -170,6 +171,7 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
+@login_required(login_url='/register')
 def create(request):
     if request.method == "POST":
         form = NewListingForm(request.POST)
@@ -279,6 +281,7 @@ def listing(request, listId):
     })
 
 
+@login_required(login_url='/register')
 def watchlist(request):
     listings = Listing.objects.filter(watchlist__in=Watchlist.objects.filter(user=request.user))
     return render(request, "auctions/watchlist.html", {
@@ -286,6 +289,7 @@ def watchlist(request):
     })
 
 
+@login_required(login_url='/register')
 def categories(request, category=None):
     if category != None and category not in util.CATEGORY_VALUES:
         return render(request, "auctions/error.html")
