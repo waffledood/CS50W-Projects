@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -170,6 +171,7 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
+@login_required(login_url='/register')
 def create(request):
     if request.method == "POST":
         form = NewListingForm(request.POST)
@@ -213,10 +215,14 @@ def listing(request, listId):
     except ObjectDoesNotExist:
         bids = None
     # check if this listing is on the user's watchlist 
-    listingWatchlistedByUser = True if Watchlist.objects.filter(listing=listing).filter(user=request.user).exists() else False
+    listingWatchlistedByUser = True if request.user.is_authenticated and Watchlist.objects.filter(listing=listing).filter(user=request.user).exists() else False
 
     # get the highest Bid for the listing, if any
     highestBid = bids.order_by('-price').first().price if bids.exists() else listing.price
+
+    # check if the current user is the highest bidder for the listing (if listing is closed)
+    highestBidder = bids.order_by('-price').first().bidder if bids.exists() else None
+    highestBidderIsCurrentUser = True if highestBidder == request.user and not listing.active and bids.exists() else False
 
     if request.method == "POST":
         # if the POST request is for a bid
@@ -275,10 +281,12 @@ def listing(request, listId):
         'commentForm': NewCommentForm(),
         'listingWatchlistedByUser': listingWatchlistedByUser,
         'ownerOfListing': ownerOfListing,
-        'listingStatus': listing.active
+        'listingStatus': listing.active,
+        'highestBidderIsCurrentUser': highestBidderIsCurrentUser
     })
 
 
+@login_required(login_url='/register')
 def watchlist(request):
     listings = Listing.objects.filter(watchlist__in=Watchlist.objects.filter(user=request.user))
     return render(request, "auctions/watchlist.html", {
@@ -286,6 +294,7 @@ def watchlist(request):
     })
 
 
+@login_required(login_url='/register')
 def categories(request, category=None):
     if category != None and category not in util.CATEGORY_VALUES:
         return render(request, "auctions/error.html")
