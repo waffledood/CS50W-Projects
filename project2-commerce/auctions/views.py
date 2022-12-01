@@ -215,7 +215,7 @@ def listing(request, listId):
     except ObjectDoesNotExist:
         bids = None
     # check if this listing is on the user's watchlist 
-    listingWatchlistedByUser = True if Watchlist.objects.filter(listing=listing).filter(user=request.user).exists() else False
+    listingWatchlistedByUser = True if request.user.is_authenticated and Watchlist.objects.filter(listing=listing).filter(user=request.user).exists() else False
 
     # get the highest Bid for the listing, if any
     highestBid = bids.order_by('-price').first().price if bids.exists() else listing.price
