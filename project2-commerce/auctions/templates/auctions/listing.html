@@ -49,6 +49,11 @@
                 Closed
             {% endif %}
         </p>
+        <p>
+            {% if highestBidderIsCurrentUser %}
+                Congratulations, you are the highest bidder!
+            {% endif %}
+        </p>
         {% if listing.active and ownerOfListing %}
             <form action="{% url 'listing' listing.id %}" method="POST">
                 {% csrf_token %}

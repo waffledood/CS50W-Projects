@@ -220,6 +220,10 @@ def listing(request, listId):
     # get the highest Bid for the listing, if any
     highestBid = bids.order_by('-price').first().price if bids.exists() else listing.price
 
+    # check if the current user is the highest bidder for the listing (if listing is closed)
+    highestBidder = bids.order_by('-price').first().bidder if bids.exists() else None
+    highestBidderIsCurrentUser = True if highestBidder == request.user and not listing.active and bids.exists() else False
+
     if request.method == "POST":
         # if the POST request is for a bid
         if "bid" in request.POST:
@@ -277,7 +281,8 @@ def listing(request, listId):
         'commentForm': NewCommentForm(),
         'listingWatchlistedByUser': listingWatchlistedByUser,
         'ownerOfListing': ownerOfListing,
-        'listingStatus': listing.active
+        'listingStatus': listing.active,
+        'highestBidderIsCurrentUser': highestBidderIsCurrentUser
     })
 
 
