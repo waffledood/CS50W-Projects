@@ -12,6 +12,57 @@ from .models import User, Listing, Comment, Bid, Watchlist, Category
 from . import util
 
 
+class NewUserForm(forms.Form):
+    username = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Username'
+            }
+        )
+    )
+    firstName = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'First Name'
+            }
+        )
+    )
+    lastName = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Last Name'
+            }
+        )
+    )
+    email = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Email'
+            }
+        )
+    )
+    password = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder': 'Password'
+            }
+        )
+    )
+    passwordAgain = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder': 'Confirm Password'
+            }
+        )
+    )
+
+
 class NewListingForm(forms.Form):
     name = forms.CharField(
         label="Name of Listing:",
@@ -168,7 +219,9 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "auctions/register.html")
+        return render(request, "auctions/register.html", {
+            'userForm': NewUserForm()
+        })
 
 
 @login_required(login_url='/register')
