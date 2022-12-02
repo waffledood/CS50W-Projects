@@ -211,7 +211,7 @@ def listing(request, listId):
         comments = None
     # get the list of Bids for the Listing
     try:
-        bids = Bid.objects.filter(listing=listId)
+        bids = Bid.objects.filter(listing=listId).order_by('-price')
     except ObjectDoesNotExist:
         bids = None
     # check if this listing is on the user's watchlist 
