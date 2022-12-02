@@ -12,6 +12,57 @@ from .models import User, Listing, Comment, Bid, Watchlist, Category
 from . import util
 
 
+class NewUserForm(forms.Form):
+    username = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Username'
+            }
+        )
+    )
+    firstName = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'First Name'
+            }
+        )
+    )
+    lastName = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Last Name'
+            }
+        )
+    )
+    email = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Email'
+            }
+        )
+    )
+    password = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder': 'Password'
+            }
+        )
+    )
+    passwordAgain = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder': 'Confirm Password'
+            }
+        )
+    )
+
+
 class NewListingForm(forms.Form):
     name = forms.CharField(
         label="Name of Listing:",
@@ -168,7 +219,9 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "auctions/register.html")
+        return render(request, "auctions/register.html", {
+            'userForm': NewUserForm()
+        })
 
 
 @login_required(login_url='/register')
@@ -211,7 +264,7 @@ def listing(request, listId):
         comments = None
     # get the list of Bids for the Listing
     try:
-        bids = Bid.objects.filter(listing=listId)
+        bids = Bid.objects.filter(listing=listId).order_by('-price')
     except ObjectDoesNotExist:
         bids = None
     # check if this listing is on the user's watchlist 
@@ -227,16 +280,16 @@ def listing(request, listId):
     if request.method == "POST":
         # if the POST request is for a bid
         if "bid" in request.POST:
-            form = NewBidForm(data=request.POST, listingPrice=listing.price)
-            if form.is_valid():
+            bidForm = NewBidForm(data=request.POST, listingPrice=listing.price)
+            if bidForm.is_valid():
                 # retrieve the form's data
-                bid = form.cleaned_data["bid"]
+                bid = bidForm.cleaned_data["bid"]
                 newBid = Bid(bidder=request.user, listing=listing, price=bid)
                 newBid.save()
                 return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
             # return the same page, with the incorrect form
             return render(request, "auctions/listing.html", {
-                'form': form,
+                'bidForm': bidForm,
                 'comments': comments,
                 'commentForm': NewCommentForm()
             })
@@ -251,7 +304,7 @@ def listing(request, listId):
                 return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
             # return the same page, with incorrect form
             return render(request, "auctions/listing.html", {
-                'form': NewBidForm(listingPrice=listing.price),
+                'bidForm': NewBidForm(listingPrice=listing.price),
                 'comments': comments,
                 'commentForm': commentForm
             })
@@ -276,7 +329,7 @@ def listing(request, listId):
         'listing': listing,
         'bids': bids,
         'highestBid': highestBid,
-        'form': NewBidForm(listingPrice=highestBid),
+        'bidForm': NewBidForm(listingPrice=highestBid),
         'comments': comments,
         'commentForm': NewCommentForm(),
         'listingWatchlistedByUser': listingWatchlistedByUser,
@@ -307,6 +360,7 @@ def categories(request, category=None):
             'categories': util.CATEGORY_CHOICES
         })
     return render(request, "auctions/categories.html", {
+        'categoryListings': Listing.objects.all(),
         'categorySelected': None,
         'categories': util.CATEGORY_CHOICES
     })

@@ -37,7 +37,7 @@
         <form action="{% url 'listing' listing.id %}" method="POST">
             {% csrf_token %}
 
-            {{ form }}
+            {{ bidForm }}
 
             <button type="submit" class="btn btn-primary mb-2">Place Bid</button>
         </form>
