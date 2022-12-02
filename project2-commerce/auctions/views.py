@@ -227,16 +227,16 @@ def listing(request, listId):
     if request.method == "POST":
         # if the POST request is for a bid
         if "bid" in request.POST:
-            form = NewBidForm(data=request.POST, listingPrice=listing.price)
-            if form.is_valid():
+            bidForm = NewBidForm(data=request.POST, listingPrice=listing.price)
+            if bidForm.is_valid():
                 # retrieve the form's data
-                bid = form.cleaned_data["bid"]
+                bid = bidForm.cleaned_data["bid"]
                 newBid = Bid(bidder=request.user, listing=listing, price=bid)
                 newBid.save()
                 return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
             # return the same page, with the incorrect form
             return render(request, "auctions/listing.html", {
-                'form': form,
+                'bidForm': bidForm,
                 'comments': comments,
                 'commentForm': NewCommentForm()
             })
@@ -251,7 +251,7 @@ def listing(request, listId):
                 return HttpResponseRedirect(reverse('listing', kwargs={'listId':listId}))
             # return the same page, with incorrect form
             return render(request, "auctions/listing.html", {
-                'form': NewBidForm(listingPrice=listing.price),
+                'bidForm': NewBidForm(listingPrice=listing.price),
                 'comments': comments,
                 'commentForm': commentForm
             })
@@ -276,7 +276,7 @@ def listing(request, listId):
         'listing': listing,
         'bids': bids,
         'highestBid': highestBid,
-        'form': NewBidForm(listingPrice=highestBid),
+        'bidForm': NewBidForm(listingPrice=highestBid),
         'comments': comments,
         'commentForm': NewCommentForm(),
         'listingWatchlistedByUser': listingWatchlistedByUser,
