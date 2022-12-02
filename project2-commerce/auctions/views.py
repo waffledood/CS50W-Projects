@@ -307,6 +307,7 @@ def categories(request, category=None):
             'categories': util.CATEGORY_CHOICES
         })
     return render(request, "auctions/categories.html", {
+        'categoryListings': Listing.objects.all(),
         'categorySelected': None,
         'categories': util.CATEGORY_CHOICES
     })
