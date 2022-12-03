@@ -96,6 +96,7 @@ class NewListingForm(forms.Form):
         label="Image of Listing:",
         widget=forms.FileInput(
             attrs={
+                'class': 'form-control-file mb-2'
             }
         )
     )
