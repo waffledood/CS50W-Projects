@@ -9,7 +9,7 @@ class Listing(models.Model):
     name = models.CharField(max_length=64)
     price = models.FloatField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
-    # image = models.ImageField()
+    image = models.ImageField(upload_to='auctions/files/listings', blank=True)
     description = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
