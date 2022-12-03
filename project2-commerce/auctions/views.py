@@ -92,6 +92,14 @@ class NewListingForm(forms.Form):
         )
     )
 
+    image = forms.ImageField(
+        label="Image of Listing:",
+        widget=forms.FileInput(
+            attrs={
+            }
+        )
+    )
+
     description = forms.CharField(
         label="Description of Listing:",
         widget=forms.Textarea(
