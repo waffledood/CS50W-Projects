@@ -9,8 +9,10 @@
     {% endif %}
 
     <form action="{% url 'register' %}" method="post">
-        {% csrf_token %}
-        {{ userForm }}
+        <div class="form-group">
+            {% csrf_token %}
+            {{ userForm }}
+        </div>
         <input class="btn btn-primary" type="submit" value="Register">
     </form>
 

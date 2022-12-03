@@ -17,7 +17,8 @@ class NewUserForm(forms.Form):
         label="",
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Username'
+                'placeholder': 'Username',
+                'class': 'form-control w-75 mb-2'
             }
         )
     )
@@ -25,7 +26,8 @@ class NewUserForm(forms.Form):
         label="",
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'First Name'
+                'placeholder': 'First Name',
+                'class': 'form-control w-75 mb-2'
             }
         )
     )
@@ -33,7 +35,8 @@ class NewUserForm(forms.Form):
         label="",
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Last Name'
+                'placeholder': 'Last Name',
+                'class': 'form-control w-75 mb-2'
             }
         )
     )
@@ -41,7 +44,8 @@ class NewUserForm(forms.Form):
         label="",
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Email'
+                'placeholder': 'Email',
+                'class': 'form-control w-75 mb-2'
             }
         )
     )
@@ -49,15 +53,17 @@ class NewUserForm(forms.Form):
         label="",
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Password'
+                'placeholder': 'Password',
+                'class': 'form-control w-75 mb-2'
             }
         )
     )
-    passwordAgain = forms.CharField(
+    confirmation = forms.CharField(
         label="",
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Confirm Password'
+                'placeholder': 'Confirm Password',
+                'class': 'form-control w-75 mb-2'
             }
         )
     )
@@ -82,6 +88,15 @@ class NewListingForm(forms.Form):
                 'step': '0.01',
                 'min': '0.0',
                 'max': '100_000.0'
+            }
+        )
+    )
+
+    image = forms.ImageField(
+        label="Image of Listing:",
+        widget=forms.FileInput(
+            attrs={
+                'class': 'form-control-file mb-2'
             }
         )
     )
