@@ -43,6 +43,9 @@ function compose_email() {
         console.log(result);
     });
   
+    // load user's sent mailbox
+    load_mailbox('sent');
+  
     return false;
   }
 }
