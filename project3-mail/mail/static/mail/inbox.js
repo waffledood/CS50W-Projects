@@ -43,6 +43,8 @@ function compose_email() {
         console.log(result);
     });
   
+    // TODO - Add error handling in fetch POST request
+  
     // load user's sent mailbox
     load_mailbox('sent');
   
