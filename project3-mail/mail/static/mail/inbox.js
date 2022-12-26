@@ -64,4 +64,21 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
+  // Retrieve the relevant emails
+  fetch(`/emails/${mailbox}`)
+  .then(response => {
+    if (response.status >= 200 && response.status <= 299) {
+      return response.json();
+    } else {
+      throw Error(response.statusText);
+    }
+  })
+  .then(emails => {
+  })
+  .catch(error => {
+    // handle error
+    console.log(error);
+  });
+
 }
