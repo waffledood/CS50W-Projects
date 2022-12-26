@@ -37,17 +37,21 @@ function compose_email() {
           body: body
       })
     })
-    .then(response => response.json())
-    .then(result => {
-        // Print result
-        console.log(result);
+    .then(response => {
+      if (response.status >= 200 && response.status <= 299) {
+        return response.json();
+      } else {
+        throw Error(response.statusText);
+      }
+    })
+    .then(jsonResponse => {
+      console.log(jsonResponse);
+      // load user's sent mailbox
+      load_mailbox('sent');
+    }).catch(error => {
+      // handle error
     });
-  
-    // TODO - Add error handling in fetch POST request
-  
-    // load user's sent mailbox
-    load_mailbox('sent');
-  
+
     return false;
   }
 }
@@ -60,4 +64,48 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
+  // Retrieve the relevant emails
+  fetch(`/emails/${mailbox}`)
+  .then(response => {
+    if (response.status >= 200 && response.status <= 299) {
+      return response.json();
+    } else {
+      throw Error(response.statusText);
+    }
+  })
+  .then(emails => {
+    // create div container for emails
+    document.querySelector('#emails-view').innerHTML += '<div id="emails" class="list-group"></div>';
+
+    // loop through json response of emails
+    for (var key of Object.keys(emails)) {
+      let emailJSONContent = emails[key];
+
+      // create email HTML element
+      let email = document.createElement('a');
+      email.innerHTML = `
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
+          <small id="email-timestamp">${emailJSONContent.timestamp}</small>
+        </div>
+        <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
+        <small class="text-muted" id="email-recipients">${emailJSONContent.recipients.join(", ")}</small>
+      `;
+
+      // apply CSS styling to email
+      email.className = `list-group-item list-group-item-action ${emailJSONContent.read == true ? 'text-muted' : ''}`;
+
+      // add URL to email
+      email.href = '';
+
+      // append email HTML element to emails class
+      document.querySelector('#emails').append(email);
+    }
+  })
+  .catch(error => {
+    // handle error
+    console.log(error);
+  });
+
 }
