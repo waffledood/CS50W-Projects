@@ -75,6 +75,33 @@ function load_mailbox(mailbox) {
     }
   })
   .then(emails => {
+    // create div container for emails
+    document.querySelector('#emails-view').innerHTML += '<div id="emails" class="list-group"></div>';
+
+    // loop through json response of emails
+    for (var key of Object.keys(emails)) {
+      let emailJSONContent = emails[key];
+
+      // create email HTML element
+      let email = document.createElement('a');
+      email.innerHTML = `
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
+          <small id="email-timestamp">${emailJSONContent.timestamp}</small>
+        </div>
+        <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
+        <small class="text-muted" id="email-recipients">${emailJSONContent.recipients.join(", ")}</small>
+      `;
+
+      // apply CSS styling to email
+      email.className = `list-group-item list-group-item-action ${emailJSONContent.read == true ? 'text-muted' : ''}`;
+
+      // add URL to email
+      email.href = '';
+
+      // append email HTML element to emails class
+      document.querySelector('#emails').append(email);
+    }
   })
   .catch(error => {
     // handle error
