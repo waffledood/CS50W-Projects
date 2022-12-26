@@ -37,17 +37,21 @@ function compose_email() {
           body: body
       })
     })
-    .then(response => response.json())
-    .then(result => {
-        // Print result
-        console.log(result);
+    .then(response => {
+      if (response.status >= 200 && response.status <= 299) {
+        return response.json();
+      } else {
+        throw Error(response.statusText);
+      }
+    })
+    .then(jsonResponse => {
+      console.log(jsonResponse);
+      // load user's sent mailbox
+      load_mailbox('sent');
+    }).catch(error => {
+      // handle error
     });
-  
-    // TODO - Add error handling in fetch POST request
-  
-    // load user's sent mailbox
-    load_mailbox('sent');
-  
+
     return false;
   }
 }
