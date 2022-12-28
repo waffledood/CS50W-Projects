@@ -101,7 +101,9 @@ function load_mailbox(mailbox) {
       email.style = "cursor: pointer";
 
       // add URL to email
-      email.href = '';
+      email.addEventListener('click', () => {
+        load_mail(emailJSONContent.id);
+      });
 
       // append email HTML element to emails class
       document.querySelector('#emails').append(email);
