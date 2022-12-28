@@ -100,7 +100,7 @@ function load_mailbox(mailbox) {
       `;
       email.style = "cursor: pointer";
 
-      // add URL to email
+      // run load_mail function to email when it is clicked
       email.addEventListener('click', () => {
         load_mail(emailJSONContent.id);
       });
