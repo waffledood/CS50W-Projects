@@ -98,6 +98,7 @@ function load_mailbox(mailbox) {
         list-group-item list-group-item-action ${emailJSONContent.read == true ? 'text-muted' : ''}
         data-id="${emailJSONContent.id}"
       `;
+      email.style = "cursor: pointer";
 
       // add URL to email
       email.href = '';
