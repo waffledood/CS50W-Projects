@@ -113,3 +113,6 @@ function load_mailbox(mailbox) {
   });
 
 }
+
+function load_mail(emailId) {
+}
