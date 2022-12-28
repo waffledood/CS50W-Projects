@@ -94,7 +94,10 @@ function load_mailbox(mailbox) {
       `;
 
       // apply CSS styling to email
-      email.className = `list-group-item list-group-item-action ${emailJSONContent.read == true ? 'text-muted' : ''}`;
+      email.className = `
+        list-group-item list-group-item-action ${emailJSONContent.read == true ? 'text-muted' : ''}
+        data-id="${emailJSONContent.id}"
+      `;
 
       // add URL to email
       email.href = '';
