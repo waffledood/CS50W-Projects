@@ -81,6 +81,7 @@ function load_mailbox(mailbox) {
     // loop through json response of emails
     for (var key of Object.keys(emails)) {
       let emailJSONContent = emails[key];
+      console.log(emailJSONContent);
 
       // create email HTML element
       let email = document.createElement('a');
