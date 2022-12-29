@@ -161,4 +161,8 @@ function load_mail(emailId) {
     emailView.textContent = '';
     emailView.append(email);
   })
+  .catch(error => {
+    // handle error
+    console.log(error);
+  })
 }
