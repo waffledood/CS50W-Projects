@@ -135,4 +135,30 @@ function load_mail(emailId) {
       throw Error(response.statusText);
     }
   })
+  .then(emailJSONContent => {
+    // set the class of emailView to a list group
+    emailView.className = "list-group";
+
+    // create the email list group item
+    let email = document.createElement('a');
+    email.innerHTML = `
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
+        <small id="email-timestamp">${emailJSONContent.timestamp}</small>
+      </div>
+      <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
+      <small class="text-muted" id="email-recipients">${emailJSONContent.recipients.join(", ")}</small>
+    `;
+
+    // apply CSS styling to email
+    email.className = `
+      list-group-item list-group-item-action ${emailJSONContent.read == true ? 'text-muted' : ''}
+      data-id="${emailJSONContent.id}"
+    `;
+    email.style = "cursor: pointer";
+
+    // insert email to email-view
+    emailView.textContent = '';
+    emailView.append(email);
+  })
 }
