@@ -91,7 +91,6 @@ function load_mailbox(mailbox) {
           <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
           <small id="email-timestamp">${emailJSONContent.timestamp}</small>
         </div>
-        <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
         <small class="text-muted" id="email-sender">${emailJSONContent.sender}</small>
       `;
 
