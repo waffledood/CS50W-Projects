@@ -123,4 +123,16 @@ function load_mail(emailId) {
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';
   document.querySelector('#email-view').style.display = 'block';
+
+  const emailView = document.querySelector('#email-view');
+
+  // Retrieve the email
+  fetch(`/emails/${emailId}`)
+  .then(response => {
+    if (response.status >= 200 && response.status <= 299) {
+      return response.json();
+    } else {
+      throw Error(response.statusText);
+    }
+  })
 }
