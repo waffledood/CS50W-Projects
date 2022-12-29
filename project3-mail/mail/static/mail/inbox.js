@@ -139,7 +139,7 @@ function load_mail(emailId) {
     emailView.className = "list-group";
 
     // create the email list group item
-    let email = document.createElement('a');
+    let email = document.createElement('div');
     email.innerHTML = `
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
@@ -151,10 +151,9 @@ function load_mail(emailId) {
 
     // apply CSS styling to email
     email.className = `
-      list-group-item list-group-item-action ${emailJSONContent.read == true ? 'text-muted' : ''}
+      list-group-item ${emailJSONContent.read == true ? 'text-muted' : ''}
       data-id="${emailJSONContent.id}"
     `;
-    email.style = "cursor: pointer";
 
     // insert email to email-view
     emailView.textContent = '';
