@@ -92,7 +92,7 @@ function load_mailbox(mailbox) {
           <small id="email-timestamp">${emailJSONContent.timestamp}</small>
         </div>
         <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
-        <small class="text-muted" id="email-recipients">${emailJSONContent.recipients.join(", ")}</small>
+        <small class="text-muted" id="email-sender">${emailJSONContent.sender}</small>
       `;
 
       // apply CSS styling to email
