@@ -101,9 +101,18 @@ function load_mailbox(mailbox) {
       `;
       email.style = "cursor: pointer";
 
-      // run load_mail function to email when it is clicked
+      // run these functions when an email is clicked
       email.addEventListener('click', () => {
+        // load the specified mail
         load_mail(emailJSONContent.id);
+
+        // mark the email as read
+        fetch(`/emails/${emailJSONContent.id}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+              read: true
+          })
+        });
       });
 
       // append email HTML element to emails class
