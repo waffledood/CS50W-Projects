@@ -60,6 +60,7 @@ function load_mailbox(mailbox) {
   
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
+  document.querySelector('#email-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';
 
   // Show the mailbox name
@@ -81,6 +82,7 @@ function load_mailbox(mailbox) {
     // loop through json response of emails
     for (var key of Object.keys(emails)) {
       let emailJSONContent = emails[key];
+      console.log(emailJSONContent);
 
       // create email HTML element
       let email = document.createElement('a');
@@ -89,15 +91,29 @@ function load_mailbox(mailbox) {
           <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
           <small id="email-timestamp">${emailJSONContent.timestamp}</small>
         </div>
-        <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
-        <small class="text-muted" id="email-recipients">${emailJSONContent.recipients.join(", ")}</small>
+        <small class="text-muted" id="email-sender">${emailJSONContent.sender}</small>
       `;
 
       // apply CSS styling to email
-      email.className = `list-group-item list-group-item-action ${emailJSONContent.read == true ? 'text-muted' : ''}`;
+      email.className = `
+        list-group-item list-group-item-action ${emailJSONContent.read == true ? 'text-muted' : ''}
+        data-id="${emailJSONContent.id}"
+      `;
+      email.style = "cursor: pointer";
 
-      // add URL to email
-      email.href = '';
+      // run these functions when an email is clicked
+      email.addEventListener('click', () => {
+        // load the specified mail
+        load_mail(emailJSONContent.id);
+
+        // mark the email as read
+        fetch(`/emails/${emailJSONContent.id}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+              read: true
+          })
+        });
+      });
 
       // append email HTML element to emails class
       document.querySelector('#emails').append(email);
@@ -108,4 +124,55 @@ function load_mailbox(mailbox) {
     console.log(error);
   });
 
+}
+
+function load_mail(emailId) {
+  // Show the individual mail and hide other views
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#compose-view').style.display = 'none';
+  document.querySelector('#email-view').style.display = 'block';
+
+  const emailView = document.querySelector('#email-view');
+
+  // Retrieve the email
+  fetch(`/emails/${emailId}`)
+  .then(response => {
+    if (response.status >= 200 && response.status <= 299) {
+      return response.json();
+    } else {
+      throw Error(response.statusText);
+    }
+  })
+  .then(emailJSONContent => {
+    // set the class of emailView to a list group
+    emailView.className = "list-group";
+
+    // create the email list group item
+    let email = document.createElement('div');
+    email.innerHTML = `
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
+        <small id="email-timestamp">${emailJSONContent.timestamp}</small>
+      </div>
+      <small class="text-muted" id="email-sender">From: ${emailJSONContent.sender}</small>
+      <br>
+      <small class="text-muted" id="email-recipients">To: ${emailJSONContent.recipients.join(", ")}</small>
+      <hr>
+      <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
+    `;
+
+    // apply CSS styling to email
+    email.className = `
+      list-group-item ${emailJSONContent.read == true ? 'text-muted' : ''}
+      data-id="${emailJSONContent.id}"
+    `;
+
+    // insert email to email-view
+    emailView.textContent = '';
+    emailView.append(email);
+  })
+  .catch(error => {
+    // handle error
+    console.log(error);
+  })
 }
