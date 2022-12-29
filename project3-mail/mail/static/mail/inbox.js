@@ -145,8 +145,11 @@ function load_mail(emailId) {
         <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
         <small id="email-timestamp">${emailJSONContent.timestamp}</small>
       </div>
+      <small class="text-muted" id="email-sender">From: ${emailJSONContent.sender}</small>
+      <br>
+      <small class="text-muted" id="email-recipients">To: ${emailJSONContent.recipients.join(", ")}</small>
+      <hr>
       <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
-      <small class="text-muted" id="email-recipients">${emailJSONContent.recipients.join(", ")}</small>
     `;
 
     // apply CSS styling to email
