@@ -178,7 +178,8 @@ function load_mail(emailId) {
     email.append(utilitiesDiv);
 
     // define the rest of the email element
-    email.innerHTML += `
+    let emailContent = document.createElement('div');
+    emailContent.innerHTML = `
       <hr>
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
@@ -190,6 +191,8 @@ function load_mail(emailId) {
       <hr>
       <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
     `;
+
+    email.append(emailContent);
 
     // apply CSS styling to email
     email.className = `
