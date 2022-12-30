@@ -144,9 +144,6 @@ function load_mail(emailId) {
     }
   })
   .then(emailJSONContent => {
-    // set the class of emailView to a list group
-    emailView.className = "list-group";
-
     // create utilities div (to store utilities-related buttons & functions)
     const utilitiesDiv = document.createElement('div');
     utilitiesDiv.className = `d-flex w-100`;
@@ -189,6 +186,9 @@ function load_mail(emailId) {
       list-group-item ${emailJSONContent.read == true ? 'text-muted' : ''}
       data-id="${emailJSONContent.id}"
     `;
+
+    // set the class of emailView to a list group
+    emailView.className = "list-group";
 
     // insert email to email-view
     emailView.textContent = '';
