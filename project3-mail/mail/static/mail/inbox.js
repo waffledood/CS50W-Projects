@@ -157,6 +157,16 @@ function load_mail(emailId) {
     `;
     archiveBtn.type = 'button';
     archiveBtn.className = 'btn btn-outline-secondary mt-2';
+    archiveBtn.addEventListener('click', () => {
+      console.log('archived');
+      // mark the email as archived
+      fetch(`/emails/${emailJSONContent.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            archived: true
+        })
+      });
+    });
 
     // add archive button to utilities div
     utilitiesDiv.append(archiveBtn);
