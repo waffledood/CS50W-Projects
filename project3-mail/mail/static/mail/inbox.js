@@ -4,22 +4,25 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
-  document.querySelector('#compose').addEventListener('click', compose_email);
+  document.querySelector('#compose').addEventListener('click', () => {
+    compose_email();
+  });
 
   // By default, load the inbox
   load_mailbox('inbox');
 });
 
-function compose_email() {
+function compose_email(cpRcpt = '', cpSbj = '', cpBody = '') {
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#email-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
 
   // Clear out composition fields
-  document.querySelector('#compose-recipients').value = '';
-  document.querySelector('#compose-subject').value = '';
-  document.querySelector('#compose-body').value = '';
+  document.querySelector('#compose-recipients').value = cpRcpt;
+  document.querySelector('#compose-subject').value = cpSbj;
+  document.querySelector('#compose-body').value = cpBody;
 
   // When a user sends a mail
   document.querySelector('#compose-form').onsubmit = () => {
@@ -203,6 +206,7 @@ function load_mail(emailId, mailbox) {
       <small class="text-muted" id="email-recipients">To: ${emailJSONContent.recipients.join(", ")}</small>
       <hr>
       <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
+      <hr>
     `;
 
     email.append(emailContent);
@@ -212,6 +216,35 @@ function load_mail(emailId, mailbox) {
       list-group-item ${emailJSONContent.read == true ? 'text-muted' : ''}
       data-id="${emailJSONContent.id}"
     `;
+
+    // create Core Functionalities div (to store core functionalities related buttons & functions)
+    const coreFuncDiv = document.createElement('div');
+    coreFuncDiv.className = `d-flex w-100`;
+
+    // create Reply button
+    const replyBtn = document.createElement('button');
+    replyBtn.type = 'button';
+    replyBtn.className = 'btn btn-outline-secondary mb-2';
+    replyBtn.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply" viewBox="0 0 16 16">
+        <path d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.74 8.74 0 0 0-1.921-.306 7.404 7.404 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254a.503.503 0 0 0-.042-.028.147.147 0 0 1 0-.252.499.499 0 0 0 .042-.028l3.984-2.933zM7.8 10.386c.068 0 .143.003.223.006.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96v-.667z"/>
+      </svg>
+      Reply
+    `;
+
+    replyBtn.addEventListener('click', () => {
+      let recipient = emailJSONContent.sender;
+      let subject = (emailJSONContent.subject.indexOf('Re') == 0) ? emailJSONContent : 'Re: ' + emailJSONContent.subject ;
+      let body = `On ${emailJSONContent.timestamp} ${emailJSONContent.sender} wrote: \n` + emailJSONContent.body;
+      // execute compose_email()
+      compose_email(cpRcpt=recipient, cpSbj = subject, cpBody=body);
+    });
+
+    // add Reply button to Core Functionalities div
+    coreFuncDiv.append(replyBtn);
+
+    // insert Core Functionalities div to email-view
+    email.append(coreFuncDiv);
 
     // set the class of emailView to a list group
     emailView.className = "list-group";
