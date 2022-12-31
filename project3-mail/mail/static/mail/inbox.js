@@ -240,6 +240,9 @@ function load_mail(emailId, mailbox) {
       compose_email(cpRcpt=recipient, cpSbj = subject, cpBody=body);
     });
 
+    // add Reply button to Core Functionalities div
+    coreFuncDiv.append(replyBtn);
+
     // insert Core Functionalities div to email-view
     email.append(coreFuncDiv);
 
