@@ -104,7 +104,7 @@ function load_mailbox(mailbox) {
       // run these functions when an email is clicked
       email.addEventListener('click', () => {
         // load the specified mail
-        load_mail(emailJSONContent.id);
+        load_mail(emailJSONContent.id, mailbox);
 
         // mark the email as read
         fetch(`/emails/${emailJSONContent.id}`, {
@@ -126,7 +126,7 @@ function load_mailbox(mailbox) {
 
 }
 
-function load_mail(emailId) {
+function load_mail(emailId, mailbox) {
   // Show the individual mail and hide other views
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';
@@ -148,38 +148,41 @@ function load_mail(emailId) {
     const utilitiesDiv = document.createElement('div');
     utilitiesDiv.className = `d-flex w-100`;
 
-    // create archive button
-    const archiveBtn = document.createElement('button');
-    archiveBtn.innerHTML = `
-      ${emailJSONContent.archived == true ? 
-        `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive-fill" viewBox="0 0 16 16">
-          <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
-        </svg>`
-      : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
-          <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
-        </svg>` 
-      }
-    `;
-    archiveBtn.type = 'button';
-    archiveBtn.className = 'btn btn-outline-secondary mt-2';
-    archiveBtn.addEventListener('click', () => {
-      // mark the email as archived
-      fetch(`/emails/${emailJSONContent.id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-            archived: emailJSONContent.archived == true ? false : true
-        })
+    // create archive button only when the mailbox is 'inbox' or 'archived'
+    if (['inbox', 'archived'].includes(mailbox)) {
+      // create archive button
+      const archiveBtn = document.createElement('button');
+      archiveBtn.innerHTML = `
+        ${emailJSONContent.archived == true ? 
+          `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive-fill" viewBox="0 0 16 16">
+            <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
+          </svg>`
+        : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+            <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+          </svg>` 
+        }
+      `;
+      archiveBtn.type = 'button';
+      archiveBtn.className = 'btn btn-outline-secondary mt-2';
+      archiveBtn.addEventListener('click', () => {
+        // mark the email as archived
+        fetch(`/emails/${emailJSONContent.id}`, {
+          method: 'PUT',
+          body: JSON.stringify({
+              archived: emailJSONContent.archived == true ? false : true
+          })
+        });
+        // load the specified mail
+        load_mailbox('inbox');
       });
-      // load the specified mail
-      load_mailbox('inbox');
-    });
 
-    // add tooltip to archive button
-    archiveBtn.setAttribute('data-bs-toggle', 'tooltip');
-    archiveBtn.setAttribute('data-bs-title', `${emailJSONContent.archived == true ? 'Unarchive' : 'Archive'}`);
+      // add tooltip to archive button
+      archiveBtn.setAttribute('data-bs-toggle', 'tooltip');
+      archiveBtn.setAttribute('data-bs-title', `${emailJSONContent.archived == true ? 'Unarchive' : 'Archive'}`);
 
-    // add archive button to utilities div
-    utilitiesDiv.append(archiveBtn);
+      // add archive button to utilities div
+      utilitiesDiv.append(archiveBtn);
+    }
 
     // create the email list group item
     let email = document.createElement('div');
