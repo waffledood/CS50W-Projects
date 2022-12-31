@@ -168,6 +168,10 @@ function load_mail(emailId) {
       });
     });
 
+    // add tooltip to archive button
+    archiveBtn.setAttribute('data-bs-toggle', 'tooltip');
+    archiveBtn.setAttribute('data-bs-title', 'Archive');
+
     // add archive button to utilities div
     utilitiesDiv.append(archiveBtn);
 
@@ -206,6 +210,9 @@ function load_mail(emailId) {
     // insert email to email-view
     emailView.textContent = '';
     emailView.append(email);
+
+    // load Tooltips
+    loadToolTips();
   })
   .catch(error => {
     // handle error
