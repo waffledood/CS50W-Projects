@@ -158,7 +158,6 @@ function load_mail(emailId) {
     archiveBtn.type = 'button';
     archiveBtn.className = 'btn btn-outline-secondary mt-2';
     archiveBtn.addEventListener('click', () => {
-      console.log('archived');
       // mark the email as archived
       fetch(`/emails/${emailJSONContent.id}`, {
         method: 'PUT',
@@ -166,6 +165,8 @@ function load_mail(emailId) {
             archived: true
         })
       });
+      // load the specified mail
+      load_mailbox('inbox');
     });
 
     // add tooltip to archive button
