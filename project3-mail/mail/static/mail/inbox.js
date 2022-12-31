@@ -234,7 +234,7 @@ function load_mail(emailId, mailbox) {
 
     replyBtn.addEventListener('click', () => {
       let recipient = emailJSONContent.sender;
-      let subject = (emailJSONContent.subject.indexOf('Re') == 0) ? emailJSONContent : 'Re: ' + emailJSONContent.subject ;
+      let subject = (emailJSONContent.subject.indexOf('Re') == 0) ? emailJSONContent.subject : 'Re: ' + emailJSONContent.subject ;
       let body = `On ${emailJSONContent.timestamp} ${emailJSONContent.sender} wrote: \n` + emailJSONContent.body;
       // execute compose_email()
       compose_email(cpRcpt=recipient, cpSbj = subject, cpBody=body);
