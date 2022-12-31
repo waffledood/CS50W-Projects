@@ -206,6 +206,7 @@ function load_mail(emailId, mailbox) {
       <small class="text-muted" id="email-recipients">To: ${emailJSONContent.recipients.join(", ")}</small>
       <hr>
       <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
+      <hr>
     `;
 
     email.append(emailContent);
@@ -215,6 +216,13 @@ function load_mail(emailId, mailbox) {
       list-group-item ${emailJSONContent.read == true ? 'text-muted' : ''}
       data-id="${emailJSONContent.id}"
     `;
+
+    // create Core Functionalities div (to store core functionalities related buttons & functions)
+    const coreFuncDiv = document.createElement('div');
+    coreFuncDiv.className = `d-flex w-100`;
+
+    // insert Core Functionalities div to email-view
+    email.append(coreFuncDiv);
 
     // set the class of emailView to a list group
     emailView.className = "list-group";
