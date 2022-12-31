@@ -167,7 +167,7 @@ function load_mail(emailId) {
       fetch(`/emails/${emailJSONContent.id}`, {
         method: 'PUT',
         body: JSON.stringify({
-            archived: `${emailJSONContent.archived == true ? false : true }`
+            archived: emailJSONContent.archived == true ? false : true
         })
       });
       // load the specified mail
