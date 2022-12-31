@@ -144,12 +144,53 @@ function load_mail(emailId) {
     }
   })
   .then(emailJSONContent => {
-    // set the class of emailView to a list group
-    emailView.className = "list-group";
+    // create utilities div (to store utilities-related buttons & functions)
+    const utilitiesDiv = document.createElement('div');
+    utilitiesDiv.className = `d-flex w-100`;
+
+    // create archive button
+    const archiveBtn = document.createElement('button');
+    archiveBtn.innerHTML = `
+      ${emailJSONContent.archived == true ? 
+        `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive-fill" viewBox="0 0 16 16">
+          <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
+        </svg>`
+      : `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+          <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+        </svg>` 
+      }
+    `;
+    archiveBtn.type = 'button';
+    archiveBtn.className = 'btn btn-outline-secondary mt-2';
+    archiveBtn.addEventListener('click', () => {
+      // mark the email as archived
+      fetch(`/emails/${emailJSONContent.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            archived: emailJSONContent.archived == true ? false : true
+        })
+      });
+      // load the specified mail
+      load_mailbox('inbox');
+    });
+
+    // add tooltip to archive button
+    archiveBtn.setAttribute('data-bs-toggle', 'tooltip');
+    archiveBtn.setAttribute('data-bs-title', `${emailJSONContent.archived == true ? 'Unarchive' : 'Archive'}`);
+
+    // add archive button to utilities div
+    utilitiesDiv.append(archiveBtn);
 
     // create the email list group item
     let email = document.createElement('div');
-    email.innerHTML = `
+
+    // add utilites div to the top of the email element
+    email.append(utilitiesDiv);
+
+    // define the rest of the email element
+    let emailContent = document.createElement('div');
+    emailContent.innerHTML = `
+      <hr>
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
         <small id="email-timestamp">${emailJSONContent.timestamp}</small>
@@ -161,18 +202,31 @@ function load_mail(emailId) {
       <p class="mb-1" id="email-body">${emailJSONContent.body}</p>
     `;
 
+    email.append(emailContent);
+
     // apply CSS styling to email
     email.className = `
       list-group-item ${emailJSONContent.read == true ? 'text-muted' : ''}
       data-id="${emailJSONContent.id}"
     `;
 
+    // set the class of emailView to a list group
+    emailView.className = "list-group";
+
     // insert email to email-view
     emailView.textContent = '';
     emailView.append(email);
+
+    // load Tooltips
+    loadToolTips();
   })
   .catch(error => {
     // handle error
     console.log(error);
   })
+}
+
+function loadToolTips() {
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 }
