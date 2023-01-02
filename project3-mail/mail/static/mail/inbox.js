@@ -94,7 +94,16 @@ function load_mailbox(mailbox) {
           <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
           <small id="email-timestamp">${emailJSONContent.timestamp}</small>
         </div>
-        <small class="text-muted" id="email-sender">${emailJSONContent.sender}</small>
+        <div class="d-flex w-100 justify-content-between">
+          <small class="text-muted" id="email-sender">${emailJSONContent.sender}</small>
+          <div class="position-relative">
+            <div class="position-absolute top-50 end-0 translate-middle-y">
+              <span class="badge bg-primary rounded-circle p-2">
+                <span class="visually-hidden">New alerts</span>
+              </span>
+            </div>
+          </div>
+        </div>
       `;
 
       // apply CSS styling to email
