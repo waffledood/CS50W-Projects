@@ -97,7 +97,7 @@ function load_mailbox(mailbox) {
         <div class="d-flex w-100 justify-content-between">
           <small class="text-muted" id="email-sender">${emailJSONContent.sender}</small>
           <div class="position-relative">
-            <div class="position-absolute top-50 end-0 translate-middle-y">
+            <div class="position-absolute top-50 end-0 translate-middle-y ${emailJSONContent.read == true ? 'visually-hidden' : ''}">
               <span class="badge bg-primary rounded-circle p-2">
                 <span class="visually-hidden">New alerts</span>
               </span>
