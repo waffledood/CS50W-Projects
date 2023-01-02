@@ -40,19 +40,16 @@ function compose_email(cpRcpt = '', cpSbj = '', cpBody = '') {
           body: body
       })
     })
-    .then(response => {
-      if (response.status >= 200 && response.status <= 299) {
-        return response.json();
-      } else {
-        throw Error(response.statusText);
-      }
-    })
+    .then(response => response.json())
     .then(jsonResponse => {
-      console.log(jsonResponse);
-      // load user's sent mailbox
-      load_mailbox('sent');
-    }).catch(error => {
-      // handle error
+      if ("message" in jsonResponse) {
+        // load user's sent mailbox
+        load_mailbox('sent');
+      } else {
+        // error message
+        const errMsg = jsonResponse["error"];
+        console.log(errMsg);
+      }
     });
 
     return false;
