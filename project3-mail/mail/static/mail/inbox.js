@@ -40,19 +40,42 @@ function compose_email(cpRcpt = '', cpSbj = '', cpBody = '') {
           body: body
       })
     })
-    .then(response => {
-      if (response.status >= 200 && response.status <= 299) {
-        return response.json();
-      } else {
-        throw Error(response.statusText);
-      }
-    })
+    .then(response => response.json())
     .then(jsonResponse => {
-      console.log(jsonResponse);
-      // load user's sent mailbox
-      load_mailbox('sent');
-    }).catch(error => {
-      // handle error
+      if ("message" in jsonResponse) {
+        // load user's sent mailbox
+        load_mailbox('sent');
+
+        // insert toast containing success message
+        let successToastDiv = document.createElement('div');
+        successToastDiv.innerHTML = `
+          <div id="successToast" class="toast text-bg-primary-subtle" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-check me-2" viewBox="0 0 16 16">
+                <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z"/>
+                <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686Z"/>
+              </svg>
+              <strong class="me-auto">Gmail</strong>
+              <small>Just now</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              Email successfully sent!
+            </div>
+          </div>
+        `;
+        successToastDiv.className = `
+          toast-container position-fixed bottom-0 end-0 p-3
+        `;
+        document.querySelector('body').append(successToastDiv);
+        const successToastTrigger = document.getElementById('successToast');
+        const toast = new bootstrap.Toast(successToastTrigger)
+        toast.show();
+      } else {
+        // error message
+        const errMsg = jsonResponse["error"];
+        console.log(errMsg);
+      }
     });
 
     return false;
@@ -94,7 +117,16 @@ function load_mailbox(mailbox) {
           <h5 class="mb-1" id="email-subject">${emailJSONContent.subject}</h5>
           <small id="email-timestamp">${emailJSONContent.timestamp}</small>
         </div>
-        <small class="text-muted" id="email-sender">${emailJSONContent.sender}</small>
+        <div class="d-flex w-100 justify-content-between">
+          <small class="text-muted" id="email-sender">${emailJSONContent.sender}</small>
+          <div class="position-relative">
+            <div class="position-absolute top-50 end-0 translate-middle-y ${emailJSONContent.read == true ? 'visually-hidden' : ''}">
+              <span class="badge bg-primary rounded-circle p-2">
+                <span class="visually-hidden">New alerts</span>
+              </span>
+            </div>
+          </div>
+        </div>
       `;
 
       // apply CSS styling to email
