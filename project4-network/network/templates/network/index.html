@@ -5,7 +5,7 @@
     <div id="create-view">
         {% if user.is_authenticated %}
             <div class="mb-3 w-100">
-                <form method="POST">
+                <form method="POST" id="composeTweet">
                     <!-- <label for="postContent" class="form-label">New Post</label> -->
                     <textarea class="form-control mb-2" id="tweetContent" rows="3" placeholder="What's happening?"></textarea>
                     <hr>
