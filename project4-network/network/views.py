@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -5,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import JsonResponse
 
-from .models import User
+from .models import User, Tweet
 
 
 def index(request):
@@ -65,4 +66,27 @@ def register(request):
 
 def tweet(request):
 
-    pass
+    # Composing a new email must be via POST
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    # Load Tweet JSON from request body
+    data = json.loads(request.body)
+
+    # Check Tweet content
+    tweetContent = data.get("tweetContent")
+    if tweetContent == "":
+        return JsonResponse({
+            "error": "Tweet is missing content."
+        }, status=400)
+
+    # Save Tweet
+    tweet = Tweet(
+        user=request.user,
+        content=tweetContent
+    )
+    tweet.save()
+
+    print(tweet)
+
+    return JsonResponse({"message": "Tweet sent successfully."}, status=201)
