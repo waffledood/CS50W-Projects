@@ -1,4 +1,5 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
     <div id="create-view">
@@ -6,4 +7,8 @@
 
     <div id="posts-view">
     </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/network.js' %}"></script>
 {% endblock %}
