@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#composeTweet').onsubmit = composeTweet;
 
     // load the "All Posts" section by default
-    loadAllPosts();
+    loadPostsAll();
 
 });
 
