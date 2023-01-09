@@ -28,9 +28,20 @@ function composeTweet() {
         }),
         headers: { "X-CSRFToken": csrftoken }
     })
-    .then(
-        console.log("success!")
-    )
+    .then(response => response.json())
+    .then(jsonResponse => {
+        if ("message" in jsonResponse) {
+            // success message
+            const successMsg = jsonResponse["message"];
+            console.log(successMsg);
+            // TODO - add handling for success
+        } else {
+            // error message
+            const errMsg = jsonResponse["error"];
+            console.log(errMsg);
+            // TODO - add handling for error
+        }
+    })
 
     return false;
 }
