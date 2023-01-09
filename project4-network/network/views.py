@@ -90,3 +90,13 @@ def tweet(request):
     print(tweet)
 
     return JsonResponse({"message": "Tweet sent successfully."}, status=201)
+
+def tweets(request):
+
+    # Retrieve all Tweets
+    tweets = Tweet.objects.all()
+
+    # Return emails in reverse chronologial order
+    tweets = tweets.order_by("-date").all()
+
+    return JsonResponse([tweet.serialize() for tweet in tweets], safe=False)
