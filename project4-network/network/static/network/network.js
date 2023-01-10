@@ -47,6 +47,41 @@ function composeTweet() {
 }
 
 function loadPostsAll() {
+
+    // Set the class of posts-view
+    document.querySelector('#posts-view').className = 'list-group';
+
+    // Retrieve all posts
+    fetch(`tweets`)
+    .then(response => response.json())
+    .then(tweets => {
+        for (var key of Object.keys(tweets)) {
+            const tweetJSONContent = tweets[key];
+            console.log(tweetJSONContent);
+
+            // create tweet HTML element
+            let tweet = document.createElement('a');
+
+            tweet.innerHTML = `
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1" id="tweet-subject">${tweetJSONContent.content}</h5>
+                    <small id="tweet-date">${tweetJSONContent.date}</small>
+                </div>
+                <div class="d-flex w-100 justify-content-between">
+                    <small class="text-muted" id="tweet-sender">${tweetJSONContent.likes}</small>
+                </div>
+            `;
+
+            // apply CSS styling to email
+            tweet.className = `
+                list-group-item list-group-item-action}
+            `;
+
+            // append email HTML element to emails class
+            document.querySelector('#posts-view').append(tweet);
+        }
+    })
+
 }
 
 function loadPostsFollowing() {
