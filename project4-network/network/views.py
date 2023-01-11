@@ -1,5 +1,6 @@
 import json
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -64,6 +65,7 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
+@login_required
 def tweet(request):
 
     # Composing a new email must be via POST
@@ -90,3 +92,13 @@ def tweet(request):
     print(tweet)
 
     return JsonResponse({"message": "Tweet sent successfully."}, status=201)
+
+def tweets(request):
+
+    # Retrieve all Tweets
+    tweets = Tweet.objects.all()
+
+    # Return emails in reverse chronologial order
+    tweets = tweets.order_by("-date").all()
+
+    return JsonResponse([tweet.serialize() for tweet in tweets], safe=False)

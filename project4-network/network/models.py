@@ -13,3 +13,11 @@ class Tweet(models.Model):
 
     def __str__(self):
         return f"Tweet ({self.id}): { self.content[:10] + '...' if len(self.content) >= 10 else self.content } by {self.user}"
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "content": self.content,
+            "date": self.date.strftime("%b %d %Y, %I:%M %p"),
+            "likes": self.likes
+        }
