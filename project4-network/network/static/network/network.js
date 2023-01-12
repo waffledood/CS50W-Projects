@@ -64,11 +64,11 @@ function loadPostsAll() {
 
             tweet.innerHTML = `
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1" id="tweet-subject">${tweetJSONContent.content}</h5>
-                    <small id="tweet-date">${tweetJSONContent.date}</small>
+                    <small class="text-muted" id="tweet-sender">${tweetJSONContent.user}</small>
+                    <small class="text-muted" id="tweet-date">${tweetJSONContent.date}</small>
                 </div>
                 <div class="d-flex w-100 justify-content-between">
-                    <small class="text-muted" id="tweet-sender">${tweetJSONContent.likes}</small>
+                        <small class="text-muted" id="tweet-likes">${tweetJSONContent.likes}</small>
                 </div>
             `;
 
