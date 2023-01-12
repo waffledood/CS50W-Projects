@@ -74,7 +74,7 @@ function loadPostsAll() {
 
             // apply CSS styling to email
             tweet.className = `
-                list-group-item list-group-item-action}
+                list-group-item list-group-item-action
             `;
 
             // append email HTML element to emails class
