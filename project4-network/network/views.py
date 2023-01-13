@@ -102,3 +102,7 @@ def tweets(request):
     tweets = tweets.order_by("-date").all()
 
     return JsonResponse([tweet.serialize() for tweet in tweets], safe=False)
+
+def profile(request, username):
+    print(username)
+    pass
