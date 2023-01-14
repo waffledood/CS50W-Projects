@@ -11,7 +11,16 @@ from .models import User, Tweet
 
 
 def index(request):
-    return render(request, "network/index.html")
+    
+    # Retrieve all Tweets
+    tweets = Tweet.objects.all()
+
+    # Return emails in reverse chronologial order
+    tweets = tweets.order_by("-date").all()
+
+    return render(request, "network/index.html", {
+        'tweets': tweets
+    })
 
 
 def login_view(request):
