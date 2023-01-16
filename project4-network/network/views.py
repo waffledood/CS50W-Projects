@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import JsonResponse
 
-from .models import User, Tweet
+from .models import User, Follower, Tweet
 
 
 def index(request):
@@ -113,5 +113,20 @@ def tweets(request):
     return JsonResponse([tweet.serialize() for tweet in tweets], safe=False)
 
 def profile(request, username):
-    print(username)
-    pass
+
+    # retrieve User object
+    user = User.objects.all().get(username=username)
+
+    # retrieve users following & followed by user
+    following = Follower.objects.all().filter(user=user.id)
+    followers = Follower.objects.all().filter(userFollowing=user.id)
+
+    # retrieve user's tweets
+    tweets = Tweet.objects.all().filter(user=user)
+    
+    return render(request, "network/profile.html", {
+        'profile': user,
+        'following': following,
+        'followers': followers,
+        'tweets': tweets
+    })
