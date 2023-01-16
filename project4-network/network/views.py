@@ -123,10 +123,14 @@ def profile(request, username):
 
     # retrieve user's tweets
     tweets = Tweet.objects.all().filter(user=user)
+
+    # check if current user is following this user
+    isFollowingUser = True if request.user in followers else False
     
     return render(request, "network/profile.html", {
         'profile': user,
         'following': following,
         'followers': followers,
-        'tweets': tweets
+        'tweets': tweets,
+        'isFollowingUser': isFollowingUser
     })
