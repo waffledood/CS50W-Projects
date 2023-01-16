@@ -5,6 +5,17 @@ from django.db import models
 class User(AbstractUser):
     pass
 
+    def __str__(self):
+        return f"User ({self.id}): {self.username}"
+
+class Follower(models.Model):
+    # user is following userFollowing
+    user = models.IntegerField()
+    userFollowing = models.IntegerField()
+
+    def __str__(self):
+        return f"Follower relationship ({self.id}): User {self.user} following User {self.userFollowing}"
+
 class Tweet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tweets")
     content = models.TextField()

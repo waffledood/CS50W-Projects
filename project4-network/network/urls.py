@@ -11,5 +11,6 @@ urlpatterns = [
 
     # API Routes
     path("tweet", views.tweet, name="tweet"),
-    path("tweets", views.tweets, name="tweets")
+    path("tweets", views.tweets, name="tweets"),
+    path("profile/<str:username>", views.profile, name="profile")
 ]

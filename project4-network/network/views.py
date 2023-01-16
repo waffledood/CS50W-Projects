@@ -7,11 +7,20 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import JsonResponse
 
-from .models import User, Tweet
+from .models import User, Follower, Tweet
 
 
 def index(request):
-    return render(request, "network/index.html")
+    
+    # Retrieve all Tweets
+    tweets = Tweet.objects.all()
+
+    # Return emails in reverse chronologial order
+    tweets = tweets.order_by("-date").all()
+
+    return render(request, "network/index.html", {
+        'tweets': tweets
+    })
 
 
 def login_view(request):
@@ -102,3 +111,26 @@ def tweets(request):
     tweets = tweets.order_by("-date").all()
 
     return JsonResponse([tweet.serialize() for tweet in tweets], safe=False)
+
+def profile(request, username):
+
+    # retrieve User object
+    user = User.objects.all().get(username=username)
+
+    # retrieve users following & followed by user
+    following = Follower.objects.all().filter(user=user.id)
+    followers = Follower.objects.all().filter(userFollowing=user.id)
+
+    # retrieve user's tweets
+    tweets = Tweet.objects.all().filter(user=user)
+
+    # check if current user is following this user
+    isFollowingUser = True if request.user in followers else False
+    
+    return render(request, "network/profile.html", {
+        'profile': user,
+        'following': following,
+        'followers': followers,
+        'tweets': tweets,
+        'isFollowingUser': isFollowingUser
+    })
