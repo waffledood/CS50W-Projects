@@ -4,6 +4,17 @@
 
 {% block body %}
     <div class="user-view">
+        <div class="d-flex w-100 justify-content-between">
+            <div>
+                {% if user.is_authenticated and user != profile %}
+                    {% if isFollowingUser %}
+                        <button type="button" class="btn btn-outline-primary">Follow</button>
+                    {% else %}
+                        <button type="button" class="btn btn-outline-primary">Unfollow</button>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
         {{ profile.username }}
         <div>
             {{ followers|length }}
