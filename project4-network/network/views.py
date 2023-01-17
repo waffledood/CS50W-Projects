@@ -24,6 +24,7 @@ def index(request):
     })
 
 
+@login_required
 def following(request):
 
     # Retrieve all users followed by current user
