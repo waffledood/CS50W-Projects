@@ -2,6 +2,7 @@ import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.db.models import Subquery
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -14,6 +15,22 @@ def index(request):
     
     # Retrieve all Tweets
     tweets = Tweet.objects.all()
+
+    # Return emails in reverse chronologial order
+    tweets = tweets.order_by("-date").all()
+
+    return render(request, "network/index.html", {
+        'tweets': tweets
+    })
+
+
+def following(request):
+
+    # Retrieve all users followed by current user
+    usersFollowedByCurrentUser = Follower.objects.all().filter(user=request.user.id)
+
+    # Retrieve all Tweets
+    tweets = Tweet.objects.all().filter(user_id__in=Subquery(usersFollowedByCurrentUser.values('userFollowing')))
 
     # Return emails in reverse chronologial order
     tweets = tweets.order_by("-date").all()
