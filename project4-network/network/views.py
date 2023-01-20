@@ -42,8 +42,13 @@ def following(request):
     # Return emails in reverse chronologial order
     tweets = tweets.order_by("-date").all()
 
+    paginator = Paginator(tweets, 10) # Show 10 tweets per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, "network/index.html", {
-        'tweets': tweets
+        'page_obj': page_obj
     })
 
 
