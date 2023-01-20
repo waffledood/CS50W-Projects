@@ -62,6 +62,10 @@
                 <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
+            <!-- Page numbers -->
+            {% for i in numPages %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endfor %}
             <!-- Next icon button -->
             {% if page_obj.has_next %}
                 <li class="page-item">

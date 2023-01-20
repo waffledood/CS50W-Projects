@@ -26,7 +26,8 @@ def index(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, "network/index.html", {
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'numPages': paginator.page_range
     })
 
 
@@ -48,7 +49,8 @@ def following(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, "network/index.html", {
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'numPages': paginator.page_range
     })
 
 
