@@ -64,7 +64,13 @@
             </li>
             <!-- Page numbers -->
             {% for i in numPages %}
-                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% if i == page_obj.number %}
+                    <li class="page-item disabled">
+                {% else %}
+                    <li class="page-item">
+                {% endif %}
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
             {% endfor %}
             <!-- Next icon button -->
             {% if page_obj.has_next %}
