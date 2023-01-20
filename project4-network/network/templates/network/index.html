@@ -49,8 +49,35 @@
         {% endif %}
     </div>
 
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <!-- Previous icon button -->
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+            {% else %}
+                <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Previous">
+            {% endif %}
+                <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <!-- Next icon button -->
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+            {% else %}
+                <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Next">
+            {% endif %}
+                <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
     <div id="posts-view" class="list-group">
-        {% for tweet in tweets %}
+        {% for tweet in page_obj %}
             <div class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
                     <small class="text-muted" id="tweet-sender">
