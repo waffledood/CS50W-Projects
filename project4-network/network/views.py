@@ -1,6 +1,7 @@
 import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.db.models import Subquery
 from django.http import HttpResponse, HttpResponseRedirect
@@ -19,8 +20,14 @@ def index(request):
     # Return emails in reverse chronologial order
     tweets = tweets.order_by("-date").all()
 
+    paginator = Paginator(tweets, 10) # Show 10 tweets per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, "network/index.html", {
-        'tweets': tweets
+        'page_obj': page_obj,
+        'numPages': paginator.page_range
     })
 
 
@@ -36,8 +43,14 @@ def following(request):
     # Return emails in reverse chronologial order
     tweets = tweets.order_by("-date").all()
 
+    paginator = Paginator(tweets, 10) # Show 10 tweets per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, "network/index.html", {
-        'tweets': tweets
+        'page_obj': page_obj,
+        'numPages': paginator.page_range
     })
 
 
