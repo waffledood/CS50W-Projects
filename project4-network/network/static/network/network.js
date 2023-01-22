@@ -3,7 +3,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // add Send Tweet functionality
     document.querySelector('#composeTweet').onsubmit = composeTweet;
 
+    // edit button on Tweet 
+    document.querySelector('#editBtn').addEventListener('click', () => editButton());
+
 });
+
+function editButton() {
+    //
+}
 
 function composeTweet() {
     // retrieve email contents from form
