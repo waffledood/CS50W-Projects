@@ -1,11 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // use buttons to toggle between views
-    document.querySelector('#following').addEventListener('click', () => loadPostsFollowing());
-
-    // create "New Post" functionality
-    document.querySelector('#create-view').addEventListener('click', () => createPost());
-
     // add Send Tweet functionality
     document.querySelector('#composeTweet').onsubmit = composeTweet;
 
@@ -41,12 +35,6 @@ function composeTweet() {
     })
 
     return false;
-}
-
-function loadPostsFollowing() {
-}
-
-function createPost() {
 }
 
 function getCookie(name) {
