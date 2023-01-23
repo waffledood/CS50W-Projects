@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#composeTweet').onsubmit = composeTweet;
 
     // edit button on Tweet 
-    document.querySelector('#editBtn').addEventListener('click', () => editButton());
+    document.querySelectorAll('.editBtn').forEach(editBtn => {
+        editBtn.addEventListener('click', (event) => editButton(event));
+    });
 
 });
 
