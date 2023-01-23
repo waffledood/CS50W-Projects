@@ -143,6 +143,27 @@ def tweets(request):
 
     return JsonResponse([tweet.serialize() for tweet in tweets], safe=False)
 
+@login_required
+def editTweet(request, id):
+    
+    # Editing a tweet must be via PATCH
+    if request.method != "PATCH":
+        return JsonResponse({"error": "PATCH request required."}, status=400)
+
+    # Load data from request body
+    data = json.loads(request.body)
+
+    editedTweetContent = data.get("editedTweetContent")
+    if editedTweetContent == "":
+        return JsonResponse({
+            "error": "Edited tweet is missing content."
+        }, status=400)
+
+    # update Tweet with edited content
+    Tweet.objects.filter(id=id).update(content=editedTweetContent)
+
+    return JsonResponse({"message": "Tweet edited successfully."}, status=201)
+
 def profile(request, username):
 
     # retrieve User object
