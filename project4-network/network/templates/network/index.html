@@ -88,15 +88,15 @@
 
     <div id="posts-view" class="list-group">
         {% for tweet in page_obj %}
-            <div class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
+            <div class="list-group-item list-group-item-action tweet">
+                <div class="d-flex w-100 justify-content-between tweetHeader">
                     <small class="text-muted" id="tweet-sender">
                         <a href="{% url 'profile' tweet.user.username %}">
                             {{tweet.user.username}}
                         </a>
                     </small>
                     <small class="text-muted" id="tweet-date">{{tweet.date}}</small>
-                    <div id="editBtn" role="button" class="d-flex justify-content-start">
+                    <div role="button" class="editBtn d-flex justify-content-start">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="icon-image" viewBox="0 0 24 24">
                                 <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
@@ -104,10 +104,10 @@
                         </div>
                     </div>
                 </div>
-                <div id="tweetContentDiv" class="d-flex w-100 justify-content-between">
-                    <span id="tweet-content">{{tweet.content}}</span>
+                <div class="tweetContentDiv d-flex w-100 justify-content-between tweetBody">
+                    <span class="tweetContent">{{tweet.content}}</span>
                 </div>
-                <div class="d-flex w-100 pt-3 justify-content-between">
+                <div class="d-flex w-100 pt-3 justify-content-between tweetUtilities">
                     <div role="button" class="d-flex justify-content-start">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="icon-image" viewBox="0 0 24 24">
