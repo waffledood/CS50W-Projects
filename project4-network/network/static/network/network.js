@@ -33,13 +33,31 @@ function editButton(event) {
     saveButton.innerHTML = 'Save';
     saveButton.className ='btn btn-outline-primary';
     saveButton.addEventListener('click', () => {
-        let tweetContentEditContent = tweetContentDiv.querySelector('.tweetContentEdit').value;
+        const tweetContentEditNew = tweetContentDiv.querySelector('.tweetContentEdit').value;
 
-        if (tweetContentEditContent.length == 0) {
+        if (tweetContentEditNew.length == 0) {
             console.log("empty!");
         } else {
             // submit edited Tweet to API
-            console.log(tweetContentEditContent);
+            let csrftoken = getCookie('csrftoken');
+            fetch(`/editTweet/${tweet.dataset.id}`, {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    editedTweetContent: tweetContentEditNew
+                }),
+                headers: { "X-CSRFToken": csrftoken }
+            })
+            .then(response => response.json())
+            .then(jsonResponse => {
+                // remove contents of tweetContentDiv
+                tweetContentDiv.innerHTML = '';
+            
+                // create span element with newly edited Tweet content
+                const tweetContentEditNewSpan = document.createElement('span');
+                tweetContentEditNewSpan.className = 'tweetContent';
+                tweetContentEditNewSpan.innerText = tweetContentEditNew;
+                tweetContentDiv.append(tweetContentEditNewSpan);
+            })
         }
     });
 
