@@ -145,6 +145,12 @@ def tweets(request):
 
 @login_required
 def editTweet(request, id):
+    # Retrieve Tweet with specified id
+    tweet = Tweet.objects.filter(id=id)
+
+    # Only a user can edit their own tweet
+    if request.user != tweet.user:
+        return JsonResponse({"error": "Only a user can edit their own tweet."}, status=400)
     
     # Editing a tweet must be via PATCH
     if request.method != "PATCH":
@@ -160,7 +166,7 @@ def editTweet(request, id):
         }, status=400)
 
     # update Tweet with edited content
-    Tweet.objects.filter(id=id).update(content=editedTweetContent)
+    tweet.update(content=editedTweetContent)
 
     return JsonResponse({"message": "Tweet edited successfully."}, status=201)
 
