@@ -8,9 +8,19 @@ document.addEventListener('DOMContentLoaded', function() {
         editBtn.addEventListener('click', (event) => editButton(event));
     });
 
+    // like button on Tweet 
+    document.querySelectorAll('.likeBtn').forEach(likeBtn => {
+        likeBtn.addEventListener('click', () => likeButton());
+    });
+
 });
 
 function editButton(event) {
+    console.log(event.target);
+    console.log(event.currentTarget);
+    // attach event listener to div
+    // event.currentTarget.addEventListener('click', );
+
     // get the parent tweet div
     let tweet = event.target.closest('.tweet');
 
@@ -63,6 +73,10 @@ function editButton(event) {
 
     // add Save button to tweet
     tweetContentDiv.append(saveButton);
+}
+
+function likeButton() {
+    //
 }
 
 function composeTweet() {
