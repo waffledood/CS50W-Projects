@@ -14,5 +14,6 @@ urlpatterns = [
     path("tweet", views.tweet, name="tweet"),
     path("tweets", views.tweets, name="tweets"),
     path("editTweet/<int:id>", views.editTweet, name="editTweet"),
-    path("profile/<str:username>", views.profile, name="profile")
+    path("profile/<str:username>", views.profile, name="profile"),
+    path("like/<int:id>", views.likeTweet, name="likeTweet")
 ]
