@@ -173,6 +173,20 @@ def editTweet(request, id):
 
 @login_required
 def likeTweet(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    # Load data from request body
+    data = json.loads(request.body)
+    idTweetLiked = data.get("idTweetLiked")
+    userIdLiking = request.user.id
+
+    # add user that liked Tweet to Tweet's related field of users that liked
+    tweetLiked = Tweet.objects.get(id=idTweetLiked)
+    userLiking = User.objects.get(id=userIdLiking)
+    tweetLiked.usersLiked.add(userLiking)
+
+    return JsonResponse({"message": "Tweet liked successfully."}, status=201)
 
 def profile(request, username):
 
