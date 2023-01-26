@@ -146,7 +146,8 @@ def tweets(request):
 @login_required
 def editTweet(request, id):
     # Retrieve Tweet with specified id
-    tweet = Tweet.objects.filter(id=id)
+    tweetQuerySet = Tweet.objects.filter(id=id)
+    tweet = tweetQuerySet.first()
 
     # Only a user can edit their own tweet
     if request.user != tweet.user:
@@ -166,7 +167,7 @@ def editTweet(request, id):
         }, status=400)
 
     # update Tweet with edited content
-    tweet.update(content=editedTweetContent)
+    tweetQuerySet.update(content=editedTweetContent)
 
     return JsonResponse({"message": "Tweet edited successfully."}, status=201)
 
