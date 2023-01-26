@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // like button on Tweet 
     document.querySelectorAll('.likeBtn').forEach(likeBtn => {
-        likeBtn.addEventListener('click', () => likeButton());
+        likeBtn.addEventListener('click', (event) => likeButton(event));
     });
 
 });
@@ -75,7 +75,7 @@ function editButton(event) {
     tweetContentDiv.append(saveButton);
 }
 
-function likeButton() {
+function likeButton(event) {
     //
 }
 
