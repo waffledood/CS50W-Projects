@@ -172,8 +172,7 @@ def editTweet(request, id):
     return JsonResponse({"message": "Tweet edited successfully."}, status=201)
 
 @login_required
-def likeTweet(request, id):
-    pass
+def likeTweet(request):
 
 def profile(request, username):
 
