@@ -76,7 +76,22 @@ function editButton(event) {
 }
 
 function likeButton(event) {
-    //
+    // get the parent tweet div
+    let tweet = event.target.closest('.tweet');
+
+    // call likeTweet API
+    let csrftoken = getCookie('csrftoken');
+    fetch(`/likeTweet`, {
+        method: 'POST',
+        body: JSON.stringify({
+            idTweetLiked: tweet.dataset.id
+        }),
+        headers: { "X-CSRFToken": csrftoken }
+    })
+    .then(response => response.json())
+    .then(jsonResponse => {
+        console.log(jsonResponse);
+    })
 }
 
 function composeTweet() {
