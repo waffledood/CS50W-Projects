@@ -184,7 +184,20 @@ def likeTweet(request):
     # add user that liked Tweet to Tweet's related field of users that liked
     tweetLiked = Tweet.objects.get(id=idTweetLiked)
     userLiking = User.objects.get(id=userIdLiking)
+
+    # check if user has already liked this tweet
+    if tweetLiked.usersLiked.all().filter(id=userIdLiking).exists():
+        tweetLiked.usersLiked.remove(userLiking)
+        tweetLiked.likes-=1
+        tweetLiked.save()
+        return JsonResponse({"message": "Tweet unliked successfully."}, status=201)
+
+    # like Tweet by adding user to list of usersLiked for Tweet
     tweetLiked.usersLiked.add(userLiking)
+
+    # update the number of likes
+    tweetLiked.likes+=1
+    tweetLiked.save()
 
     return JsonResponse({"message": "Tweet liked successfully."}, status=201)
 
