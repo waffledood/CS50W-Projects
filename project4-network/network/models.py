@@ -18,6 +18,7 @@ class Follower(models.Model):
 
 class Tweet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tweets")
+    usersLiked = models.ManyToManyField(User, related_name="likedTweets", blank=True)
     content = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     likes = models.IntegerField(default=0)

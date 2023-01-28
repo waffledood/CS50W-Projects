@@ -146,7 +146,8 @@ def tweets(request):
 @login_required
 def editTweet(request, id):
     # Retrieve Tweet with specified id
-    tweet = Tweet.objects.filter(id=id)
+    tweetQuerySet = Tweet.objects.filter(id=id)
+    tweet = tweetQuerySet.first()
 
     # Only a user can edit their own tweet
     if request.user != tweet.user:
@@ -166,9 +167,39 @@ def editTweet(request, id):
         }, status=400)
 
     # update Tweet with edited content
-    tweet.update(content=editedTweetContent)
+    tweetQuerySet.update(content=editedTweetContent)
 
     return JsonResponse({"message": "Tweet edited successfully."}, status=201)
+
+@login_required
+def likeTweet(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    # Load data from request body
+    data = json.loads(request.body)
+    idTweetLiked = data.get("idTweetLiked")
+    userIdLiking = request.user.id
+
+    # add user that liked Tweet to Tweet's related field of users that liked
+    tweetLiked = Tweet.objects.get(id=idTweetLiked)
+    userLiking = User.objects.get(id=userIdLiking)
+
+    # check if user has already liked this tweet
+    if tweetLiked.usersLiked.all().filter(id=userIdLiking).exists():
+        tweetLiked.usersLiked.remove(userLiking)
+        tweetLiked.likes-=1
+        tweetLiked.save()
+        return JsonResponse({"message": "Tweet unliked successfully."}, status=201)
+
+    # like Tweet by adding user to list of usersLiked for Tweet
+    tweetLiked.usersLiked.add(userLiking)
+
+    # update the number of likes
+    tweetLiked.likes+=1
+    tweetLiked.save()
+
+    return JsonResponse({"message": "Tweet liked successfully."}, status=201)
 
 def profile(request, username):
 
