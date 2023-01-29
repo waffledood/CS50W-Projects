@@ -144,6 +144,7 @@ function composeTweet() {
             const successMsg = jsonResponse["message"];
             console.log(successMsg);
             // TODO - add handling for success
+            document.querySelector('#tweetContent').value = '';
         } else {
             // error message
             const errMsg = jsonResponse["error"];
