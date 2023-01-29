@@ -143,8 +143,19 @@ function composeTweet() {
             // success message
             const successMsg = jsonResponse["message"];
             console.log(successMsg);
-            // TODO - add handling for success
+
+            // clear textarea of form
             document.querySelector('#tweetContent').value = '';
+
+            // create new Tweet
+            const tweet = jsonResponse["tweet"];
+            let newTweet = document.querySelector(".tweet.user").cloneNode(true);
+            newTweet.querySelector(".tweet-date").textContent = tweet.date;
+            newTweet.querySelector(".tweet-content").textContent = tweet.content;
+            newTweet.querySelector(".tweet-likes").textContent = tweet.likes;
+            
+            // add new Tweet to posts-view
+            document.querySelector('#posts-view').prepend(newTweet);
         } else {
             // error message
             const errMsg = jsonResponse["error"];
