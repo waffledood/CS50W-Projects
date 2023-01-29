@@ -95,7 +95,7 @@
                             {{tweet.user.username}}
                         </a>
                     </small>
-                    <small class="text-muted" id="tweet-date">{{tweet.date}}</small>
+                    <small class="text-muted tweet-date">{{tweet.date}}</small>
                     {% if tweet.user == request.user %}
                         <div role="button" class="editBtn d-flex justify-content-start">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="icon-image" viewBox="0 0 24 24">
@@ -105,7 +105,7 @@
                     {% endif %}
                 </div>
                 <div class="tweetContentDiv d-flex w-100 justify-content-between tweetBody">
-                    <span class="tweetContent">{{tweet.content}}</span>
+                    <span class="tweet-content">{{tweet.content}}</span>
                 </div>
                 <div class="d-flex w-100 pt-3 justify-content-between tweetUtilities">
                     <div role="button" class="d-flex justify-content-start">
@@ -141,7 +141,7 @@
                             {% endif %}
                         </div>
                         <div class="px-3">
-                            <small class="text-muted pe-12" id="tweet-likes">{{tweet.likes}}</small>
+                            <small class="text-muted pe-12 tweet-likes">{{tweet.likes}}</small>
                         </div>
                     </div>
                 </div>
