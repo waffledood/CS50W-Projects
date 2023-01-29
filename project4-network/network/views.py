@@ -131,7 +131,7 @@ def tweet(request):
 
     print(tweet)
 
-    return JsonResponse({"message": "Tweet sent successfully."}, status=201)
+    return JsonResponse({"message": "Tweet sent successfully.", "tweet": tweet.serialize()}, status=201)
 
 def tweets(request):
 
