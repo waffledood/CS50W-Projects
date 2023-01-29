@@ -26,53 +26,55 @@ function editButton(event) {
 
     const tweetContentDiv = tweet.querySelector('.tweetContentDiv');
 
-    // retrieve tweet content
-    const tweetContent = tweet.querySelector('.tweetContent');
+    if (tweet.getElementsByClassName('tweetContent').length > 0) {
+        // retrieve tweet content
+        const tweetContent = tweet.querySelector('.tweetContent');
 
-    // remove contents of tweetContentDiv
-    tweetContentDiv.innerHTML = '';
+        // remove contents of tweetContentDiv
+        tweetContentDiv.innerHTML = '';
 
-    // insert textarea to tweetContentDiv
-    const tweetContentEdit = document.createElement('textarea');
-    tweetContentEdit.className = 'tweetContentEdit';
-    tweetContentEdit.innerHTML = tweetContent.innerHTML;
-    tweetContentDiv.append(tweetContentEdit);
+        // insert textarea to tweetContentDiv
+        const tweetContentEdit = document.createElement('textarea');
+        tweetContentEdit.className = 'tweetContentEdit';
+        tweetContentEdit.innerHTML = tweetContent.innerHTML;
+        tweetContentDiv.append(tweetContentEdit);
 
-    // create Save button
-    const saveButton = document.createElement('button');
-    saveButton.innerHTML = 'Save';
-    saveButton.className ='btn btn-outline-primary';
-    saveButton.addEventListener('click', () => {
-        const tweetContentEditNew = tweetContentDiv.querySelector('.tweetContentEdit').value;
+        // create Save button
+        const saveButton = document.createElement('button');
+        saveButton.innerHTML = 'Save';
+        saveButton.className ='btn btn-outline-primary';
+        saveButton.addEventListener('click', () => {
+            const tweetContentEditNew = tweetContentDiv.querySelector('.tweetContentEdit').value;
 
-        if (tweetContentEditNew.length == 0) {
-            console.log("empty!");
-        } else {
-            // submit edited Tweet to API
-            let csrftoken = getCookie('csrftoken');
-            fetch(`/editTweet/${tweet.dataset.id}`, {
-                method: 'PATCH',
-                body: JSON.stringify({
-                    editedTweetContent: tweetContentEditNew
-                }),
-                headers: { "X-CSRFToken": csrftoken }
-            })
-            .then(response => response.json())
-            .then(jsonResponse => {
-                // remove contents of tweetContentDiv
-                tweetContentDiv.innerHTML = '';
-            
-                // create span element with newly edited Tweet content
-                const tweetContentEditNewSpan = document.createElement('span');
-                tweetContentEditNewSpan.className = 'tweetContent';
-                tweetContentEditNewSpan.innerText = tweetContentEditNew;
-                tweetContentDiv.append(tweetContentEditNewSpan);
-            })
-        }
-    });
+            if (tweetContentEditNew.length == 0) {
+                console.log("empty!");
+            } else {
+                // submit edited Tweet to API
+                let csrftoken = getCookie('csrftoken');
+                fetch(`/editTweet/${tweet.dataset.id}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify({
+                        editedTweetContent: tweetContentEditNew
+                    }),
+                    headers: { "X-CSRFToken": csrftoken }
+                })
+                .then(response => response.json())
+                .then(jsonResponse => {
+                    // remove contents of tweetContentDiv
+                    tweetContentDiv.innerHTML = '';
+                
+                    // create span element with newly edited Tweet content
+                    const tweetContentEditNewSpan = document.createElement('span');
+                    tweetContentEditNewSpan.className = 'tweetContent';
+                    tweetContentEditNewSpan.innerText = tweetContentEditNew;
+                    tweetContentDiv.append(tweetContentEditNewSpan);
+                })
+            }
+        });
 
-    // add Save button to tweet
-    tweetContentDiv.append(saveButton);
+        // add Save button to tweet
+        tweetContentDiv.append(saveButton);
+    }
 }
 
 function likeButton(event) {
