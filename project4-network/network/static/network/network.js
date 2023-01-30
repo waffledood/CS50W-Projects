@@ -6,13 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector("#posts-view").addEventListener("click", function(event) {
         // edit button on Tweet 
         const editBtnClicked = event.target.closest('.editBtn');
-        if(editBtnClicked) {
+        if (editBtnClicked) {
             editButton(event);
         }
 
         // like button on Tweet 
         const likeButtonClicked = event.target.closest('.likeBtn');
-        if(likeButtonClicked) {
+        if (likeButtonClicked) {
             likeButtonHover(event);
             likeButtonClick(event);
         }
