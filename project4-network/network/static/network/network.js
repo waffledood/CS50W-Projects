@@ -82,7 +82,7 @@ function editButton(event) {
     }
 }
 
-function likeButton(event) {
+function likeButtonClick(event) {
     // get the parent tweet div
     let tweet = event.target.closest('.tweet');
 
@@ -126,6 +126,10 @@ function likeButton(event) {
             // error
         }
     })
+}
+
+function likeButtonHover(event) {
+    //
 }
 
 function composeTweet() {
