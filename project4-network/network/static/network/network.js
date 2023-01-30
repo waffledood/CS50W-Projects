@@ -163,6 +163,7 @@ function composeTweet() {
             newTweet.querySelector(".tweet-date").textContent = tweet.date;
             newTweet.querySelector(".tweet-content").textContent = tweet.content;
             newTweet.querySelector(".tweet-likes").textContent = tweet.likes;
+            newTweet.dataset.id = tweet.id;
             // remove tweet-template & add tweet class
             newTweet.classList.remove('tweet-template');
             newTweet.classList.add('tweet');
