@@ -3,14 +3,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // add Send Tweet functionality
     document.querySelector('#composeTweet').onsubmit = composeTweet;
 
-    // edit button on Tweet 
-    document.querySelectorAll('.editBtn').forEach(editBtn => {
-        editBtn.addEventListener('click', (event) => editButton(event));
-    });
+    document.querySelector("#posts-view").addEventListener("click", function(event) {
+        // edit button on Tweet 
+        const editBtnClicked = event.target.closest('.editBtn');
+        if(editBtnClicked) {
+            editButton(event);
+        }
 
-    // like button on Tweet 
-    document.querySelectorAll('.likeBtn').forEach(likeBtn => {
-        likeBtn.addEventListener('click', (event) => likeButton(event));
+        // like button on Tweet 
+        const likeButtonClicked = event.target.closest('.likeBtn');
+        if(likeButtonClicked) {
+            likeButtonHover(event);
+            likeButtonClick(event);
+        }
     });
 
 });
