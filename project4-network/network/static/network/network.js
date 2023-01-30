@@ -163,6 +163,9 @@ function composeTweet() {
             newTweet.querySelector(".tweet-date").textContent = tweet.date;
             newTweet.querySelector(".tweet-content").textContent = tweet.content;
             newTweet.querySelector(".tweet-likes").textContent = tweet.likes;
+            // remove tweet-template & add tweet class
+            newTweet.classList.remove('tweet-template');
+            newTweet.classList.add('tweet');
             
             // add new Tweet to posts-view
             document.querySelector('#posts-view').prepend(newTweet);
