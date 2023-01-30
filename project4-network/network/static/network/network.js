@@ -159,6 +159,7 @@ function composeTweet() {
             // create new Tweet
             const tweet = jsonResponse["tweet"];
             let newTweet = document.querySelector(".tweet-template").cloneNode(true);
+            newTweet.style.display = "block";
             newTweet.querySelector(".tweet-date").textContent = tweet.date;
             newTweet.querySelector(".tweet-content").textContent = tweet.content;
             newTweet.querySelector(".tweet-likes").textContent = tweet.likes;
