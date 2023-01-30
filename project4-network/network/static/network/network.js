@@ -102,9 +102,9 @@ function likeButton(event) {
                 </svg>`;
             tweet.querySelector('#tweetLikeButton').innerHTML = unLikedIcon.outerHTML;
             // decrement Tweet likes
-            var tweetLikes = tweet.querySelector('#tweet-likes').innerHTML;
+            var tweetLikes = tweet.querySelector('.tweet-likes').innerHTML;
             tweetLikes--;
-            tweet.querySelector('#tweet-likes').innerHTML = tweetLikes;
+            tweet.querySelector('.tweet-likes').innerHTML = tweetLikes;
         } else if (jsonResponse['message'] == 'Tweet liked successfully.') {
             // change like icon to liked
             const likedIcon = document.createElement('div');
@@ -114,9 +114,9 @@ function likeButton(event) {
                 </svg>`;
             tweet.querySelector('#tweetLikeButton').innerHTML = likedIcon.outerHTML;
             // increment Tweet likes
-            var tweetLikes = tweet.querySelector('#tweet-likes').innerHTML;
+            var tweetLikes = tweet.querySelector('.tweet-likes').innerHTML;
             tweetLikes++;
-            tweet.querySelector('#tweet-likes').innerHTML = tweetLikes;
+            tweet.querySelector('.tweet-likes').innerHTML = tweetLikes;
         } else {
             // error
         }
