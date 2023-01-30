@@ -158,10 +158,15 @@ function composeTweet() {
 
             // create new Tweet
             const tweet = jsonResponse["tweet"];
-            let newTweet = document.querySelector(".tweet.user").cloneNode(true);
+            let newTweet = document.querySelector(".tweet-template").cloneNode(true);
+            newTweet.style.display = "block";
             newTweet.querySelector(".tweet-date").textContent = tweet.date;
             newTweet.querySelector(".tweet-content").textContent = tweet.content;
             newTweet.querySelector(".tweet-likes").textContent = tweet.likes;
+            newTweet.dataset.id = tweet.id;
+            // remove tweet-template & add tweet class
+            newTweet.classList.remove('tweet-template');
+            newTweet.classList.add('tweet');
             
             // add new Tweet to posts-view
             document.querySelector('#posts-view').prepend(newTweet);
