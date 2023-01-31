@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // edit button on Tweet 
         const editBtnClicked = event.target.closest('.editBtn');
         if (editBtnClicked) {
-            editButton(event);
+            editButtonClick(event);
         }
 
         // like button on Tweet 
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function editButton(event) {
+function editButtonClick(event) {
     console.log(event.target);
     console.log(event.currentTarget);
     // attach event listener to div
