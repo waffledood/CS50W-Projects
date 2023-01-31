@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // like button on Tweet 
         const likeButtonClicked = event.target.closest('.likeBtn');
         if (likeButtonClicked) {
-            likeButtonHover(event);
             likeButtonClick(event);
         }
     });
