@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // add Send Tweet functionality
     document.querySelector('#composeTweet').onsubmit = composeTweet;
 
+    // add event listeners for click events
     document.querySelector("#posts-view").addEventListener("click", function(event) {
         // edit button on Tweet 
         const editBtnClicked = event.target.closest('.editBtn');
