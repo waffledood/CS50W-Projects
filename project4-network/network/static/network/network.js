@@ -18,6 +18,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // add event listeners for hover events
+    document.querySelector("#posts-view").addEventListener("hover", function(event) {
+        // edit button on Tweet 
+        const editBtnHover = event.target.closest('.editBtn');
+        if (editBtnHover) {
+            editButtonHover(event);
+        }
+
+        // like button on Tweet 
+        const likeButtonHover = event.target.closest('.likeBtn');
+        if (likeButtonHover) {
+            likeButtonHover(event);
+        }
+    });
+
 });
 
 function editButtonClick(event) {
