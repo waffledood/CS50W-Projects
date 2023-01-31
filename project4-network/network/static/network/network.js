@@ -98,6 +98,10 @@ function editButtonClick(event) {
     }
 }
 
+function editButtonHover(click) {
+    //
+}
+
 function likeButtonClick(event) {
     // get the parent tweet div
     let tweet = event.target.closest('.tweet');
