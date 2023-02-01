@@ -4,36 +4,39 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#composeTweet').onsubmit = composeTweet;
 
     // add event listeners for click events
-    document.querySelector("#posts-view").addEventListener("click", function(event) {
-        // edit button on Tweet 
-        const editBtnClicked = event.target.closest('.editBtn');
-        if (editBtnClicked) {
-            editButtonClick(event);
-        }
-
-        // like button on Tweet 
-        const likeButtonClicked = event.target.closest('.likeBtn');
-        if (likeButtonClicked) {
-            likeButtonClick(event);
-        }
-    });
+    document.querySelector("#posts-view").addEventListener("click", addClickEvents, false);
 
     // add event listeners for hover events
-    document.querySelector("#posts-view").addEventListener("hover", function(event) {
-        // edit button on Tweet 
-        const editBtnHover = event.target.closest('.editBtn');
-        if (editBtnHover) {
-            editButtonHover(event);
-        }
-
-        // like button on Tweet 
-        const likeButtonHover = event.target.closest('.likeBtn');
-        if (likeButtonHover) {
-            likeButtonHover(event);
-        }
-    });
-
+    document.querySelector("#posts-view").addEventListener("hover", addHoverEvents, false);
 });
+
+function addClickEvents(event) {
+    // edit button on Tweet 
+    const editBtnClicked = event.target.closest('.editBtn');
+    if (editBtnClicked) {
+        editButtonClick(event);
+    }
+
+    // like button on Tweet 
+    const likeButtonClicked = event.target.closest('.likeBtn');
+    if (likeButtonClicked) {
+        likeButtonClick(event);
+    }
+}
+
+function addHoverEvents(event) {
+    // edit button on Tweet 
+    const editBtnHover = event.target.closest('.editBtn');
+    if (editBtnHover) {
+        editButtonHover(event);
+    }
+
+    // like button on Tweet 
+    const likeButtonHover = event.target.closest('.likeBtn');
+    if (likeButtonHover) {
+        likeButtonHover(event);
+    }
+}
 
 function editButtonClick(event) {
     console.log(event.target);
