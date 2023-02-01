@@ -46,9 +46,11 @@ function editButtonClick(event) {
 
     const tweetContentDiv = tweet.querySelector('.tweetContentDiv');
 
-    if (tweet.getElementsByClassName('tweetContent').length > 0) {
-        // retrieve tweet content
-        const tweetContent = tweet.querySelector('.tweet-content');
+    // retrieve tweet content
+    const tweetContent = tweet.querySelector('.tweet-content');
+
+    // if the Tweet content is present (the Tweet is not in edit mode)
+    if (tweetContent) {
 
         // remove contents of tweetContentDiv
         tweetContentDiv.innerHTML = '';
