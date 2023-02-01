@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector("#posts-view").addEventListener("click", addClickEvents, false);
 
     // add event listeners for hover events
-    document.querySelector("#posts-view").addEventListener("hover", addHoverEvents, false);
+    document.querySelector("#posts-view").addEventListener("mouseover", addMouseOverEvents, false);
 });
 
 function addClickEvents(event) {
@@ -24,17 +24,17 @@ function addClickEvents(event) {
     }
 }
 
-function addHoverEvents(event) {
+function addMouseOverEvents(event) {
     // edit button on Tweet 
-    const editBtnHover = event.target.closest('.editBtn');
-    if (editBtnHover) {
-        editButtonHover(event);
+    const editBtnMouseOver = event.target.closest('.editBtn');
+    if (editBtnMouseOver) {
+        editButtonMouseOver(event);
     }
 
     // like button on Tweet 
-    const likeButtonHover = event.target.closest('.likeBtn');
-    if (likeButtonHover) {
-        likeButtonHover(event);
+    const likeButtonMouseOver = event.target.closest('.likeBtn');
+    if (likeButtonMouseOver) {
+        likeButtonMouseOver(event);
     }
 }
 
@@ -102,7 +102,7 @@ function editButtonClick(event) {
     }
 }
 
-function editButtonHover(click) {
+function editButtonMouseOver(click) {
     //
 }
 
@@ -152,7 +152,7 @@ function likeButtonClick(event) {
     })
 }
 
-function likeButtonHover(event) {
+function likeButtonMouseOver(event) {
     //
 }
 
