@@ -186,6 +186,13 @@ function composeTweet() {
             // remove tweet-template & add tweet class
             newTweet.classList.remove('tweet-template');
             newTweet.classList.add('tweet');
+
+            // if there are currently 10 Tweets on this page, remove the oldest Tweet
+            const tweetsCurrentPage = document.querySelectorAll('.tweet');
+            if (tweetsCurrentPage.length == 10) {
+                const lastTweet = tweetsCurrentPage[9];
+                lastTweet.remove();
+            }
             
             // add new Tweet to posts-view
             document.querySelector('#posts-view').prepend(newTweet);
