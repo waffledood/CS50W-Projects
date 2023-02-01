@@ -48,7 +48,7 @@ function editButtonClick(event) {
 
     if (tweet.getElementsByClassName('tweetContent').length > 0) {
         // retrieve tweet content
-        const tweetContent = tweet.querySelector('.tweetContent');
+        const tweetContent = tweet.querySelector('.tweet-content');
 
         // remove contents of tweetContentDiv
         tweetContentDiv.innerHTML = '';
