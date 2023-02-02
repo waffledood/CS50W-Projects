@@ -181,16 +181,7 @@ function composeTweet() {
             document.querySelector('#tweetContent').value = '';
 
             // create new Tweet
-            const tweet = jsonResponse["tweet"];
-            let newTweet = document.querySelector(".tweet-template").cloneNode(true);
-            newTweet.style.display = "block";
-            newTweet.querySelector(".tweet-date").textContent = tweet.date;
-            newTweet.querySelector(".tweet-content").textContent = tweet.content;
-            newTweet.querySelector(".tweet-likes").textContent = tweet.likes;
-            newTweet.dataset.id = tweet.id;
-            // remove tweet-template & add tweet class
-            newTweet.classList.remove('tweet-template');
-            newTweet.classList.add('tweet');
+            const newTweet = createTweet(jsonResponse["tweet"]);
 
             // if there are currently 10 Tweets on this page, remove the oldest Tweet
             const tweetsCurrentPage = document.querySelectorAll('.tweet');
@@ -210,6 +201,21 @@ function composeTweet() {
     })
 
     return false;
+}
+
+function createTweet(tweetJsonObject) {
+    // clone Tweet from Tweet template
+    let newTweet = document.querySelector(".tweet-template").cloneNode(true);
+    newTweet.style.display = "block";
+    newTweet.querySelector(".tweet-date").textContent = tweetJsonObject.date;
+    newTweet.querySelector(".tweet-content").textContent = tweetJsonObject.content;
+    newTweet.querySelector(".tweet-likes").textContent = tweetJsonObject.likes;
+    newTweet.dataset.id = tweetJsonObject.id;
+    // remove tweet-template & add tweet class
+    newTweet.classList.remove('tweet-template');
+    newTweet.classList.add('tweet');
+
+    return newTweet;
 }
 
 function getCookie(name) {
