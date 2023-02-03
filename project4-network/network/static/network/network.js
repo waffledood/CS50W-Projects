@@ -3,24 +3,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // add Send Tweet functionality
     document.querySelector('#composeTweet').onsubmit = composeTweet;
 
-    document.querySelector("#posts-view").addEventListener("click", function(event) {
-        // edit button on Tweet 
-        const editBtnClicked = event.target.closest('.editBtn');
-        if (editBtnClicked) {
-            editButton(event);
-        }
+    // add event listeners for click events
+    document.querySelector("#posts-view").addEventListener("click", addClickEvents, false);
 
-        // like button on Tweet 
-        const likeButtonClicked = event.target.closest('.likeBtn');
-        if (likeButtonClicked) {
-            likeButtonHover(event);
-            likeButtonClick(event);
-        }
-    });
-
+    // add event listeners for hover events
+    document.querySelector("#posts-view").addEventListener("mouseover", addMouseOverEvents, false);
 });
 
-function editButton(event) {
+function addClickEvents(event) {
+    // edit button on Tweet 
+    const editBtnClicked = event.target.closest('.editBtn');
+    if (editBtnClicked) {
+        editButtonClick(event);
+    }
+
+    // like button on Tweet 
+    const likeButtonClicked = event.target.closest('.likeBtn');
+    if (likeButtonClicked) {
+        likeButtonClick(event);
+    }
+}
+
+function addMouseOverEvents(event) {
+    // edit button on Tweet 
+    const editBtnMouseOver = event.target.closest('.editBtn');
+    if (editBtnMouseOver) {
+        editButtonMouseOver(event);
+    }
+
+    // like button on Tweet 
+    const likeButtonMouseOver = event.target.closest('.likeBtn');
+    if (likeButtonMouseOver) {
+        likeButtonMouseOver(event);
+    }
+}
+
+function editButtonClick(event) {
     console.log(event.target);
     console.log(event.currentTarget);
     // attach event listener to div
@@ -31,9 +49,11 @@ function editButton(event) {
 
     const tweetContentDiv = tweet.querySelector('.tweetContentDiv');
 
-    if (tweet.getElementsByClassName('tweetContent').length > 0) {
-        // retrieve tweet content
-        const tweetContent = tweet.querySelector('.tweetContent');
+    // retrieve tweet content
+    const tweetContent = tweet.querySelector('.tweet-content');
+
+    // if the Tweet content is present (the Tweet is not in edit mode)
+    if (tweetContent) {
 
         // remove contents of tweetContentDiv
         tweetContentDiv.innerHTML = '';
@@ -82,6 +102,10 @@ function editButton(event) {
     }
 }
 
+function editButtonMouseOver(click) {
+    //
+}
+
 function likeButtonClick(event) {
     // get the parent tweet div
     let tweet = event.target.closest('.tweet');
@@ -128,7 +152,7 @@ function likeButtonClick(event) {
     })
 }
 
-function likeButtonHover(event) {
+function likeButtonMouseOver(event) {
     //
 }
 
@@ -157,19 +181,38 @@ function composeTweet() {
             document.querySelector('#tweetContent').value = '';
 
             // create new Tweet
-            const tweet = jsonResponse["tweet"];
-            let newTweet = document.querySelector(".tweet-template").cloneNode(true);
-            newTweet.style.display = "block";
-            newTweet.querySelector(".tweet-date").textContent = tweet.date;
-            newTweet.querySelector(".tweet-content").textContent = tweet.content;
-            newTweet.querySelector(".tweet-likes").textContent = tweet.likes;
-            newTweet.dataset.id = tweet.id;
-            // remove tweet-template & add tweet class
-            newTweet.classList.remove('tweet-template');
-            newTweet.classList.add('tweet');
-            
-            // add new Tweet to posts-view
-            document.querySelector('#posts-view').prepend(newTweet);
+            const newTweet = createTweet(jsonResponse["tweet"]);
+
+            // if there are currently 10 Tweets on this page, remove the oldest Tweet
+            const tweetsCurrentPage = document.querySelectorAll('.tweet');
+            const currentPageNumber = document.querySelector('.page-item.disabled.page').dataset.pageNumber;
+
+            // if the current page is the first page, add the new Tweet
+            if (currentPageNumber == '1') {
+                // prepend the new Tweet
+                document.querySelector('#posts-view').prepend(newTweet);
+            // if the current page is not the first page, add the Tweet from the previous page
+            } else {
+                // prepend the Tweet from the previous page
+                fetch('/tweets', {
+                    method: 'GET',
+                    headers: { "X-CSRFToken": csrftoken }
+                })
+                .then(response => response.json())
+                .then(jsonResponse => {
+                    const tweetFromPrevPageJson = jsonResponse[(currentPageNumber - 1) * 10];
+                    const tweetFromPrevPage = createTweet(tweetFromPrevPageJson);
+                    document.querySelector('#posts-view').prepend(tweetFromPrevPage);
+
+                });
+            }
+
+            // if the current page is at the 10 Tweets limit, remove the oldest Tweet on this page
+            if (tweetsCurrentPage.length == 10) {
+                // remove the oldest Tweet
+                const lastTweet = tweetsCurrentPage[9];
+                lastTweet.remove();
+            }
         } else {
             // error message
             const errMsg = jsonResponse["error"];
@@ -179,6 +222,21 @@ function composeTweet() {
     })
 
     return false;
+}
+
+function createTweet(tweetJsonObject) {
+    // clone Tweet from Tweet template
+    let newTweet = document.querySelector(".tweet-template").cloneNode(true);
+    newTweet.style.display = "block";
+    newTweet.querySelector(".tweet-date").textContent = tweetJsonObject.date;
+    newTweet.querySelector(".tweet-content").textContent = tweetJsonObject.content;
+    newTweet.querySelector(".tweet-likes").textContent = tweetJsonObject.likes;
+    newTweet.dataset.id = tweetJsonObject.id;
+    // remove tweet-template & add tweet class
+    newTweet.classList.remove('tweet-template');
+    newTweet.classList.add('tweet');
+
+    return newTweet;
 }
 
 function getCookie(name) {
