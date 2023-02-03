@@ -207,13 +207,12 @@ function composeTweet() {
                 });
             }
 
+            // if the current page is at the 10 Tweets limit, remove the oldest Tweet on this page
             if (tweetsCurrentPage.length == 10) {
+                // remove the oldest Tweet
                 const lastTweet = tweetsCurrentPage[9];
                 lastTweet.remove();
             }
-            
-            // add new Tweet to posts-view
-            document.querySelector('#posts-view').prepend(newTweet);
         } else {
             // error message
             const errMsg = jsonResponse["error"];
