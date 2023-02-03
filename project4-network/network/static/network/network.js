@@ -186,6 +186,27 @@ function composeTweet() {
             // if there are currently 10 Tweets on this page, remove the oldest Tweet
             const tweetsCurrentPage = document.querySelectorAll('.tweet');
             const currentPageNumber = document.querySelector('.page-item.disabled.page').dataset.pageNumber;
+
+            // if the current page is the first page, add the new Tweet
+            if (currentPageNumber == '1') {
+                // prepend the new Tweet
+                document.querySelector('#posts-view').prepend(newTweet);
+            // if the current page is not the first page, add the Tweet from the previous page
+            } else {
+                // prepend the Tweet from the previous page
+                fetch('/tweets', {
+                    method: 'GET',
+                    headers: { "X-CSRFToken": csrftoken }
+                })
+                .then(response => response.json())
+                .then(jsonResponse => {
+                    const tweetFromPrevPageJson = jsonResponse[(currentPageNumber - 1) * 10];
+                    const tweetFromPrevPage = createTweet(tweetFromPrevPageJson);
+                    document.querySelector('#posts-view').prepend(tweetFromPrevPage);
+
+                });
+            }
+
             if (tweetsCurrentPage.length == 10) {
                 const lastTweet = tweetsCurrentPage[9];
                 lastTweet.remove();
