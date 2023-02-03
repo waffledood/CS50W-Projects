@@ -185,6 +185,7 @@ function composeTweet() {
 
             // if there are currently 10 Tweets on this page, remove the oldest Tweet
             const tweetsCurrentPage = document.querySelectorAll('.tweet');
+            const currentPageNumber = document.querySelector('.page-item.disabled.page').dataset.pageNumber;
             if (tweetsCurrentPage.length == 10) {
                 const lastTweet = tweetsCurrentPage[9];
                 lastTweet.remove();
