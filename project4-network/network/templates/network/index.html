@@ -65,11 +65,11 @@
             <!-- Page numbers -->
             {% for i in numPages %}
                 {% if i == page_obj.number %}
-                    <li class="page-item disabled">
+                    <li class="page-item disabled page" data-page-number="{{ i }}">
                 {% else %}
-                    <li class="page-item">
+                    <li class="page-item page" data-page-number="{{ i }}">
                 {% endif %}
-                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    <a class="page-link page" href="?page={{ i }}">{{ i }}</a>
                 </li>
             {% endfor %}
             <!-- Next icon button -->
