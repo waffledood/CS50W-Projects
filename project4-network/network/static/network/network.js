@@ -32,8 +32,8 @@ function addMouseOverEvents(event) {
     }
 
     // like button on Tweet 
-    const likeButtonMouseOver = event.target.closest('.likeBtn');
-    if (likeButtonMouseOver) {
+    const likeBtnMouseOver = event.target.closest('.likeBtn');
+    if (likeBtnMouseOver) {
         likeButtonMouseOver(event);
     }
 }

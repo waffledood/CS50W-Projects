@@ -65,11 +65,11 @@
             <!-- Page numbers -->
             {% for i in numPages %}
                 {% if i == page_obj.number %}
-                    <li class="page-item disabled">
+                    <li class="page-item disabled page" data-page-number="{{ i }}">
                 {% else %}
-                    <li class="page-item">
+                    <li class="page-item page" data-page-number="{{ i }}">
                 {% endif %}
-                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    <a class="page-link page" href="?page={{ i }}">{{ i }}</a>
                 </li>
             {% endfor %}
             <!-- Next icon button -->
@@ -95,7 +95,7 @@
                             {{tweet.user.username}}
                         </a>
                     </small>
-                    <small class="text-muted tweet-date">{{tweet.date}}</small>
+                    <small class="text-muted tweet-date">{{ tweet.date|date:"M d Y, h:i A" }}</small>
                     {% if tweet.user == request.user %}
                         <div role="button" class="editBtn d-flex justify-content-start">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="icon-image" viewBox="0 0 24 24">
