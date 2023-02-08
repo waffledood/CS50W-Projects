@@ -95,7 +95,7 @@
                             {{tweet.user.username}}
                         </a>
                     </small>
-                    <small class="text-muted tweet-date">{{tweet.date}}</small>
+                    <small class="text-muted tweet-date">{{ tweet.date|date:"M d Y, h:i A" }}</small>
                     {% if tweet.user == request.user %}
                         <div role="button" class="editBtn d-flex justify-content-start">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="icon-image" viewBox="0 0 24 24">
