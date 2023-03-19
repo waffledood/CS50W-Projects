@@ -9,11 +9,13 @@ from .models import Listing, User
 def index(request):
     return HttpResponse("Hello, world!")
 
+
 def user(request, id):
     # Retrieve User with specified id
     user = User.objects.get(id=id)
 
     return JsonResponse([user.serialize()], safe=False)
+
 
 def users(request):
     # Retrieve all users
@@ -21,11 +23,13 @@ def users(request):
 
     return JsonResponse([user.serialize() for user in users], safe=False)
 
+
 def listing(request, id):
     #  Retrieve Listing with specified id
     listing = Listing.objects.get(id=id)
 
     return JsonResponse([listing.serialize()], safe=False)
+
 
 def listings(request):
     # Retrieve all listings
@@ -35,6 +39,7 @@ def listings(request):
     listings = listings.order_by("-rating").all()
 
     return JsonResponse([listing.serialize() for listing in listings], safe=False)
+
 
 def createListing(request):
     # Creating a new Listing must be via POST
