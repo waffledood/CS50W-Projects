@@ -70,13 +70,16 @@ def listing(request, id):
 
 
 def listings(request):
-    # Retrieve all listings
-    listings = Listing.objects.all()
+    if request.method == "GET":
+        # Retrieve all listings
+        listings = Listing.objects.all()
 
-    # Order listings by ratings
-    listings = listings.order_by("-rating").all()
+        # Order listings by ratings
+        listings = listings.order_by("-rating").all()
 
-    return JsonResponse([listing.serialize() for listing in listings], safe=False)
+        return JsonResponse([listing.serialize() for listing in listings], safe=False)
+
+    return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
 def createListing(request):
