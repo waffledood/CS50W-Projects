@@ -46,10 +46,27 @@ def users(request):
 
 
 def listing(request, id):
-    #  Retrieve Listing with specified id
-    listing = Listing.objects.get(id=id)
+    if request.method == "GET":
+        # Return an error if the id doesn't exist in the database
+        try:
+            Listing.objects.get(id=id)
+        except Listing.DoesNotExist:
+            return JsonResponse({"error": "Listing id does not exist."}, status=400)
 
-    return JsonResponse([listing.serialize()], safe=False)
+        #  Retrieve Listing with specified id
+        listing = Listing.objects.get(id=id)
+        return JsonResponse([listing.serialize()], safe=False)
+
+    if request.method == "DELETE":
+        # Return an error if the id doesn't exist in the database
+        try:
+            Listing.objects.get(id=id)
+        except Listing.DoesNotExist:
+            return JsonResponse({"error": "Listing id does not exist."}, status=400)
+
+        # Delete Listing with specified id
+        Listing.objects.get(id=id).delete()
+        return JsonResponse({"message": "Listing deleted successfully"}, status=201)
 
 
 def listings(request):
