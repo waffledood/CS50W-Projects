@@ -52,6 +52,9 @@ class Listing(models.Model):
     price_nightly = models.DecimalField(max_digits=5, decimal_places=0)
     
     owner_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
+    
+    def __str__(self):
+        return f"Listing ({self.id}): {self.name}, {self.rating} stars, ${self.price_nightly}"
 
     def serialize(self):
         return {
