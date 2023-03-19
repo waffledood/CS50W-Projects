@@ -45,6 +45,22 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
+    def __str__(self):
+        return f"User ({self.id}): {self.first_name} {self.last_name}, {self.email}"
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "location": self.location,
+            "last_login": self.last_login,
+            "is_staff": self.is_staff,
+            "is_active": self.is_active,
+            "date_joined": self.date_joined
+        }
+
 class Listing(models.Model):
     name = models.CharField(max_length=64)
     description = models.TextField()
