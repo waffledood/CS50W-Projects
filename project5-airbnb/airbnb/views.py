@@ -11,10 +11,29 @@ def index(request):
 
 
 def user(request, id):
-    # Retrieve User with specified id
-    user = User.objects.get(id=id)
+    if request.method == "GET":
+        # Return an error if the id doesn't exist in the database
+        try:
+            User.objects.get(id=id)
+        except User.DoesNotExist:
+            return JsonResponse({"error": "id does not exist."}, status=400)
 
-    return JsonResponse([user.serialize()], safe=False)
+        # Retrieve User with specified id
+        user = User.objects.get(id=id)
+        return JsonResponse([user.serialize()], safe=False)
+
+    if request.method == "DELETE":
+        # Return an error if the id doesn't exist in the database
+        try:
+            User.objects.get(id=id)
+        except User.DoesNotExist:
+            return JsonResponse({"error": "id does not exist."}, status=400)
+
+        # Delete User with specified id
+        User.objects.delete(id=id)
+        return JsonResponse({"message": "User deleted successfully"}, status=201)
+
+    return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
 
 
 def users(request):
