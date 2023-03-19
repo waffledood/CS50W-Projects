@@ -30,7 +30,7 @@ def user(request, id):
             return JsonResponse({"error": "User id does not exist."}, status=400)
 
         # Delete User with specified id
-        User.objects.delete(id=id)
+        User.objects.get(id=id).delete()
         return JsonResponse({"message": "User deleted successfully"}, status=201)
 
     return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
