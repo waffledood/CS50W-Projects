@@ -37,10 +37,12 @@ def user(request, id):
 
 
 def users(request):
-    # Retrieve all users
-    users = User.objects.all()
+    if request.method == "GET":
+        # Retrieve all users
+        users = User.objects.all()
+        return JsonResponse([user.serialize() for user in users], safe=False)
 
-    return JsonResponse([user.serialize() for user in users], safe=False)
+    return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
 def listing(request, id):
