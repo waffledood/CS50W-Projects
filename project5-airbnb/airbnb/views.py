@@ -30,7 +30,7 @@ def listings(request):
     listings = Listing.objects.all()
 
     # Order listings by ratings
-    listings.order_by("-rating").all()
+    listings = listings.order_by("-rating").all()
 
     return JsonResponse([listing.serialize() for listing in listings], safe=False)
 
