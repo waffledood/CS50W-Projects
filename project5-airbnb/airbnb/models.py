@@ -51,7 +51,7 @@ class Listing(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=2)
     price_nightly = models.DecimalField(max_digits=5, decimal_places=0)
     
-    owner_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
     
     def __str__(self):
         return f"Listing ({self.id}): {self.name}, {self.rating} stars, ${self.price_nightly}"
@@ -63,7 +63,7 @@ class Listing(models.Model):
             "description": self.description,
             "rating": self.rating,
             "price_nightly": self.price_nightly,
-            "owner_id": self.owner_id
+            "owner_id": self.owner
         }
 
 class Booking(models.Model):
