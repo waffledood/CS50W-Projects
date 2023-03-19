@@ -3,7 +3,7 @@ from varname import nameof
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
-from .models import Listing, User
+from .models import Booking, Listing, User
 
 
 def index(request):
@@ -81,3 +81,10 @@ def createListing(request):
     listing.save()
 
     return JsonResponse({"message": "Listing created successfully.", "listing": listing.serialize()}, status=201)
+
+
+def booking(request, id):
+    # Retrieve booking with specified id
+    booking = Booking.objects.get(id)
+
+    return JsonResponse([booking.serialize()], safe=False)
