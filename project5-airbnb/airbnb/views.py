@@ -88,3 +88,10 @@ def booking(request, id):
     booking = Booking.objects.get(id)
 
     return JsonResponse([booking.serialize()], safe=False)
+
+
+def bookings(request):
+    # Retrieve all bookings
+    bookings = Booking.objects.all()
+
+    return JsonResponse([booking.serialize() for booking in bookings], safe=False)
