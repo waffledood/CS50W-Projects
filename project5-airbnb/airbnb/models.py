@@ -53,6 +53,16 @@ class Listing(models.Model):
     
     owner_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "rating": self.rating,
+            "price_nightly": self.price_nightly,
+            "owner_id": self.owner_id
+        }
+
 class Booking(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
