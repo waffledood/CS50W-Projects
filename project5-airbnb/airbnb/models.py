@@ -63,7 +63,7 @@ class Listing(models.Model):
             "description": self.description,
             "rating": self.rating,
             "price_nightly": self.price_nightly,
-            "owner_id": self.owner
+            "owner_id": self.owner.id
         }
 
 class Booking(models.Model):
