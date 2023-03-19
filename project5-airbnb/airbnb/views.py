@@ -16,7 +16,7 @@ def user(request, id):
         try:
             User.objects.get(id=id)
         except User.DoesNotExist:
-            return JsonResponse({"error": "id does not exist."}, status=400)
+            return JsonResponse({"error": "User id does not exist."}, status=400)
 
         # Retrieve User with specified id
         user = User.objects.get(id=id)
@@ -27,7 +27,7 @@ def user(request, id):
         try:
             User.objects.get(id=id)
         except User.DoesNotExist:
-            return JsonResponse({"error": "id does not exist."}, status=400)
+            return JsonResponse({"error": "User id does not exist."}, status=400)
 
         # Delete User with specified id
         User.objects.delete(id=id)
