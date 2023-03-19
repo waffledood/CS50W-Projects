@@ -127,10 +127,30 @@ def createListing(request):
 
 
 def booking(request, id):
-    # Retrieve booking with specified id
-    booking = Booking.objects.get(id)
+    if request.method == "GET":
+        # Return an error if the id doesn't exist in the database
+        try:
+            # Retrieve Booking with specified id
+            Booking.objects.get(id)
+        except Booking.DoesNotExist:
+            return JsonResponse({"error": "Booking id does not exist."}, status=400)
 
-    return JsonResponse([booking.serialize()], safe=False)
+        #  Retrieve Booking with specified id
+        booking = Booking.objects.get(id=id)
+        return JsonResponse([booking.serialize()], safe=False)
+
+    if request.method == "DELETE":
+        # Return an error if the id doesn't exist in the database
+        try:
+            Booking.objects.get(id=id)
+        except Booking.DoesNotExist:
+            return JsonResponse({"error": "Booking id does not exist."}, status=400)
+
+        # Delete Booking with specified id
+        Booking.objects.get(id=id).delete()
+        return JsonResponse({"message": "Booking deleted successfully"}, status=201)
+
+    return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
 
 
 def bookings(request):
