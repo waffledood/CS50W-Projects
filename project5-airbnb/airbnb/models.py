@@ -72,3 +72,15 @@ class Booking(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bookings")
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="listings")
+
+    def __str__(self):
+        return f"Booking ({self.id}): {self.start_date} -- {self.end_date} by User {self.user.id} for Listing {self.listing.id}"
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "start_date": self.start_date.strftime('%Y-%m-%d'),
+            "end_date": self.end_date.strftime('%Y-%m-%d'),
+            "user_id": self.user.id,
+            "listing_id": self.user.listing.id,
+        }
