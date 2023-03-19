@@ -68,6 +68,8 @@ def listing(request, id):
         Listing.objects.get(id=id).delete()
         return JsonResponse({"message": "Listing deleted successfully"}, status=201)
 
+    return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
+
 
 def listings(request):
     if request.method == "GET":
