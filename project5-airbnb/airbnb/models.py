@@ -45,5 +45,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-class User(AbstractUser):
-    pass
+class Listing(models.Model):
+    name = models.CharField(max_length=64)
+    description = models.TextField()
+    rating = models.DecimalField(max_digits=3, decimal_places=2)
+    price_nightly = models.DecimalField(max_digits=5, decimal_places=0)
+    
+    owner_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
