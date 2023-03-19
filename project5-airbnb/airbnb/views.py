@@ -154,7 +154,10 @@ def booking(request, id):
 
 
 def bookings(request):
-    # Retrieve all bookings
-    bookings = Booking.objects.all()
+    if request.method == "GET":
+        # Retrieve all bookings
+        bookings = Booking.objects.all()
 
-    return JsonResponse([booking.serialize() for booking in bookings], safe=False)
+        return JsonResponse([booking.serialize() for booking in bookings], safe=False)
+
+    return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
