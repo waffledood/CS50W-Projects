@@ -1,11 +1,17 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
-from .models import Listing
+from .models import Listing, User
 
 
 def index(request):
     return HttpResponse("Hello, world!")
+
+def user(request, id):
+    # Retrieve User with specified id
+    user = User.objects.get(id=id)
+
+    return JsonResponse([user.serialize()], safe=False)
 
 def listing(request, id):
     #  Retrieve Listing with specified id
