@@ -13,6 +13,12 @@ def user(request, id):
 
     return JsonResponse([user.serialize()], safe=False)
 
+def users(request):
+    # Retrieve all users
+    users = User.objects.all()
+
+    return JsonResponse([user.serialize() for user in users], safe=False)
+
 def listing(request, id):
     #  Retrieve Listing with specified id
     listing = Listing.objects.get(id=id)

@@ -7,6 +7,7 @@ urlpatterns = [
 
     # API Routes
     path("user/<int:id>", views.user, name="user"),
+    path("users", views.users, name="users"),
     path("listing/<int:id>", views.listing, name="listing"),
     path("listings", views.listings, name="listings"),
 ]
