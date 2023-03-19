@@ -10,4 +10,5 @@ urlpatterns = [
     path("users", views.users, name="users"),
     path("listing/<int:id>", views.listing, name="listing"),
     path("listings", views.listings, name="listings"),
+    path("createListing", views.createListing, name="createListing"),
 ]
