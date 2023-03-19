@@ -52,3 +52,10 @@ class Listing(models.Model):
     price_nightly = models.DecimalField(max_digits=5, decimal_places=0)
     
     owner_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
+
+class Booking(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bookings")
+    listing_id = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="listings")
