@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 from varname import nameof
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
@@ -10,6 +11,24 @@ from .model import validator
 
 def index(request):
     return HttpResponse("Hello, world!")
+
+
+def login(request):
+    if request.method == "POST":
+
+        # Attempt to sign user in
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+
+        # Check if authentication successful
+        if user is not None:
+            login(request, user)
+            return JsonResponse({"message": "Logged in successfully"}, status=200)
+        else:
+            return JsonResponse({"error": "Invalid username and/or password."}, status=400)
+    else:
+        return JsonResponse({"error": "POST request required."}, status=400)
 
 
 def user(request, id):

@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("login", views.login, name="login"),
 
     # API Routes
     path("user/<int:id>", views.user, name="user"),
