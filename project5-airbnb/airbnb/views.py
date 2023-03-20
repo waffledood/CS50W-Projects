@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from varname import nameof
 from django.contrib.auth import authenticate, login, logout
+from django.db import IntegrityError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
@@ -35,6 +36,30 @@ def logout(request):
     if request.method == "POST":
         logout(request)
         return JsonResponse({"message": "Logged out successfully", "user": request.user.serialize()}, status=200)
+    else:
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+
+def register(request):
+    if request.method == "POST":
+        # Load JSON from request body
+        data = json.loads(request.body)
+        email = data.get("email")
+        password = request.get("password")
+        confirmation = request.get("confirmation")
+
+        # Ensure password matches confirmation
+        if password != confirmation:
+            return JsonResponse({"error": "Passwords must match"}, status=400)
+
+        # Attempt to create new user
+        try:
+            user = User.objects.create_user(email, password)
+            user.save()
+        except IntegrityError:
+            return JsonResponse({"error": "Account with email already exists!"}, status=400)
+        login(request, user)
+        return JsonResponse({"message": "New user registered successfully", "user": user.serialize()}, status=200)
     else:
         return JsonResponse({"error": "POST request required."}, status=400)
 
