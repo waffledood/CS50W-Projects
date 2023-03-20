@@ -24,7 +24,7 @@ def login(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return JsonResponse({"message": "Logged in successfully"}, status=200)
+            return JsonResponse({"message": "Logged in successfully", "user": user.serialize()}, status=200)
         else:
             return JsonResponse({"error": "Invalid username and/or password."}, status=400)
     else:
