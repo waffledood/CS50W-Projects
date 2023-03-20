@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from varname import nameof
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
@@ -161,3 +162,43 @@ def bookings(request):
         return JsonResponse([booking.serialize() for booking in bookings], safe=False)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
+
+
+def createBooking(request):
+    # Creating a new Booking must be via POST
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    # Load Booking JSON from request body
+    data = json.loads(request.body)
+
+    # Retrieve Booking details
+    start_date = data.get("start_date")
+    end_date = data.get("end_date")
+    user = request.user
+    listing_id = data.get("listing_id")
+
+    # Check for & return missing Booking details
+    bookingDetails = [start_date, end_date, listing_id]
+    missingBookingDetails = []
+
+    for detail in bookingDetails:
+        if detail == "":
+            missingBookingDetails.append(nameof(detail))
+
+    if not missingBookingDetails:
+        return JsonResponse({
+            "error": "Created Booking is missing details.",
+            "missingDetails": missingBookingDetails
+        }, status=400)
+
+    # Save Booking
+    booking = Booking(
+        start_date=start_date,
+        end_date=end_date,
+        user=user,
+        listing=Listing.objects.get(id=listing_id)
+    )
+    booking.save()
+
+    return JsonResponse({"message": "Booking created successfully.", "booking": booking.serialize()}, status=201)
