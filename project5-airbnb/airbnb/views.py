@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 from varname import nameof
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
@@ -27,6 +27,14 @@ def login(request):
             return JsonResponse({"message": "Logged in successfully"}, status=200)
         else:
             return JsonResponse({"error": "Invalid username and/or password."}, status=400)
+    else:
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+
+def logout(request):
+    if request.method == "POST":
+        logout(request)
+        return JsonResponse({"message": "Logged out successfully", "user": request.user.serialize()}, status=200)
     else:
         return JsonResponse({"error": "POST request required."}, status=400)
 
