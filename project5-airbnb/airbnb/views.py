@@ -5,6 +5,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 from .models import Booking, Listing, User
+from .model import validator
 
 
 def index(request):
@@ -191,6 +192,16 @@ def createBooking(request):
             "error": "Created Booking is missing details.",
             "missingDetails": missingBookingDetails
         }, status=400)
+
+    # Check if Booking details are in correct format
+    if validator.startAndEndDateFormatsAreWrong(startDate=start_date, endDate=end_date):
+        return JsonResponse({"error": "Both start_date & end_date must be in the correct format"}, status=400)
+
+    # Check if Booking details violate business logic
+    if validator.startDateIsAfterEndDate(startDate=start_date, endDate=end_date):
+        return JsonResponse({"error": "End date of booking must be greater than start date"}, status=400)
+    if validator.startDateIsBeforeToday(startDate=start_date):
+        return JsonResponse({"error": "Today has elapsed start date of booking"}, status=400)
 
     # Save Booking
     booking = Booking(
