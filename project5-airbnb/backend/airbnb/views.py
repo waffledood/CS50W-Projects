@@ -1,6 +1,8 @@
 import json
 from datetime import datetime
 from varname import nameof
+from django.contrib.auth import authenticate, login, logout
+from django.db import IntegrityError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
@@ -10,6 +12,56 @@ from .model import validator
 
 def index(request):
     return HttpResponse("Hello, world!")
+
+
+def login(request):
+    if request.method == "POST":
+
+        # Attempt to sign user in
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+
+        # Check if authentication successful
+        if user is not None:
+            login(request, user)
+            return JsonResponse({"message": "Logged in successfully", "user": user.serialize()}, status=200)
+        else:
+            return JsonResponse({"error": "Invalid username and/or password."}, status=400)
+    else:
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+
+def logout(request):
+    if request.method == "POST":
+        logout(request)
+        return JsonResponse({"message": "Logged out successfully", "user": request.user.serialize()}, status=200)
+    else:
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+
+def register(request):
+    if request.method == "POST":
+        # Load JSON from request body
+        data = json.loads(request.body)
+        email = data.get("email")
+        password = request.get("password")
+        confirmation = request.get("confirmation")
+
+        # Ensure password matches confirmation
+        if password != confirmation:
+            return JsonResponse({"error": "Passwords must match"}, status=400)
+
+        # Attempt to create new user
+        try:
+            user = User.objects.create_user(email, password)
+            user.save()
+        except IntegrityError:
+            return JsonResponse({"error": "Account with email already exists!"}, status=400)
+        login(request, user)
+        return JsonResponse({"message": "New user registered successfully", "user": user.serialize()}, status=200)
+    else:
+        return JsonResponse({"error": "POST request required."}, status=400)
 
 
 def user(request, id):
