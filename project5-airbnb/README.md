@@ -16,7 +16,7 @@ This project thus has a different set of business logic & requires a different s
 
 Complexity of this project:
 
-- Uses a custom `User` model & `UserManager`, `UserAdmin`, `UserCreationForm`, `UserChangeForm` classes.
+- Uses a custom `User` model & `UserManager`, `UserAdmin`, `UserCreationForm`, `UserChangeForm` classes, as this `User` model does not enforce `username`s as the unique identifier unlike Django's default `User` model.
 - `Django` is used for the backend, `React` is used for the frontend. Previous projects were built fully in `Django`.
 
 ## External Packages
