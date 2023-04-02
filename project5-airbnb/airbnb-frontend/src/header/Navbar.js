@@ -1,19 +1,13 @@
 import classes from "./Navbar.component.css";
+import ListYourHome from "./ListYourHome";
+import Profile from "./Profile";
 
 const Navbar = (props) => {
   return (
     <div>
       <nav>
-        <ul>
-          <li>
-            <a href="">Item 1</a>
-          </li>
-          <li>
-            <a href="" id="profile">
-              Item 2
-            </a>
-          </li>
-        </ul>
+        <ListYourHome />
+        <Profile />
       </nav>
     </div>
   );
