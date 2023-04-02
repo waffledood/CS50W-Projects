@@ -1,11 +1,11 @@
-import classes from "./Navbar.component.css";
+import classes from "./Navbar.module.css";
 import ListYourHome from "./ListYourHome";
 import Profile from "./Profile";
 
 const Navbar = (props) => {
   return (
     <div>
-      <nav>
+      <nav className={`${classes.nav}`}>
         <ListYourHome />
         <Profile />
       </nav>
