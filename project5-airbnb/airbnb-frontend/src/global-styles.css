@@ -1,6 +1,19 @@
 /* Global variables */
 :root {
   --primary-color: #ff385c;
+  --font-color: #000000;
+  --font-size-main: 18px;
+  --font-weight: 600;
+  --border-color-main: #dddddd;
+  --border-radius: 20px;
+}
+
+/* Global classes */
+.default-font {
+  /* Font */
+  color: var(--font-color);
+  font-weight: var(--font-weight);
+  font-size: var(--font-size-main);
 }
 
 * {
