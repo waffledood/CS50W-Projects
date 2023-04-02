@@ -1,0 +1,26 @@
+nav > ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+nav > ul > li > a {
+  /* Font */
+  text-decoration: none;
+  color: var(--font-color);
+  font-weight: var(--font-weight);
+
+  /* Spacing & Margin */
+  margin: 0px 10px;
+  padding: 0 20px;
+  display: block;
+}
+
+#profile {
+  /* Border */
+  border: 2px var(--border-color-main) solid;
+  border-radius: var(--border-radius);
+
+  /* Spacing & Margin */
+  padding: 5px 5px 5px 12px;
+}
