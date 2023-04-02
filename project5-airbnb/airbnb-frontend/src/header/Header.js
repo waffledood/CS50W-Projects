@@ -1,9 +1,9 @@
-import classes from "./Header.component.css";
+import classes from "./Header.module.css";
 import Homepage from "./Homepage";
 
 const Header = (props) => {
   return (
-    <header>
+    <header className={`${classes.header}`}>
       <Homepage />
     </header>
   );
