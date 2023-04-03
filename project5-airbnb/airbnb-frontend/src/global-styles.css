@@ -16,6 +16,11 @@
   font-size: var(--font-size-main);
 }
 
+.link {
+  text-decoration: none;
+  color: var(--font-color);
+}
+
 * {
   box-sizing: border-box;
   margin: 0px;
