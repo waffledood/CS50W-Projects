@@ -21,8 +21,35 @@ const ModalOverlay = (props) => {
   return (
     <div className={classes.modal}>
       <form action="#" onSubmit={formSubmitHandler}>
-        sample form
-        <button type="submit">Submit</button>
+        <div className={classes.formControl}>
+          <label htmlFor="listingName">Name</label>
+          <input type="text" name="listingName" id="listingName" />
+        </div>
+
+        <div className={classes.formControl}>
+          <label htmlFor="listingDescription">Description</label>
+          <textarea
+            name="listingDescription"
+            id="listingDescription"
+          ></textarea>
+        </div>
+
+        <div className={classes.formControl}>
+          <label htmlFor="listingPriceNightly">Price (Nightly)</label>
+          <input
+            type="number"
+            name="listingPriceNightly"
+            id="listingPriceNightly"
+          />
+        </div>
+
+        <br />
+
+        <div className={classes.formControl}>
+          <button type="submit" className="btn">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );
