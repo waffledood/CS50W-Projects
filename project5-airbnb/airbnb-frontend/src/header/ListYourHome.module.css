@@ -6,3 +6,7 @@
   display: block;
   padding: 12px;
 }
+
+.a:hover {
+  cursor: pointer;
+}
