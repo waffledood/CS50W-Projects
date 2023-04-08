@@ -26,3 +26,20 @@
   margin: 0px;
   padding: 0px;
 }
+
+/* Universal styling for all buttons */
+.btn {
+  /* Font */
+  color: var(--font-color);
+  font-weight: var(--font-weight);
+
+  /* Border */
+  border: 2px var(--border-color-main) solid;
+  border-radius: var(--border-radius);
+
+  /* Spacing & Margin */
+  padding: 5px 5px 5px 5px;
+
+  /* Button */
+  background: #fff;
+}
