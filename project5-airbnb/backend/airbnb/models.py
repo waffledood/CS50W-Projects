@@ -105,5 +105,5 @@ class Booking(models.Model):
             "start_date": self.start_date.strftime('%Y-%m-%d'),
             "end_date": self.end_date.strftime('%Y-%m-%d'),
             "user_id": self.user.id,
-            "listing_id": self.user.listing.id,
+            "listing_id": self.listing.id,
         }
