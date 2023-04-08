@@ -43,3 +43,7 @@
   /* Button */
   background: #fff;
 }
+
+.btn:hover {
+  cursor: pointer;
+}
