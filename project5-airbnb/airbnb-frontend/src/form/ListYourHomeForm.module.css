@@ -20,3 +20,31 @@
   padding: 20px;
   border-radius: 5px;
 }
+
+/* Form styling */
+.formControl {
+  margin-bottom: 15px;
+}
+
+.formControl label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.formControl input,
+textarea {
+  width: 100%;
+  padding: 4px;
+  height: 40px;
+  border: #f5f5f5 1px solid;
+  border-radius: 5px;
+}
+
+.formControl textarea {
+  height: 60px;
+  resize: vertical;
+}
+
+.formControl input[type="number"] {
+  width: 20%;
+}
