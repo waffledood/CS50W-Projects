@@ -71,3 +71,4 @@ The following are pages/views in the Airbnb clone application:
 
    - Displays details of a user's account
 
+## Database Design
