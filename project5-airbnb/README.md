@@ -27,6 +27,8 @@ For ease of reference, the full list is appended below:
 
 - `varname`
 
+## Terminology
+
 ## Architecture, System Design
 
 React is used on the frontend, with Django for the backend.
