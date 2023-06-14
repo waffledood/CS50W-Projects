@@ -26,3 +26,9 @@ An accompanying `requirements.txt` listing all external packages has been includ
 For ease of reference, the full list is appended below:
 
 - `varname`
+
+## Architecture
+
+React is used on the frontend, with Django for the backend.
+
+Django views are used as API endpoints.
