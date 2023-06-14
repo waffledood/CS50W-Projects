@@ -49,3 +49,25 @@ This section details the jargons used in this application & what they mean:
 React is used on the frontend, with Django for the backend.
 
 Django views are used as API endpoints.
+
+### Pages
+
+The following are pages/views in the Airbnb clone application:
+
+1. Main page
+
+   - Shows all current listings
+     All listings with available slots in the near future (up to 2 years from today's date)
+
+2. Listing page
+
+   - Shows details of a listing
+
+3. Creating Listing page
+
+   - Creation of a listing
+
+4. Account page
+
+   - Displays details of a user's account
+
