@@ -29,6 +29,21 @@ For ease of reference, the full list is appended below:
 
 ## Terminology
 
+This section details the jargons used in this application & what they mean:
+
+- Listing
+  A property that has been listed on Airbnb as available for booking.
+  A listing includes the following details:
+
+  - Picture(s) of the property
+  - Address of the property
+  - Nightly rate of the property
+
+- Slot/Slots
+  An available window in the property's booking schedule.
+
+  A slot refers to 1 night. Slots refer to multiple nights.
+
 ## Architecture, System Design
 
 React is used on the frontend, with Django for the backend.
