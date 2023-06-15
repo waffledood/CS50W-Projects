@@ -72,3 +72,15 @@ The following are pages/views in the Airbnb clone application:
    - Displays details of a user's account
 
 ## Database Design
+
+The following is the database schema of this application:
+
+`User`
+
+| Column    | Key |     |     | Type |
+| --------- | --- | --- | --- | ---- |
+| bookingId | PK  | NN  | AI  | INT  |
+| userId    | FK  |     |     |      |
+| listingId | FK  |     |     |      |
+| startDate |     |     |     | TIME |
+| endDate   |     |     |     | TIME |
