@@ -95,3 +95,13 @@ The following is the database schema of this application:
 | description |     |     |     | CHAR   |
 | rating      |     |     |     | DOUBLE |
 | rentNightly |     |     |     | DOUBLE |
+
+`Booking`
+
+| Column    | Key |     |     | Type |
+| --------- | --- | --- | --- | ---- |
+| bookingId | PK  | NN  | AI  | INT  |
+| userId    | FK  |     |     |      |
+| listingId | FK  |     |     |      |
+| startDate |     |     |     | TIME |
+| endDate   |     |     |     | TIME |
