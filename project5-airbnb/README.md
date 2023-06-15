@@ -84,3 +84,14 @@ The following is the database schema of this application:
 | listingId | FK  |     |     |      |
 | startDate |     |     |     | TIME |
 | endDate   |     |     |     | TIME |
+
+`Listing`
+
+| Column      | Key |     |     | Type   |
+| ----------- | --- | --- | --- | ------ |
+| listingId   | PK  | NN  | AI  | INT    |
+| ownerId     | FK  |     |     |        |
+| name        |     |     |     | CHAR   |
+| description |     |     |     | CHAR   |
+| rating      |     |     |     | DOUBLE |
+| rentNightly |     |     |     | DOUBLE |
