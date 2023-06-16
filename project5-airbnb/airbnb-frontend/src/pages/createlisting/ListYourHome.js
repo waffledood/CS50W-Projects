@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import classes from "./ListYourHome.module.css";
-import ListYourHomeForm from "../form/ListYourHomeForm";
+import ListYourHomeForm from "../../form/ListYourHomeForm";
 
 const ListYourHome = (props) => {
   const [listYourHomeClick, setListYourHomeClick] = useState(false);
