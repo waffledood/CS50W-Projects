@@ -1,12 +1,12 @@
 import React from "react";
 
 import "./App.css";
-import Header from "./header/Header";
+import MainPage from "./mainpage/MainPage";
 
 function App() {
   return (
     <React.Fragment>
-      <Header />
+      <MainPage />
       <div>Hello world!</div>
     </React.Fragment>
   );
