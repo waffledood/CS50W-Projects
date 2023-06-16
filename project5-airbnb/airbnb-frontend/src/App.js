@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./App.css";
-import MainPage from "./mainpage/MainPage";
+import MainPage from "./pages/mainpage/MainPage";
 
 function App() {
   return (

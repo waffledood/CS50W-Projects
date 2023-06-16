@@ -1,4 +1,4 @@
-import Navbar from "../header/Navbar";
+import Navbar from "../../header/Navbar";
 
 const MainPage = (props) => {
   return <Navbar />;
