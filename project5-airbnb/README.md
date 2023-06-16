@@ -59,11 +59,11 @@ The following are pages/views in the Airbnb clone application:
    - Shows all current listings
      All listings with available slots in the near future (up to 2 years from today's date)
 
-2. Listing page
+2. View Listing page
 
    - Shows details of a listing
 
-3. Creating Listing page
+3. Create Listing page
 
    - Creation of a listing
 
