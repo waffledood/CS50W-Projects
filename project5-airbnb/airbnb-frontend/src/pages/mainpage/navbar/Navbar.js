@@ -1,6 +1,6 @@
 import classes from "./Navbar.module.css";
-import ListYourHome from "./ListYourHome";
-import Profile from "./Profile";
+import ListYourHome from "../../../header/ListYourHome";
+import Profile from "../../../header/Profile";
 
 const Navbar = (props) => {
   return (
