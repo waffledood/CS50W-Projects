@@ -34,11 +34,11 @@
   font-weight: var(--font-weight);
 
   /* Border */
-  border: 2px var(--border-color-main) solid;
+  border: 1px var(--border-color-main) solid;
   border-radius: var(--border-radius);
 
   /* Spacing & Margin */
-  padding: 5px 5px 5px 5px;
+  padding: 12px;
 
   /* Button */
   background: #fff;
