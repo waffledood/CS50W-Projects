@@ -9,4 +9,6 @@
 
 .a:hover {
   cursor: pointer;
+  border-radius: 20px;
+  background-color: #ddd;
 }
