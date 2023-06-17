@@ -164,7 +164,7 @@ def createListing(request):
     if not missingListingDetails:
         return JsonResponse({
             "error": "Created Listing is missing details.",
-            "missingDetails": listingDetails
+            "missingDetails": missingListingDetails
         }, status=400)
 
     # Save Listing
