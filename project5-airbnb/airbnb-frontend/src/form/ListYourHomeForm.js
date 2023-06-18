@@ -3,17 +3,10 @@ import ReactDOM from "react-dom";
 
 import classes from "./ListYourHomeForm.module.css";
 
-const Backdrop = (props) => {
-  return <div className={classes.backdrop} onClick={props.onExit}></div>;
-};
-
 const ModalOverlay = (props) => {
   const formSubmitHandler = (event) => {
     // stop form submission
     event.preventDefault();
-
-    // close the modal overlay
-    props.onExit();
 
     // handle form submission
   };
