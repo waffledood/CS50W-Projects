@@ -1,9 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 import classes from "./ListYourHomeForm.module.css";
 
-const ModalOverlay = (props) => {
+const ListYourHomeForm = (props) => {
   const formSubmitHandler = (event) => {
     // stop form submission
     event.preventDefault();
@@ -45,21 +44,6 @@ const ModalOverlay = (props) => {
         </div>
       </form>
     </div>
-  );
-};
-
-const ListYourHomeForm = (props) => {
-  return (
-    <React.Fragment>
-      {ReactDOM.createPortal(
-        <Backdrop onExit={props.onExit} />,
-        document.getElementById("backdrop-root")
-      )}
-      {ReactDOM.createPortal(
-        <ModalOverlay onExit={props.onExit} />,
-        document.getElementById("overlay-root")
-      )}
-    </React.Fragment>
   );
 };
 
