@@ -1,7 +1,22 @@
-.modal {
-  position: fixed;
-  top: 30vh;
-  left: 10%;
+.header {
+  /* Flex properties */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 80px;
+  height: 80px;
+  width: 100%;
+
+  min-width: 35rem;
+}
+
+.logo {
+  fill: var(--primary-color);
+}
+
+.form {
   width: 80%;
   z-index: 100;
   overflow: hidden;
