@@ -33,11 +33,7 @@ const ListYourHomeForm = (props) => {
           <Profile />
         </nav>
       </header>
-      <form action="#" onSubmit={formSubmitHandler}>
-        <div className={classes.formControl}>
-          <label htmlFor="listingName">Name</label>
-          <input type="text" name="listingName" id="listingName" />
-        </div>
+        <h1 className={classes.h1}>List Your Home</h1>
 
         <div className={classes.formControl}>
           <label htmlFor="listingDescription">Description</label>
