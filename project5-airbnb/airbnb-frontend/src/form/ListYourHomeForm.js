@@ -33,33 +33,40 @@ const ListYourHomeForm = (props) => {
           <Profile />
         </nav>
       </header>
+      <body className={classes.body}>
         <h1 className={classes.h1}>List Your Home</h1>
+        <form action="#" className={classes.form} onSubmit={formSubmitHandler}>
+          <div className={classes.formControl}>
+            <label htmlFor="listingName">Name</label>
+            <input type="text" name="listingName" id="listingName" />
+          </div>
 
-        <div className={classes.formControl}>
-          <label htmlFor="listingDescription">Description</label>
-          <textarea
-            name="listingDescription"
-            id="listingDescription"
-          ></textarea>
-        </div>
+          <div className={classes.formControl}>
+            <label htmlFor="listingDescription">Description</label>
+            <textarea
+              name="listingDescription"
+              id="listingDescription"
+            ></textarea>
+          </div>
 
-        <div className={classes.formControl}>
-          <label htmlFor="listingPriceNightly">Price (Nightly)</label>
-          <input
-            type="number"
-            name="listingPriceNightly"
-            id="listingPriceNightly"
-          />
-        </div>
+          <div className={classes.formControl}>
+            <label htmlFor="listingPriceNightly">Price (Nightly)</label>
+            <input
+              type="number"
+              name="listingPriceNightly"
+              id="listingPriceNightly"
+            />
+          </div>
 
-        <br />
+          <br />
 
-        <div className={classes.formControl}>
-          <button type="submit" className="btn">
-            Submit
-          </button>
-        </div>
-      </form>
+          <div className={classes.formControl}>
+            <button type="submit" className="btn">
+              Submit
+            </button>
+          </div>
+        </form>
+      </body>
     </div>
   );
 };
