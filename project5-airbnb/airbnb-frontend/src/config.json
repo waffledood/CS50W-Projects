@@ -1,4 +1,5 @@
 {
+  "backendPort": "http://127.0.0.1:8000/",
   "listingPriceMin": 0,
   "listingPriceMax": 1000,
   "listingPriceStep": 1
