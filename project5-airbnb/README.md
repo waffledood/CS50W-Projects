@@ -26,6 +26,7 @@ An accompanying `requirements.txt` listing all external packages has been includ
 For ease of reference, the full list is appended below:
 
 - `varname`
+- `django-cors-headers`
 
 ## Terminology
 
@@ -105,3 +106,7 @@ The following is the database schema of this application:
 | listingId | FK  |     |     |      |
 | startDate |     |     |     | TIME |
 | endDate   |     |     |     | TIME |
+
+References:
+
+- [SQL Data types](https://www.w3schools.com/sql/sql_datatypes.asp)
