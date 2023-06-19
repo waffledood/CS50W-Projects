@@ -4,6 +4,8 @@ import classes from "./ListYourHomeForm.module.css";
 
 import Profile from "../pages/account/Profile";
 
+import config from "../config.json";
+
 const ListYourHomeForm = (props) => {
   const formSubmitHandler = (event) => {
     // stop form submission
@@ -54,6 +56,9 @@ const ListYourHomeForm = (props) => {
             <input
               type="number"
               name="listingPriceNightly"
+              min={config.listingPriceMin}
+              max={config.listingPriceMax}
+              step={config.listingPriceStep}
               id="listingPriceNightly"
             />
           </div>
