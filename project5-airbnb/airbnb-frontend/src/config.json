@@ -1,5 +1,16 @@
 {
   "backendPort": "http://127.0.0.1:8000/",
+  "api_login": "login",
+  "api_logout": "logout",
+  "api_register": "register",
+  "api_user": "user",
+  "api_users": "users",
+  "api_listing": "listing",
+  "api_listings": "listings",
+  "api_createListing": "createListing",
+  "api_booking": "booking",
+  "api_bookings": "bookings",
+  "api_createBooking": "createBooking",
   "listingPriceMin": 0,
   "listingPriceMax": 1000,
   "listingPriceStep": 1
