@@ -51,4 +51,7 @@ But doing this doesn't seem to work. I am still getting the `Forbidden (CSRF coo
 There are a few things I had mistakenly done:
 
 - The definition of the `getCSRFToken()` view. Returning the token from `get_token()` from the `django.middleware.csrf` library was probably not the best approach. Because calling just the `getCSRFToken()` view, without triggering the `get_token()` function, will return a CSRF Token in the Cookies of the Response.
-  I found out about this through Bryan's video: [link](https://youtu.be/NFHiT4ncPD8?t=1052).
+  I found out about this through Bryan's Part 3 video: [link](https://youtu.be/NFHiT4ncPD8?t=1052).
+
+- Pure JavaScript alone will not be able to retrieve the CSRF Token from the Cookies of the Response. Only AJAX can handle that. Then this is where the custom code (from Django's documentation & several StackOverflow answers) cite the same block of code, to retrieve the cookie `'csrftoken'` from the document.
+  I found out about this in Bryan's Part 7 video: [link](https://youtu.be/EMKRnPeiD5A?t=2174).
