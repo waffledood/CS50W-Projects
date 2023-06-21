@@ -55,3 +55,4 @@ There are a few things I had mistakenly done:
 
 - Pure JavaScript alone will not be able to retrieve the CSRF Token from the Cookies of the Response. Only AJAX can handle that. Then this is where the custom code (from Django's documentation & several StackOverflow answers) cite the same block of code, to retrieve the cookie `'csrftoken'` from the document.
   I found out about this in Bryan's Part 7 video: [link](https://youtu.be/EMKRnPeiD5A?t=2174).
+  This is also mentioned in this StackOverflow answer: [link](https://stackoverflow.com/a/220233/15781733).
