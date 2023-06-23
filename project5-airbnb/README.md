@@ -27,6 +27,8 @@ For ease of reference, the full list is appended below:
 
 - `varname`
 - `django-cors-headers`
+- `axios`
+- `js-cookie`
 
 ## Terminology
 
