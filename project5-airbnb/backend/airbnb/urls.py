@@ -15,5 +15,6 @@ urlpatterns = [
     path("createListing", views.createListing, name="createListing"),
     path("booking/<int:id>", views.booking, name="booking"),
     path("bookings", views.bookings, name="bookings"),
-    path("createBooking", views.createBooking, name="createBooking")
+    path("createBooking", views.createBooking, name="createBooking"),
+    path("getCSRFToken", views.getCSRFToken, name="getToken")
 ]

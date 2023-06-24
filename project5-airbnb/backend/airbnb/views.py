@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .models import Booking, Listing, User
 from .model import validator
@@ -265,3 +266,8 @@ def createBooking(request):
     booking.save()
 
     return JsonResponse({"message": "Booking created successfully.", "booking": booking.serialize()}, status=201)
+
+
+@ensure_csrf_cookie
+def getCSRFToken(request):
+    return JsonResponse({"success": 'CSRF cookie set'}, status=200)
