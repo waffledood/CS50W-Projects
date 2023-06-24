@@ -35,7 +35,7 @@ const ListYourHomeForm = (props) => {
           <Profile />
         </nav>
       </header>
-      <body className={classes.body}>
+      <div className={classes.body}>
         <h1 className={classes.h1}>List Your Home</h1>
         <form action="#" className={classes.form} onSubmit={formSubmitHandler}>
           <div className={classes.formControl}>
@@ -71,7 +71,7 @@ const ListYourHomeForm = (props) => {
             </button>
           </div>
         </form>
-      </body>
+      </div>
     </div>
   );
 };
