@@ -54,6 +54,10 @@ Even after using the `axios` package to make the `GET` request to the Django `ge
 
 After checking a few SO answers & Bryan's videos, it seems that the initial `GET` request to `getCSRFToken/` doesn't store the cookies in the local browser.
 
+I suspect it's something to do with the CORS setting in Django (`settings.py`).
+
+Better to start from a clean slate & try again.
+
 **Resolution**
 
 There are a few things I had mistakenly done:
@@ -64,3 +68,15 @@ There are a few things I had mistakenly done:
 - Pure JavaScript alone will not be able to retrieve the CSRF Token from the Cookies of the Response. Only AJAX can handle that. Then this is where the custom code (from Django's documentation & several StackOverflow answers) cite the same block of code, to retrieve the cookie `'csrftoken'` from the document.
   I found out about this in Bryan's Part 7 video: [link](https://youtu.be/EMKRnPeiD5A?t=2174).
   This is also mentioned in this StackOverflow answer: [link](https://stackoverflow.com/a/220233/15781733).
+  This StackOverflow post mentions why AJAX is needed to retrieve the HTTP response headers: [link](https://stackoverflow.com/questions/220231/accessing-the-web-pages-http-headers-in-javascript).
+
+- There is also an issue with the `sameSite=Lax` cookie header causing cookies to not be saved in cross-site requests: [link](https://stackoverflow.com/a/72322207/15781733). Setting the following properties in `settings.py` will ensure the `sameSite` cookie header is `None`, [link](https://stackoverflow.com/a/63590219/15781733).
+
+  This Mozilla [documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies) on "Using HTTP Cookies" is useful.
+
+  This website explains how to generate CSRF Tokens (not very in-depth explanation) & custom CSRF Tokens: [link](https://www.makeuseof.com/django-csrf-tokens-what-why-need/).
+
+- The following resources are quite extensive on the topic of CORS & cross-site requests:
+  - Enabling receiving & sending cookies by a CORS request: [link](https://stackoverflow.com/a/46412839/15781733)
+  - Cookie not being set in browser (Django specific): [link](https://stackoverflow.com/a/71309794/15781733)
+  - Disabling the `sameSite=Lax` cookie property: [link](https://stackoverflow.com/questions/63576338/django-check-cookiess-samesite-attribute)
