@@ -76,6 +76,20 @@ There are a few things I had mistakenly done:
 
   This website explains how to generate CSRF Tokens (not very in-depth explanation) & custom CSRF Tokens: [link](https://www.makeuseof.com/django-csrf-tokens-what-why-need/).
 
+- That aside, a point to explore is why the the `Set-Cookie` header in the response from the Django backend is not actually setting the cookies in the browser running React.
+
+  Links:
+
+  - [Set cookies for cross-origin requests](https://stackoverflow.com/questions/46288437/set-cookies-for-cross-origin-requests/46412839#46412839)
+  - [empty response from rest api using JS, but got a JSON response in PostMan](https://stackoverflow.com/questions/73065409/empty-response-from-rest-api-using-javascript-fetch-method-got-a-json-response)
+  - [ensure_csrf_token doesn't set CSRF cookie](https://stackoverflow.com/questions/73860607/ensure-csrf-token-is-not-setting-the-csrf-cookie-in-cookies-tab)
+  - [Set-Cookie header not setting cookie in browser](https://stackoverflow.com/questions/61555100/cookie-in-set-cookie-header-not-being-set)
+  - [Cookie not set when React & Django on different servers](https://stackoverflow.com/questions/71288955/drf-set-cookie-does-not-work-when-frontend-is-on-localhost-and-backend-is-on-a-r)
+  - [Added server address to CORS whitelist, but cross-origin request is blocked](https://stackoverflow.com/questions/71715600/i-have-cors-whitelisted-in-django-and-the-cross-origin-request-is-still-blocked)
+  - [Setting up CORS in Django](https://stackoverflow.com/questions/22355540/access-control-allow-origin-in-django-app/67844932#67844932)
+  - [CSRF Cookie not set with React frontend -- Django forum](https://forum.djangoproject.com/t/csrf-cookie-is-not-set-with-react-frontend/6509/30)
+  - [Django CSRF Token is null in Chrome](https://stackoverflow.com/questions/26049151/django-csrf-token-is-null-in-chrome)
+
 - The following resources are quite extensive on the topic of CORS & cross-site requests:
   - Enabling receiving & sending cookies by a CORS request: [link](https://stackoverflow.com/a/46412839/15781733)
   - Cookie not being set in browser (Django specific): [link](https://stackoverflow.com/a/71309794/15781733)
