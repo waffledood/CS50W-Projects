@@ -100,3 +100,4 @@ There are a few things I had mistakenly done:
 
 - Miscelleaneous resources:
   - Feed data from React POST request into Django, without rendering said Django form on the frontend: [link](https://stackoverflow.com/questions/75265333/is-it-possible-to-feed-data-from-a-react-post-request-into-a-django-form-without)
+    Relevant Django documentation: [link](https://docs.djangoproject.com/en/4.2/topics/forms/)
