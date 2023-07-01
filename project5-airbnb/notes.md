@@ -94,3 +94,5 @@ There are a few things I had mistakenly done:
   - Enabling receiving & sending cookies by a CORS request: [link](https://stackoverflow.com/a/46412839/15781733)
   - Cookie not being set in browser (Django specific): [link](https://stackoverflow.com/a/71309794/15781733)
   - Disabling the `sameSite=Lax` cookie property: [link](https://stackoverflow.com/questions/63576338/django-check-cookiess-samesite-attribute)
+  - Django CSRF Protection Guide -- StackHawk: [link](https://www.stackhawk.com/blog/django-csrf-protection-guide/#how-to-use-djangos-csrf-middleware)
+  - CSRF Token Missing -- django forums: [link](https://forum.djangoproject.com/t/csrf-token-missing-react-axios-and-django/14169/3)
