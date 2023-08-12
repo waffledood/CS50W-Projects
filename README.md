@@ -13,6 +13,10 @@ The projects built are listed below & represented by their corresponding branche
 - Project 4 - Network (`project4` branch)
 - Project 5 - Anki (`project5` branch)
 
+Discarded Project(s):
+
+- Project 5 - Airbnb (`project5-redacted` branch)
+
 Future plans for the projects:
 
 - Deploy these projects to a server.
