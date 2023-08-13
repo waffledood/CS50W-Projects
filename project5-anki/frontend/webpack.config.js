@@ -11,6 +11,16 @@ module.exports = {
     path: path.resolve(__dirname, "../backend/anki/static/anki/build/"),
     filename: "[name].js",
   },
+  // Add a rule so Webpack reads JS with Babel
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"],
+      },
+    ],
+  },
   plugins: [
     // Don't output new files if there is an error
     new webpack.NoEmitOnErrorsPlugin(),
