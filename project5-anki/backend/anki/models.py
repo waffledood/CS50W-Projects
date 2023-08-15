@@ -24,6 +24,7 @@ class Collection(models.Model):
     user_id = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name="collections")
     name = models.CharField(max_length=64)
+    description = models.CharField(max_length=128)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
