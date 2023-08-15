@@ -40,6 +40,7 @@ The following are pages/views in the Anki application:
    - A User will be able to create a Collection.
    - Details to be provided:
      - Name of collection - A text-based (text, numbers & special characters) name
+     - Description of collection - A text-based (text, numbers & special characters) description
 
 5. Create Card page
 
@@ -74,6 +75,7 @@ The following is the database schema of this application
 | id            | PK  | NN  | AI  | INT      |
 | user_id       | FK  |     |     | INT      |
 | name          |     |     |     | CHAR     |
+| description   |     |     |     | CHAR     |
 | date_created  |     |     |     | DATETIME |
 | date_modified |     |     |     | DATETIME |
 
