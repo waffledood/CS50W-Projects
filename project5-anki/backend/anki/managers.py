@@ -10,12 +10,14 @@ class CustomUserManager(BaseUserManager):
         """
         Create and save a user with the given email and password.
         """
-        if not username or email:
+        print(f"creating user {username}, email: {email}")
+        if not username or not email:
             raise ValueError("The username & email must be set")
         email = self.normalize_email(email)
         user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save()
+        print(f"user {username}, email: {email} successfully created")
         return user
 
     def create_superuser(self, username, email, password, **extra_fields):
