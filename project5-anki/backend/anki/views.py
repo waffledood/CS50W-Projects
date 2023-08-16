@@ -57,3 +57,11 @@ def login(request):
             return JsonResponse({"message": "Logged in successfully", "user": user.serialize()}, status=200)
     else:
         return JsonResponse({"error": "POST request required."}, status=400)
+
+
+def logout(request):
+    if request.method == "POST":
+        logout(request)
+        return JsonResponse({"message": "Logged out successfully", "user": request.user.serialize()}, status=200)
+    else:
+        return JsonResponse({"error": "POST request required."}, status=400)
