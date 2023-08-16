@@ -125,3 +125,13 @@ def collection(request, id):
         return JsonResponse({"message": "Collection deleted successfully"}, status=201)
 
     return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
+
+
+def collections(request):
+    if request.method == "GET":
+        # Retrieve all Collections that exist
+        collections = Collection.objects.all()
+
+        return JsonResponse({[collection.serialize() for collection in collections]}, status=200)
+
+    return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
