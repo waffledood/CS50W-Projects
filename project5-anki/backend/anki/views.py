@@ -65,3 +65,28 @@ def logout(request):
         return JsonResponse({"message": "Logged out successfully", "user": request.user.serialize()}, status=200)
     else:
         return JsonResponse({"error": "POST request required."}, status=400)
+
+
+def user(request, id):
+    if request.method == "GET":
+        # Return an error if the id doesn't exist in the database
+        try:
+            user = User.objects.get(id=id)
+        except User.DoesNotExist:
+            return JsonResponse({"error": "User id does not exist."}, status=400)
+
+        # Retrieve User with specified id
+        return JsonResponse([user.serialize()], safe=False)
+
+    if request.method == "DELETE":
+        # Return an error if the id doesn't exist in the database
+        try:
+            user = User.objects.get(id=id)
+        except User.DoesNotExist:
+            return JsonResponse({"error": "User id does not exist."}, status=400)
+
+        # Delete User with specified id
+        user.delete()
+        return JsonResponse({"message": "User deleted successfully"}, status=201)
+
+    return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
