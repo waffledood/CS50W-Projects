@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.db import IntegrityError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from .models import User
+from .models import User, Collection
 
 
 def index(request):
@@ -99,3 +99,29 @@ def users(request):
         return JsonResponse([user.serialize() for user in users], safe=False)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
+
+
+def collection(request, id):
+    if request.method == "GET":
+        # Return an error if the id doesn't exist in the database
+        try:
+            # Retrieve Collection with specified id
+            collection = Collection.objects.get(id)
+        except Collection.DoesNotExist:
+            return JsonResponse({"error": "Collection id does not exist."}, status=400)
+
+        #  Retrieve Collection with specified id
+        return JsonResponse([collection.serialize()], safe=False)
+
+    if request.method == "DELETE":
+        # Return an error if the id doesn't exist in the database
+        try:
+            collection = Collection.objects.get(id=id)
+        except Collection.DoesNotExist:
+            return JsonResponse({"error": "Collection id does not exist."}, status=400)
+
+        # Delete Collection with specified id
+        collection.delete()
+        return JsonResponse({"message": "Collection deleted successfully"}, status=201)
+
+    return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
