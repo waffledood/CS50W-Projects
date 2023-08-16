@@ -43,6 +43,19 @@ class Collection(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"Collection ({self.id}), by User ({self.user_id}), name: {self.name}, description: {self.description}, date_created: {self.date_created}, date_modified: {self.date_modified}"
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "name": self.name,
+            "description": self.description,
+            "date_created": self.date_created,
+            "date_modified": self.date_modified
+        }
+
 
 class Card(models.Model):
     collection_id = models.ForeignKey(
