@@ -62,3 +62,14 @@ class Card(models.Model):
         to=Collection, on_delete=models.CASCADE, related_name="cards")
     question = models.CharField(max_length=400)
     answer = models.CharField(max_length=400)
+
+    def __self__(self):
+        return f"Card ({self.id}), of Collection({self.collection_id}), question: {self.question}, answer: {self.answer}"
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "collection_id": self.collection_id,
+            "question": self.question,
+            "answer": self.answer
+        }
