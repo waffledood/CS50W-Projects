@@ -90,3 +90,12 @@ def user(request, id):
         return JsonResponse({"message": "User deleted successfully"}, status=201)
 
     return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
+
+
+def users(request):
+    if request.method == "GET":
+        # Retrieve all users
+        users = User.objects.all()
+        return JsonResponse([user.serialize() for user in users], safe=False)
+
+    return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
