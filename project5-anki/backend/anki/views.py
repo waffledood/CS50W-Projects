@@ -136,7 +136,7 @@ def collections(request):
         # Retrieve all Collections that exist
         collections = Collection.objects.all()
 
-        return JsonResponse({[collection.serialize() for collection in collections]}, status=200)
+        return JsonResponse({"collections": [collection.serialize() for collection in collections]}, status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
