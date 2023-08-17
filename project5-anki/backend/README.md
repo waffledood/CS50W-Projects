@@ -2,9 +2,9 @@
 
 ## Superuser (Admin Account) Details
 
-Username: haikal
-Email: haikal@gmail.com
-Password: password123
+Username: haik
+Email: haik@gmail.com
+Password: password
 
 ## Creating a Custom User Model
 
