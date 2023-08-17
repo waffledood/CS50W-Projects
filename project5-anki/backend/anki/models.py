@@ -36,7 +36,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Collection(models.Model):
-    user_id = models.ForeignKey(
+    user = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name="collections")
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=128)
@@ -58,7 +58,7 @@ class Collection(models.Model):
 
 
 class Card(models.Model):
-    collection_id = models.ForeignKey(
+    collection = models.ForeignKey(
         to=Collection, on_delete=models.CASCADE, related_name="cards")
     question = models.CharField(max_length=400)
     answer = models.CharField(max_length=400)
