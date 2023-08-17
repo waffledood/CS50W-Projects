@@ -100,7 +100,8 @@ def users(request):
     if request.method == "GET":
         # Retrieve all users
         users = User.objects.all()
-        return JsonResponse([user.serialize() for user in users], safe=False)
+
+        return JsonResponse({"users": [user.serialize() for user in users]}, status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
