@@ -3,7 +3,11 @@ from django.contrib.auth import authenticate, login
 from django.db import IntegrityError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import User, Collection
+
+from varname import nameof
 
 
 def index(request):
@@ -135,3 +139,52 @@ def collections(request):
         return JsonResponse({[collection.serialize() for collection in collections]}, status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
+
+
+@csrf_exempt
+def createCollection(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    # Load JSON from request body
+    data = json.loads(request.body)
+
+    # Retrieve Collection details
+    user = request.user
+    name = data.get("name")
+    description = data.get("description")
+
+    # Check for & return missing Collection details, if any
+    collectionDetails = [name, description]
+    missingCollectionDetails = []
+
+    for detail in collectionDetails:
+        if detail == None:
+            missingCollectionDetails.append(nameof(detail))
+
+    if not missingCollectionDetails:
+        return JsonResponse({
+            "error": "Created Collection is missing details",
+            "missingDetails": missingCollectionDetails
+        }, status=400)
+
+    # Validate Collection details
+    try:
+        # if name is empty, raise an Error
+        if not name:
+            raise ValueError("name variable is empty")
+        # if description is empty, raise an Error
+        if not description:
+            raise ValueError("description variable is empty")
+    except ValueError as e:
+        return JsonResponse({"error": f"{e}"}, status=400)
+
+    # Create & save Collection object
+    Collection = Collection(
+        user=user,
+        name=name,
+        description=description
+    )
+    collection.save()
+
+    return JsonResponse({"message": "Collection saved successfully.", "collection": collection.serialize()}, status=201)
