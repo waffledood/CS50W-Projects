@@ -213,3 +213,13 @@ def card(request, id):
         return JsonResponse({"message": "Card deleted successfully"}, status=201)
 
     return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
+
+
+def cards(request):
+    if request.method == "GET":
+        # Retrieve all Cards that exist
+        cards = Card.objects.all()
+
+        return JsonResponse({"cards": [card.serialize() for card in cards]}, status=200)
+
+    return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
