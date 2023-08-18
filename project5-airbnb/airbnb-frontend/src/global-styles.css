@@ -1,0 +1,49 @@
+/* Global variables */
+:root {
+  --primary-color: #ff385c;
+  --font-color: #000000;
+  --font-size-main: 14px;
+  --font-weight: 600;
+  --border-color-main: #dddddd;
+  --border-radius: 20px;
+}
+
+/* Global classes */
+.default-font {
+  /* Font */
+  color: var(--font-color);
+  font-weight: var(--font-weight);
+  font-size: var(--font-size-main);
+}
+
+.link {
+  text-decoration: none;
+  color: var(--font-color);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* Universal styling for all buttons */
+.btn {
+  /* Font */
+  color: var(--font-color);
+  font-weight: var(--font-weight);
+
+  /* Border */
+  border: 2px var(--border-color-main) solid;
+  border-radius: var(--border-radius);
+
+  /* Spacing & Margin */
+  padding: 5px 5px 5px 5px;
+
+  /* Button */
+  background: #fff;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
