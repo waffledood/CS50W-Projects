@@ -58,6 +58,8 @@ class Collection(models.Model):
 
 
 class Card(models.Model):
+    user = models.ForeignKey(
+        to=User, on_delete=models.CASCADE, related_name="cards")
     collection = models.ForeignKey(
         to=Collection, on_delete=models.CASCADE, related_name="cards")
     question = models.CharField(max_length=400)

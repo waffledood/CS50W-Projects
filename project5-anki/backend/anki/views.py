@@ -223,3 +223,55 @@ def cards(request):
         return JsonResponse({"cards": [card.serialize() for card in cards]}, status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
+
+
+@csrf_exempt
+def createCard(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    # Load JSON from request.body
+    data = json.loads(request.body)
+
+    # Retrieve Card details
+    user = request.user
+    collection_id = data["collection_id"]
+    question = data["question"]
+    answer = data["answer"]
+
+    # Check for & return missing Card details, if any
+    cardDetails = [collection_id, question, answer]
+    missingCardDetails = []
+
+    for detail in cardDetails:
+        if detail == None:
+            missingCardDetails.append(nameof(detail))
+
+    if not missingCardDetails:
+        return JsonResponse({
+            "error": "Created Card is missing details",
+            "missingDetails": missingCardDetails
+        }, status=400)
+
+    # Validate Card details
+    try:
+        collection = Collection.objects.get(collection_id)
+        if not question:
+            raise ValueError("question variable is empty")
+        if not answer:
+            raise ValueError("answer variable is empty")
+    except Collection.DoesNotExist:
+        return JsonResponse({"error": "Collection id does not exist"}, status=400)
+    except ValueError as e:
+        return JsonResponse({"error": f"{e}"}, status=400)
+
+    # Create & save Card object
+    card = Card(
+        user=user,
+        collection=collection,
+        question=question,
+        answer=answer
+    )
+    card.save()
+
+    return JsonResponse({"message": "Card saved successfully", "card": card.serialize()}, status=200)
