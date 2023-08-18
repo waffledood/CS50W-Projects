@@ -5,7 +5,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import User, Collection
+from .models import User, Collection, Card
 
 from varname import nameof
 
@@ -189,3 +189,27 @@ def createCollection(request):
     collection.save()
 
     return JsonResponse({"message": "Collection saved successfully.", "collection": collection.serialize()}, status=201)
+
+
+def card(request, id):
+    if request.method == "GET":
+        # Return an error if the id doesn't exist in the database
+        try:
+            card = Card.objects.get(id=id)
+        except Card.DoesNotExist:
+            return JsonResponse({"error": "Card id does not exist"}, status=400)
+
+        return JsonResponse({"user": card.serialize()}, status=201)
+
+    if request.method == "DELETE":
+        # Return an error if the id doesn't exist in the database
+        try:
+            card = Card.objects.get(id=id)
+        except Card.DoesNotExist:
+            return JsonResponse({"error": "Card id does not exist"}, status=400)
+
+        # delete the Card
+        card.delete()
+        return JsonResponse({"message": "Card deleted successfully"}, status=201)
+
+    return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)

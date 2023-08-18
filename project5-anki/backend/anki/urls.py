@@ -11,5 +11,6 @@ urlpatterns = [
     path("users", views.users, name="users"),
     path("collection", views.collection, name="collection"),
     path("collections", views.collections, name="collections"),
-    path("createCollection", views.createCollection, name="createCollection")
+    path("createCollection", views.createCollection, name="createCollection"),
+    path("card", views.card, name="card")
 ]
