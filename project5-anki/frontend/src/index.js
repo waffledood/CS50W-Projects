@@ -1,17 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-// Define the React app
+import Login from "./login/Login";
+
 const App = () => {
-  const [count, setCount] = React.useState(0);
-  const onClick = () => setCount((c) => c + 1);
-  return (
-    <div>
-      <h1>The count is {count}</h1>
-      <button onClick={onClick}>Count</button>
-    </div>
-  );
+  return <Login />;
 };
-// Mount the app to the mount point.
+
+// Mount App to the mount point.
 const root = document.getElementById("app");
 ReactDOM.render(<App />, root);
