@@ -7,4 +7,5 @@
 }
 
 .flexItem {
+  min-width: 40vw;
 }
