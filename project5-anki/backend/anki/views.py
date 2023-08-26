@@ -1,5 +1,5 @@
 import json
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, JsonResponse
@@ -58,7 +58,7 @@ def login(request):
             return JsonResponse({"error": "Invalid username and/or password."}, status=400)
         # If authentication is successful, log user in
         else:
-            login(request, user)
+            auth_login(request, user)
             return JsonResponse({"message": "Logged in successfully", "user": user.serialize()}, status=200)
     else:
         return render(request, "anki/login.html")
