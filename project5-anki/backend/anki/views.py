@@ -1,5 +1,6 @@
 import json
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
@@ -10,8 +11,8 @@ from .models import User, Collection, Card
 from varname import nameof
 
 
+@login_required
 def index(request):
-    # return HttpResponse(f"Hello World!")
     return render(request, "anki/index.html")
 
 
