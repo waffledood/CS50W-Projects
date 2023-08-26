@@ -18,12 +18,11 @@ def index(request):
 
 def register(request):
     if request.method == "POST":
-        # Load JSON from request body
-        data = json.loads(request.body)
-        username = data.get("username")
-        email = data.get("email")
-        password = request.get("password")
-        confirmation = request.get("confirmation")
+        # Retrieve registration details
+        username = request.POST["username"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+        confirmation = request.POST["confirmation"]
 
         # Ensure password matches confirmation
         if password != confirmation:
