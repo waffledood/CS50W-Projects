@@ -46,10 +46,10 @@ def register(request):
 
 def login(request):
     if request.method == "POST":
-
-        # Verify user's credentials
+        # Retrieve login details
         username = request.POST["username"]
         password = request.POST["password"]
+        # Verify user's credentials
         user = authenticate(request, username=username, password=password)
 
         # Check if authentication failed
