@@ -3,5 +3,42 @@
 {% block title %}Register | Anki{% endblock %}
 
 {% block body %}
-<div>register here</div>
+<div class="flexContainer">
+  <div class="flexItem">
+    <h1>Anki</h1>
+  </div>
+  <div class="flexItem p-3">
+    <h3>Create Account</h3>
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        placeholder="Enter your username"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        placeholder="Enter your password"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="confirmation" class="form-label">Re-enter Your Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="confirmation"
+        placeholder="Confirm your password"
+      />
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+    </div>
+  </div>
+</div>
 {% endblock %}
