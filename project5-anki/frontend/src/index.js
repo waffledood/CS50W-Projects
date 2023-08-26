@@ -1,10 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Login from "./login/Login";
-
 const App = () => {
-  return <Login />;
+  return <div>Hello!</div>;
 };
 
 // Mount App to the mount point.
