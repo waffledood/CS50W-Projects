@@ -9,38 +9,44 @@
   </div>
   <div class="flexItem p-3">
     <h3>Welcome back!</h3>
-    <div class="mb-3">
-      <label for="username" class="form-label">Username</label>
-      <input
-        type="text"
-        class="form-control"
-        id="username"
-        placeholder="Enter your username"
-      />
-    </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <input
-        type="password"
-        class="form-control"
-        id="password"
-        placeholder="Enter your password"
-      />
-    </div>
-    <div class="mb-3">
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value=""
-          id="rememberMe"
-        />
-        <label class="form-check-label" for="rememberMe"> Remember me </label>
-      </div>
-    </div>
-    <div class="mb-3">
-      <button type="submit" class="btn btn-primary">Log In</button>
-    </div>
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+          />
+        </div>
+        <div class="mb-3">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="rememberMe"
+              name="rememberMe"
+            />
+            <label class="form-check-label" for="rememberMe"> Remember me </label>
+          </div>
+        </div>
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary">Log In</button>
+        </div>
+    </form>
     Don't have an account? <a href="{% url 'register' %}">Register</a>
   </div>
 </div>
