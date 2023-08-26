@@ -42,7 +42,7 @@ def register(request):
 
         return JsonResponse({"message": "New user registered successfully", "user": user.serialize()}, status=200)
     else:
-        return JsonResponse({"error": "POST request required."}, status=400)
+        return render(request, "anki/register.html")
 
 
 def login(request):
