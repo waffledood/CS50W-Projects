@@ -1,0 +1,15 @@
+.flexContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100vh;
+}
+
+.flexItem {
+  min-width: 40vw;
+}
+
+.flexItem h1 {
+  text-align: center;
+}
