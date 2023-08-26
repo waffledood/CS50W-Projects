@@ -1,4 +1,5 @@
-{% extends "anki/layout.html" %} {% block body %}
+{% extends "anki/layout.html" %} {% block title %}Login | Anki {% endblock %}
+{%block body %}
 <div class="flexContainer">
   <div class="flexItem">
     <h1>Anki</h1>
@@ -39,5 +40,4 @@
     Don't have an account? <a href="{% url 'register' %}">Register</a>
   </div>
 </div>
-
 {% endblock %}
