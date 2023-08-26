@@ -61,7 +61,7 @@ def login(request):
             login(request, user)
             return JsonResponse({"message": "Logged in successfully", "user": user.serialize()}, status=200)
     else:
-        return JsonResponse({"error": "POST request required."}, status=400)
+        return render(request, "anki/login.html")
 
 
 def logout(request):
