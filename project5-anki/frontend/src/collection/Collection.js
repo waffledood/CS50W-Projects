@@ -25,7 +25,22 @@ const Collection = () => {
       <h1>Collection</h1>
       <Container>
         <Row className="row-cols-2">
-          {"Placeholder value for testing purposes."}
+          {cards.map((card) => {
+            return (
+              <>
+                <Col key={`${card.id}q`}>
+                  <div className={classes.card}>
+                    <div className={classes.question}>{card.question}</div>
+                  </div>
+                </Col>
+                <Col key={`${card.id}a`}>
+                  <div className={classes.card}>
+                    <div className={classes.answer}>{card.answer}</div>
+                  </div>
+                </Col>
+              </>
+            );
+          })}
         </Row>
       </Container>
     </div>
