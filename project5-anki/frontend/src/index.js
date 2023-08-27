@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import Collection from "./collection/Collection";
 
@@ -12,5 +12,7 @@ const App = () => {
 };
 
 // Mount App to the mount point.
-const root = document.getElementById("app");
-ReactDOM.render(<App />, root);
+const rootElement = document.getElementById("app");
+const root = createRoot(rootElement);
+
+root.render(<App />);
