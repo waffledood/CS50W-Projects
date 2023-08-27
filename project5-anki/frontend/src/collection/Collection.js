@@ -24,24 +24,22 @@ const Collection = () => {
     <div>
       <h1>Collection</h1>
       <Container>
-        <Row className="row-cols-2">
-          {cards.map((card) => {
-            return (
-              <>
-                <Col key={`${card.id}q`}>
-                  <div className={classes.card}>
-                    <div className={classes.question}>{card.question}</div>
-                  </div>
-                </Col>
-                <Col key={`${card.id}a`}>
-                  <div className={classes.card}>
-                    <div className={classes.answer}>{card.answer}</div>
-                  </div>
-                </Col>
-              </>
-            );
-          })}
-        </Row>
+        {cards.map((card) => {
+          return (
+            <Row className="row-cols-2" key={card.id}>
+              <Col>
+                <div className={classes.card}>
+                  <div className={classes.question}>{card.question}</div>
+                </div>
+              </Col>
+              <Col>
+                <div className={classes.card}>
+                  <div className={classes.question}>{card.answer}</div>
+                </div>
+              </Col>
+            </Row>
+          );
+        })}
       </Container>
     </div>
   );
