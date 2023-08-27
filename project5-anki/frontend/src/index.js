@@ -1,8 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import Collection from "./collection/Collection";
+
 const App = () => {
-  return <div>Hello!</div>;
+  return (
+    <>
+      <Collection />
+    </>
+  );
 };
 
 // Mount App to the mount point.
