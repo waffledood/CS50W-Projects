@@ -3,11 +3,11 @@
 {% block title %}Login | Anki {% endblock %}
 
 {% block body %}
-<div class="d-flex flex-row justify-content-evenly align-items-center flexContainer h-100">
-  <div class="flexItem">
+<div class="d-flex flex-row justify-content-evenly align-items-center flexContainer h-100 w-100">
+  <div class="min-vw-40">
     <h1>Anki</h1>
   </div>
-  <div class="flexItem p-3">
+  <div class="min-vw-40 p-3">
     <h3>Welcome back!</h3>
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
