@@ -2,8 +2,9 @@ import json
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, Collection, Card
@@ -58,7 +59,7 @@ def login(request):
         # If authentication is successful, log user in
         else:
             auth_login(request, user)
-            return JsonResponse({"message": "Logged in successfully", "user": user.serialize()}, status=200)
+            return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "anki/login.html")
 
