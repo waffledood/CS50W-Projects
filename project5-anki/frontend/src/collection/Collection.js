@@ -34,7 +34,7 @@ const Collection = () => {
               </Col>
               <Col>
                 <div className={classes.card}>
-                  <div className={classes.question}>{card.answer}</div>
+                  <div className={classes.answer}>{card.answer}</div>
                 </div>
               </Col>
             </Row>
