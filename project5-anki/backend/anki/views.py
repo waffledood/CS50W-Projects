@@ -55,7 +55,7 @@ def login(request):
 
         # Check if authentication failed
         if user is None:
-            return JsonResponse({"error": "Invalid username and/or password."}, status=400)
+            return render(request, "anki/login.html", {"error": "Credentials are invalid."})
         # If authentication is successful, log user in
         else:
             auth_login(request, user)
@@ -143,7 +143,7 @@ def collections(request):
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
-@csrf_exempt
+@ csrf_exempt
 def createCollection(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
@@ -226,7 +226,7 @@ def cards(request):
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
-@csrf_exempt
+@ csrf_exempt
 def createCard(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
