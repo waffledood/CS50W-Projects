@@ -24,6 +24,10 @@ const Collection = () => {
     <div>
       <h1>Collection</h1>
       <Container>
+        <Row className="row-cols-2">
+          <Col className={`${classes.header}`}>Question</Col>
+          <Col className={`${classes.header}`}>Answer</Col>
+        </Row>
         {cards.map((card) => {
           return (
             <Row className="row-cols-2" key={card.id}>
