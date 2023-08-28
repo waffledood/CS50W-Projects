@@ -31,15 +31,11 @@ const Collection = () => {
         {cards.map((card) => {
           return (
             <Row className="row-cols-2" key={card.id}>
-              <Col>
-                <div className={classes.card}>
-                  <div className={classes.question}>{card.question}</div>
-                </div>
+              <Col className={`${classes.card} ${classes.question}`}>
+                {card.question}
               </Col>
-              <Col>
-                <div className={classes.card}>
-                  <div className={classes.answer}>{card.answer}</div>
-                </div>
+              <Col className={`${classes.card} ${classes.answer}`}>
+                {card.answer}
               </Col>
             </Row>
           );
