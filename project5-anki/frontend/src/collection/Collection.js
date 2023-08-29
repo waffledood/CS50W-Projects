@@ -37,6 +37,7 @@ const Collection = () => {
               <Col className={`${classes.card} ${classes.answer}`}>
                 {card.answer}
               </Col>
+              <Col xs="1">Edit</Col>
             </Row>
           );
         })}
