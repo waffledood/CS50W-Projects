@@ -24,17 +24,21 @@ const Collection = () => {
     <div>
       <h1>Collection</h1>
       <Container>
-        <Row className="row-cols-2">
-          <Col className={`${classes.header}`}>Question</Col>
-          <Col className={`${classes.header}`}>Answer</Col>
+        <Row className="row-cols-3">
+          <Col xs="6" className={`${classes.header}`}>
+            Question
+          </Col>
+          <Col xs="5" className={`${classes.header}`}>
+            Answer
+          </Col>
         </Row>
         {cards.map((card) => {
           return (
-            <Row className="row-cols-2" key={card.id}>
-              <Col className={`${classes.card} ${classes.question}`}>
+            <Row className="row-cols-3" key={card.id}>
+              <Col xs="6" className={`${classes.card} ${classes.question}`}>
                 {card.question}
               </Col>
-              <Col className={`${classes.card} ${classes.answer}`}>
+              <Col xs="5" className={`${classes.card} ${classes.answer}`}>
                 {card.answer}
               </Col>
               <Col xs="1">Edit</Col>
