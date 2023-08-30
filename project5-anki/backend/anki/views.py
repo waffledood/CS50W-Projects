@@ -122,7 +122,7 @@ def collection(request, collectionId):
     if request.method == "DELETE":
         # Return an error if the id doesn't exist in the database
         try:
-            collection = Collection.objects.get(id=id)
+            collection = Collection.objects.get(id=collectionId)
         except Collection.DoesNotExist:
             return JsonResponse({"error": "Collection id does not exist."}, status=400)
 
@@ -205,7 +205,7 @@ def card(request, cardId):
     if request.method == "DELETE":
         # Return an error if the id doesn't exist in the database
         try:
-            card = Card.objects.get(id=id)
+            card = Card.objects.get(id=cardId)
         except Card.DoesNotExist:
             return JsonResponse({"error": "Card id does not exist"}, status=400)
 
