@@ -107,13 +107,12 @@ def users(request):
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
-def collection(request, id):
+def collection(request, collectionId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
         try:
             # Retrieve Collection with specified id
-            collection = Collection.objects.get(id=id)
-            print('collection: ', collection)
+            collection = Collection.objects.get(id=collectionId)
         except Collection.DoesNotExist:
             return JsonResponse({"error": "Collection id does not exist."}, status=400)
 
