@@ -7,10 +7,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 const Collection = () => {
+  const [collectionDetails, setCollectionDetails] = useState({});
   const [cards, setCards] = useState([]);
   const collectionId = 1;
 
   useEffect(() => {
+    // fetch the cards in this collection
     fetch(`http://localhost:8000/anki/cards/${collectionId}`)
       .then((response) => {
         return response.json();
@@ -18,12 +20,26 @@ const Collection = () => {
       .then((collection) => {
         setCards(collection["cards"]);
       });
+
+    // fetch this collection's details
+    fetch(`http://localhost:8000/anki/collection/${collectionId}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((collection) => {
+        setCollectionDetails({
+          name: collection["name"],
+          description: collection["description"],
+          date_created: collection["date_created"],
+          date_modified: collection["date_modified"],
+        });
+      });
   }, []);
 
   return (
     <div className={classes.collection}>
       <Container>
-        <h1>Collection</h1>
+        <h1>{collectionDetails["name"]}</h1>
       </Container>
       <Container>
         <Row className="row-cols-3">
