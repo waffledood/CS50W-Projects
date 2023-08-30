@@ -14,5 +14,6 @@ urlpatterns = [
     path("createCollection", views.createCollection, name="createCollection"),
     path("card", views.card, name="card"),
     path("cards", views.cards, name="cards"),
+    path("cards/<int:collectionId>", views.cards, name="cards"),
     path("createCard", views.createCard, name="createCard")
 ]

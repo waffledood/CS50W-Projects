@@ -227,6 +227,17 @@ def cards(request):
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
+def cards(request, collectionId):
+    if request.method == "GET":
+        # Retrieve all Cards that exist
+        collection = Collection.objects.get(id=collectionId)
+        cards = collection.cards.all()
+
+        return JsonResponse({"cards": [card.serialize() for card in cards]}, status=200)
+
+    return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
+
+
 @ csrf_exempt
 def createCard(request):
     if request.method != "POST":
