@@ -117,7 +117,7 @@ def collection(request, collectionId):
             return JsonResponse({"error": "Collection id does not exist."}, status=400)
 
         #  Retrieve Collection with specified id
-        return JsonResponse([collection.serialize()], safe=False)
+        return JsonResponse(collection.serialize(), safe=False)
 
     if request.method == "DELETE":
         # Return an error if the id doesn't exist in the database
