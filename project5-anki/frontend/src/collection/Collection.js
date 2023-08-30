@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import classes from "./Collection.module.css";
 
@@ -7,18 +7,18 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 const Collection = () => {
-  const cards = [
-    {
-      id: 1,
-      question: "question 1",
-      answer: "answer 1",
-    },
-    {
-      id: 2,
-      question: "question 2",
-      answer: "answer 2",
-    },
-  ];
+  const [cards, setCards] = useState([]);
+  const collectionId = 1;
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/anki/cards/${collectionId}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((collection) => {
+        setCards(collection["cards"]);
+      });
+  }, []);
 
   return (
     <div>
