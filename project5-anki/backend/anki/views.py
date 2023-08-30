@@ -193,11 +193,11 @@ def createCollection(request):
     return JsonResponse({"message": "Collection saved successfully.", "collection": collection.serialize()}, status=201)
 
 
-def card(request, id):
+def card(request, cardId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
         try:
-            card = Card.objects.get(id=id)
+            card = Card.objects.get(id=cardId)
         except Card.DoesNotExist:
             return JsonResponse({"error": "Card id does not exist"}, status=400)
 
