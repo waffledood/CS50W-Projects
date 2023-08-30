@@ -21,8 +21,10 @@ const Collection = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Collection</h1>
+    <div className={classes.collection}>
+      <Container>
+        <h1>Collection</h1>
+      </Container>
       <Container>
         <Row className="row-cols-3">
           <Col xs="6" className={`${classes.header}`}>
