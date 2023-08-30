@@ -72,11 +72,11 @@ def logout(request):
         return JsonResponse({"error": "POST request required."}, status=400)
 
 
-def user(request, id):
+def user(request, userId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
         try:
-            user = User.objects.get(id=id)
+            user = User.objects.get(id=userId)
         except User.DoesNotExist:
             return JsonResponse({"error": "User id does not exist."}, status=400)
 
@@ -86,7 +86,7 @@ def user(request, id):
     if request.method == "DELETE":
         # Return an error if the id doesn't exist in the database
         try:
-            user = User.objects.get(id=id)
+            user = User.objects.get(id=userId)
         except User.DoesNotExist:
             return JsonResponse({"error": "User id does not exist."}, status=400)
 
