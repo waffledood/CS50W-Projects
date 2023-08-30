@@ -112,7 +112,8 @@ def collection(request, id):
         # Return an error if the id doesn't exist in the database
         try:
             # Retrieve Collection with specified id
-            collection = Collection.objects.get(id)
+            collection = Collection.objects.get(id=id)
+            print('collection: ', collection)
         except Collection.DoesNotExist:
             return JsonResponse({"error": "Collection id does not exist."}, status=400)
 
