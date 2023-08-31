@@ -81,7 +81,7 @@ def user(request, userId):
             return JsonResponse({"error": "User id does not exist."}, status=400)
 
         # Retrieve User with specified id
-        return JsonResponse(user.serialize(), safe=False)
+        return JsonResponse(user.serialize(), status=200)
 
     if request.method == "DELETE":
         # Return an error if the id doesn't exist in the database
@@ -102,7 +102,7 @@ def users(request):
         # Retrieve all users
         users = User.objects.all()
 
-        return JsonResponse([user.serialize() for user in users], status=200)
+        return JsonResponse([user.serialize() for user in users], safe=False, status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
@@ -138,7 +138,7 @@ def collections(request):
         # Retrieve all Collections that exist
         collections = Collection.objects.all()
 
-        return JsonResponse({"collections": [collection.serialize() for collection in collections]}, status=200)
+        return JsonResponse([collection.serialize() for collection in collections], safe=False, status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
@@ -221,18 +221,18 @@ def cards(request):
         # Retrieve all Cards that exist
         cards = Card.objects.all()
 
-        return JsonResponse([card.serialize() for card in cards], status=200)
+        return JsonResponse([card.serialize() for card in cards], safe=False, status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
-def cards(request, collectionId):
+def cardsOfCollection(request, collectionId):
     if request.method == "GET":
         # Retrieve all Cards that exist
         collection = Collection.objects.get(id=collectionId)
         cards = collection.cards.all()
 
-        return JsonResponse([card.serialize() for card in cards], status=200)
+        return JsonResponse([card.serialize() for card in cards], safe=False, status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
