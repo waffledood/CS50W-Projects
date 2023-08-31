@@ -81,7 +81,7 @@ def user(request, userId):
             return JsonResponse({"error": "User id does not exist."}, status=400)
 
         # Retrieve User with specified id
-        return JsonResponse([user.serialize()], safe=False)
+        return JsonResponse(user.serialize(), safe=False)
 
     if request.method == "DELETE":
         # Return an error if the id doesn't exist in the database
@@ -102,7 +102,7 @@ def users(request):
         # Retrieve all users
         users = User.objects.all()
 
-        return JsonResponse({"users": [user.serialize() for user in users]}, status=200)
+        return JsonResponse([user.serialize() for user in users], status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
@@ -200,7 +200,7 @@ def card(request, cardId):
         except Card.DoesNotExist:
             return JsonResponse({"error": "Card id does not exist"}, status=400)
 
-        return JsonResponse({"user": card.serialize()}, status=201)
+        return JsonResponse(card.serialize(), status=201)
 
     if request.method == "DELETE":
         # Return an error if the id doesn't exist in the database
@@ -221,7 +221,7 @@ def cards(request):
         # Retrieve all Cards that exist
         cards = Card.objects.all()
 
-        return JsonResponse({"cards": [card.serialize() for card in cards]}, status=200)
+        return JsonResponse([card.serialize() for card in cards], status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
@@ -232,7 +232,7 @@ def cards(request, collectionId):
         collection = Collection.objects.get(id=collectionId)
         cards = collection.cards.all()
 
-        return JsonResponse({"cards": [card.serialize() for card in cards]}, status=200)
+        return JsonResponse([card.serialize() for card in cards], status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
