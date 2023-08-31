@@ -17,8 +17,8 @@ const Collection = () => {
       .then((response) => {
         return response.json();
       })
-      .then((collection) => {
-        setCards(collection["cards"]);
+      .then((cardsInCollection) => {
+        setCards(cardsInCollection);
       });
 
     // fetch this collection's details
