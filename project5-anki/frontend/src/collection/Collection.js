@@ -5,6 +5,7 @@ import classes from "./Collection.module.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import ListGroup from "react-bootstrap/ListGroup";
 
 const Collection = () => {
   const [collectionDetails, setCollectionDetails] = useState({});
@@ -40,6 +41,9 @@ const Collection = () => {
     <div className={classes.collection}>
       <Container>
         <h1>{collectionDetails["name"]}</h1>
+        <ListGroup className={classes.collectionDescription}>
+          <ListGroup.Item>{collectionDetails["description"]}</ListGroup.Item>
+        </ListGroup>
       </Container>
       <Container>
         <Row className="row-cols-3">
