@@ -46,6 +46,7 @@ const Collection = () => {
         </ListGroup>
       </Container>
       <Container>
+        <hr />
         <Row className="row-cols-3">
           <Col xs="6" className={`${classes.header}`}>
             Question
