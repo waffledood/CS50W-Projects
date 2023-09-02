@@ -47,18 +47,22 @@ const Collection = () => {
       </Container>
       <Container>
         <hr />
-        <Row className="row-cols-3">
-          <Col xs="6" className={`${classes.header}`}>
+        <Row className="row-cols-4">
+          <Col xs="1" className={`${classes.header}`}>
+            No.
+          </Col>
+          <Col xs="5" className={`${classes.header}`}>
             Question
           </Col>
           <Col xs="5" className={`${classes.header}`}>
             Answer
           </Col>
         </Row>
-        {cards.map((card) => {
+        {cards.map((card, i) => {
           return (
             <Row className="row-cols-3" key={card.id}>
-              <Col xs="6" className={`${classes.card} ${classes.question}`}>
+              <Col xs="1">{i + 1}</Col>
+              <Col xs="5" className={`${classes.card} ${classes.question}`}>
                 {card.question}
               </Col>
               <Col xs="5" className={`${classes.card} ${classes.answer}`}>
