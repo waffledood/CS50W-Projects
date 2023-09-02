@@ -6,6 +6,8 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Table from "react-bootstrap/Table";
 
+import { ThreeDots } from "react-bootstrap-icons";
+
 const Collection = () => {
   const [collectionDetails, setCollectionDetails] = useState({});
   const [cards, setCards] = useState([]);
@@ -62,7 +64,9 @@ const Collection = () => {
                   <td>{i + 1}</td>
                   <td>{card.question}</td>
                   <td>{card.answer}</td>
-                  <td></td>
+                  <td>
+                    <ThreeDots />
+                  </td>
                 </tr>
               );
             })}
