@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import classes from "./Collection.module.css";
 
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
+import Table from "react-bootstrap/Table";
 
 const Collection = () => {
   const [collectionDetails, setCollectionDetails] = useState({});
@@ -47,31 +46,28 @@ const Collection = () => {
       </Container>
       <Container>
         <hr />
-        <Row className="row-cols-4">
-          <Col xs="1" className={`${classes.header}`}>
-            No.
-          </Col>
-          <Col xs="5" className={`${classes.header}`}>
-            Question
-          </Col>
-          <Col xs="5" className={`${classes.header}`}>
-            Answer
-          </Col>
-        </Row>
-        {cards.map((card, i) => {
-          return (
-            <Row className="row-cols-3" key={card.id}>
-              <Col xs="1">{i + 1}</Col>
-              <Col xs="5" className={`${classes.card} ${classes.question}`}>
-                {card.question}
-              </Col>
-              <Col xs="5" className={`${classes.card} ${classes.answer}`}>
-                {card.answer}
-              </Col>
-              <Col xs="1">Edit</Col>
-            </Row>
-          );
-        })}
+        <Table hover={true}>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Question</th>
+              <th>Answer</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {cards.map((card, i) => {
+              return (
+                <tr key={card.id}>
+                  <td>{i + 1}</td>
+                  <td>{card.question}</td>
+                  <td>{card.answer}</td>
+                  <td></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
       </Container>
     </div>
   );
