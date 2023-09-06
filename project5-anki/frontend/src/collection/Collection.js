@@ -15,7 +15,7 @@ const Collection = () => {
 
   useEffect(() => {
     // fetch the cards in this collection
-    fetch(`http://localhost:8000/anki/cards/${collectionId}`)
+    fetch(`http://127.0.0.1:8000/anki/cards/${collectionId}`)
       .then((response) => {
         return response.json();
       })
@@ -24,7 +24,7 @@ const Collection = () => {
       });
 
     // fetch this collection's details
-    fetch(`http://localhost:8000/anki/collection/${collectionId}`)
+    fetch(`http://127.0.0.1:8000/anki/collection/${collectionId}`)
       .then((response) => {
         return response.json();
       })
