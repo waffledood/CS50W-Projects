@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Table from "react-bootstrap/Table";
 
-import { ThreeDots } from "react-bootstrap-icons";
+import { ThreeDots, PlayCircle } from "react-bootstrap-icons";
 
 const Collection = () => {
   const [collectionDetails, setCollectionDetails] = useState({});
@@ -42,9 +42,20 @@ const Collection = () => {
     <div className={classes.collection}>
       <Container>
         <h1>{collectionDetails["name"]}</h1>
-        <ListGroup className={classes.collectionDescription}>
-          <ListGroup.Item>{collectionDetails["description"]}</ListGroup.Item>
-        </ListGroup>
+        <div className="d-flex flex-row justify-content-between align-items-center">
+          <div>
+            <ListGroup className={classes.collectionDescription}>
+              <ListGroup.Item>
+                {collectionDetails["description"]}
+              </ListGroup.Item>
+            </ListGroup>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary">
+              Add Card
+            </button>
+          </div>
+        </div>
       </Container>
       <Container>
         <hr />
