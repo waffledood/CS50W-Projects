@@ -7,11 +7,13 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("login", views.login, name="login"),
     path("logout", views.logout, name="logout"),
-    path("user", views.user, name="user"),
+    path("user/<int:userId>", views.user, name="user"),
     path("users", views.users, name="users"),
-    path("collection", views.collection, name="collection"),
+    path("collection/<int:collectionId>", views.collection, name="collection"),
     path("collections", views.collections, name="collections"),
     path("createCollection", views.createCollection, name="createCollection"),
-    path("card", views.card, name="card"),
-    path("cards", views.cards, name="cards")
+    path("card/<int:cardId>", views.card, name="card"),
+    path("cards", views.cards, name="cards"),
+    path("cards/<int:collectionId>", views.cardsOfCollection, name="cards"),
+    path("createCard", views.createCard, name="createCard")
 ]

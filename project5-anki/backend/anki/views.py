@@ -1,8 +1,10 @@
 import json
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, Collection, Card
@@ -10,19 +12,18 @@ from .models import User, Collection, Card
 from varname import nameof
 
 
+@login_required
 def index(request):
-    # return HttpResponse(f"Hello World!")
     return render(request, "anki/index.html")
 
 
 def register(request):
     if request.method == "POST":
-        # Load JSON from request body
-        data = json.loads(request.body)
-        username = data.get("username")
-        email = data.get("email")
-        password = request.get("password")
-        confirmation = request.get("confirmation")
+        # Retrieve registration details
+        username = request.POST["username"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+        confirmation = request.POST["confirmation"]
 
         # Ensure password matches confirmation
         if password != confirmation:
@@ -41,26 +42,26 @@ def register(request):
 
         return JsonResponse({"message": "New user registered successfully", "user": user.serialize()}, status=200)
     else:
-        return JsonResponse({"error": "POST request required."}, status=400)
+        return render(request, "anki/register.html")
 
 
 def login(request):
     if request.method == "POST":
-
-        # Verify user's credentials
+        # Retrieve login details
         username = request.POST["username"]
         password = request.POST["password"]
+        # Verify user's credentials
         user = authenticate(request, username=username, password=password)
 
         # Check if authentication failed
         if user is None:
-            return JsonResponse({"error": "Invalid username and/or password."}, status=400)
+            return render(request, "anki/login.html", {"error": "Credentials are invalid."})
         # If authentication is successful, log user in
         else:
-            login(request, user)
-            return JsonResponse({"message": "Logged in successfully", "user": user.serialize()}, status=200)
+            auth_login(request, user)
+            return HttpResponseRedirect(reverse("index"))
     else:
-        return JsonResponse({"error": "POST request required."}, status=400)
+        return render(request, "anki/login.html")
 
 
 def logout(request):
@@ -71,21 +72,21 @@ def logout(request):
         return JsonResponse({"error": "POST request required."}, status=400)
 
 
-def user(request, id):
+def user(request, userId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
         try:
-            user = User.objects.get(id=id)
+            user = User.objects.get(id=userId)
         except User.DoesNotExist:
             return JsonResponse({"error": "User id does not exist."}, status=400)
 
         # Retrieve User with specified id
-        return JsonResponse([user.serialize()], safe=False)
+        return JsonResponse(user.serialize(), status=200)
 
     if request.method == "DELETE":
         # Return an error if the id doesn't exist in the database
         try:
-            user = User.objects.get(id=id)
+            user = User.objects.get(id=userId)
         except User.DoesNotExist:
             return JsonResponse({"error": "User id does not exist."}, status=400)
 
@@ -101,27 +102,27 @@ def users(request):
         # Retrieve all users
         users = User.objects.all()
 
-        return JsonResponse({"users": [user.serialize() for user in users]}, status=200)
+        return JsonResponse([user.serialize() for user in users], safe=False, status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
-def collection(request, id):
+def collection(request, collectionId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
         try:
             # Retrieve Collection with specified id
-            collection = Collection.objects.get(id)
+            collection = Collection.objects.get(id=collectionId)
         except Collection.DoesNotExist:
             return JsonResponse({"error": "Collection id does not exist."}, status=400)
 
         #  Retrieve Collection with specified id
-        return JsonResponse([collection.serialize()], safe=False)
+        return JsonResponse(collection.serialize(), safe=False)
 
     if request.method == "DELETE":
         # Return an error if the id doesn't exist in the database
         try:
-            collection = Collection.objects.get(id=id)
+            collection = Collection.objects.get(id=collectionId)
         except Collection.DoesNotExist:
             return JsonResponse({"error": "Collection id does not exist."}, status=400)
 
@@ -137,12 +138,12 @@ def collections(request):
         # Retrieve all Collections that exist
         collections = Collection.objects.all()
 
-        return JsonResponse({"collections": [collection.serialize() for collection in collections]}, status=200)
+        return JsonResponse([collection.serialize() for collection in collections], safe=False, status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
-@csrf_exempt
+@ csrf_exempt
 def createCollection(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
@@ -191,20 +192,20 @@ def createCollection(request):
     return JsonResponse({"message": "Collection saved successfully.", "collection": collection.serialize()}, status=201)
 
 
-def card(request, id):
+def card(request, cardId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
         try:
-            card = Card.objects.get(id=id)
+            card = Card.objects.get(id=cardId)
         except Card.DoesNotExist:
             return JsonResponse({"error": "Card id does not exist"}, status=400)
 
-        return JsonResponse({"user": card.serialize()}, status=201)
+        return JsonResponse(card.serialize(), status=201)
 
     if request.method == "DELETE":
         # Return an error if the id doesn't exist in the database
         try:
-            card = Card.objects.get(id=id)
+            card = Card.objects.get(id=cardId)
         except Card.DoesNotExist:
             return JsonResponse({"error": "Card id does not exist"}, status=400)
 
@@ -220,12 +221,23 @@ def cards(request):
         # Retrieve all Cards that exist
         cards = Card.objects.all()
 
-        return JsonResponse({"cards": [card.serialize() for card in cards]}, status=200)
+        return JsonResponse([card.serialize() for card in cards], safe=False, status=200)
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
-@csrf_exempt
+def cardsOfCollection(request, collectionId):
+    if request.method == "GET":
+        # Retrieve all Cards that exist
+        collection = Collection.objects.get(id=collectionId)
+        cards = collection.cards.all()
+
+        return JsonResponse([card.serialize() for card in cards], safe=False, status=200)
+
+    return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
+
+
+@ csrf_exempt
 def createCard(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)

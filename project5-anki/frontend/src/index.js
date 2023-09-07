@@ -1,17 +1,18 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
-// Define the React app
+import Collection from "./collection/Collection";
+
 const App = () => {
-  const [count, setCount] = React.useState(0);
-  const onClick = () => setCount((c) => c + 1);
   return (
-    <div>
-      <h1>The count is {count}</h1>
-      <button onClick={onClick}>Count</button>
-    </div>
+    <>
+      <Collection />
+    </>
   );
 };
-// Mount the app to the mount point.
-const root = document.getElementById("app");
-ReactDOM.render(<App />, root);
+
+// Mount App to the mount point.
+const rootElement = document.getElementById("app");
+const root = createRoot(rootElement);
+
+root.render(<App />);
