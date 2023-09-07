@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Table from "react-bootstrap/Table";
 
-import { ThreeDots, PlayCircle } from "react-bootstrap-icons";
+import { ThreeDots, PlayCircleFill } from "react-bootstrap-icons";
 
 const Collection = () => {
   const [collectionDetails, setCollectionDetails] = useState({});
@@ -50,10 +50,13 @@ const Collection = () => {
               </ListGroup.Item>
             </ListGroup>
           </div>
-          <div>
+          <div className="d-inline-flex align-items-center">
             <button type="button" class="btn btn-primary">
               Add Card
             </button>
+            <div className="ms-3">
+              <PlayCircleFill size={30} color="#198754" />
+            </div>
           </div>
         </div>
       </Container>
