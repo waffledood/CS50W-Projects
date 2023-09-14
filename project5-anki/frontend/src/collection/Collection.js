@@ -52,7 +52,7 @@ const Collection = () => {
             </ListGroup>
           </div>
           <div className="d-inline-flex align-items-center">
-            <button type="button" class="btn btn-primary">
+            <button type="button" className="btn btn-primary">
               Add Card
             </button>
             <button type="button" className="btn ms-3 px-0 py-0">
