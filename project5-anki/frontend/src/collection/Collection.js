@@ -13,6 +13,16 @@ const Collection = () => {
   const [cards, setCards] = useState([]);
   const collectionId = 1;
 
+  const [isAddingANewCard, setIsAddingANewCard] = useState(false);
+
+  const addCardButtonHandler = () => {
+    // toggle the state of isAddingANewCard
+    setIsAddingANewCard((prev) => {
+      return !prev;
+    });
+    console.log("add card button clicked");
+  };
+
   useEffect(() => {
     // fetch the cards in this collection
     fetch(`http://127.0.0.1:8000/anki/cards/${collectionId}`)
