@@ -5,9 +5,8 @@ import classes from "./Collection.module.css";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Table from "react-bootstrap/Table";
-import { Button } from "react-bootstrap/Button";
 
-import { ThreeDots, PlayCircleFill } from "react-bootstrap-icons";
+import { ThreeDots, Play } from "react-bootstrap-icons";
 
 const Collection = () => {
   const [collectionDetails, setCollectionDetails] = useState({});
@@ -55,8 +54,8 @@ const Collection = () => {
             <button type="button" className="btn btn-primary">
               Add Card
             </button>
-            <button type="button" className="btn ms-3 px-0 py-0">
-              <PlayCircleFill size={36} color="#198754" />
+            <button type="button" className="btn btn-success ms-3 px-0 py-0">
+              <Play size={36} />
             </button>
           </div>
         </div>
