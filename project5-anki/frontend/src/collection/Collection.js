@@ -14,6 +14,30 @@ const Collection = () => {
   const collectionId = 1;
 
   const [isAddingANewCard, setIsAddingANewCard] = useState(false);
+  const newCardToAdd = (
+    <tr>
+      <td>{cards.length + 1}</td>
+      <td>
+        <textarea
+          name=""
+          id=""
+          cols="1"
+          rows="1"
+          placeholder="New Question..."
+        ></textarea>
+      </td>
+      <td>
+        <textarea
+          name=""
+          id=""
+          cols="1"
+          rows="1"
+          placeholder="New Answer..."
+        ></textarea>
+      </td>
+      <td></td>
+    </tr>
+  );
 
   const addCardButtonHandler = () => {
     // toggle the state of isAddingANewCard
@@ -98,6 +122,7 @@ const Collection = () => {
                 </tr>
               );
             })}
+            {isAddingANewCard && newCardToAdd}
           </tbody>
         </Table>
       </Container>
