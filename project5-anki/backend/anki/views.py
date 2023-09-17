@@ -107,6 +107,7 @@ def users(request):
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
+@ csrf_exempt
 def collection(request, collectionId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
@@ -192,6 +193,7 @@ def createCollection(request):
     return JsonResponse({"message": "Collection saved successfully.", "collection": collection.serialize()}, status=201)
 
 
+@ csrf_exempt
 def card(request, cardId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
