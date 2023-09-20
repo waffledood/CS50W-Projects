@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Table from "react-bootstrap/Table";
 
-import { ThreeDots, Play } from "react-bootstrap-icons";
+import { ThreeDots, Play, PlusLg } from "react-bootstrap-icons";
 
 const Collection = () => {
   const [collectionDetails, setCollectionDetails] = useState({});
@@ -35,7 +35,14 @@ const Collection = () => {
           placeholder="New Answer..."
         ></textarea>
       </td>
-      <td></td>
+      <td>
+        <button
+          type="button"
+          className="btn btn-success px-1 py-1 d-inline-flex justify-content-center align-items-center"
+        >
+          <PlusLg />
+        </button>
+      </td>
     </tr>
   );
 
