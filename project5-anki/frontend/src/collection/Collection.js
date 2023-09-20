@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import classes from "./Collection.module.css";
 
+import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Table from "react-bootstrap/Table";
@@ -36,12 +37,12 @@ const Collection = () => {
         ></textarea>
       </td>
       <td>
-        <button
-          type="button"
-          className="btn btn-success px-1 py-1 d-inline-flex justify-content-center align-items-center"
+        <Button
+          variant="success"
+          className="px-1 py-1 d-inline-flex justify-content-center align-items-center"
         >
           <PlusLg />
-        </button>
+        </Button>
       </td>
     </tr>
   );
@@ -124,12 +125,12 @@ const Collection = () => {
                   <td>{card.question}</td>
                   <td>{card.answer}</td>
                   <td>
-                    <button
-                      type="button"
-                      className="btn btn-secondary px-1 py-1 d-inline-flex justify-content-center align-items-center"
+                    <Button
+                      variant="secondary"
+                      className="px-1 py-1 d-inline-flex justify-content-center align-items-center"
                     >
                       <ThreeDots />
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               );
