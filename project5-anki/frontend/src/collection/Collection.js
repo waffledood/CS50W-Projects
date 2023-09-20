@@ -117,7 +117,12 @@ const Collection = () => {
                   <td>{card.question}</td>
                   <td>{card.answer}</td>
                   <td>
-                    <ThreeDots />
+                    <button
+                      type="button"
+                      className="btn btn-secondary px-1 py-1 d-inline-flex justify-content-center align-items-center"
+                    >
+                      <ThreeDots />
+                    </button>
                   </td>
                 </tr>
               );
