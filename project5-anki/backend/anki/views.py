@@ -254,12 +254,13 @@ def createCard(request):
     answer = data.get("answer")
 
     # Check for & return missing Card details, if any
-    cardDetails = [collection_id, question, answer]
+    cardDetails = [(collection_id, "collection"),
+                   (question, "question"), (answer, "answer")]
     missingCardDetails = []
 
-    for detail in cardDetails:
-        if detail == None:
-            missingCardDetails.append(nameof(detail))
+    for cardDetailValue, cardDetailVarName in cardDetails:
+        if cardDetailValue == None:
+            missingCardDetails.append(cardDetailVarName)
 
     if missingCardDetails:
         return JsonResponse({
