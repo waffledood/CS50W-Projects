@@ -244,14 +244,14 @@ def createCard(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
 
-    # Load JSON from request.body
+    # Load JSON from request.body as a dict
     data = json.loads(request.body)
 
     # Retrieve Card details
     user = request.user
-    collection_id = data["collection_id"]
-    question = data["question"]
-    answer = data["answer"]
+    collection_id = data.get("collection_id")
+    question = data.get("question")
+    answer = data.get("answer")
 
     # Check for & return missing Card details, if any
     cardDetails = [collection_id, question, answer]
@@ -261,7 +261,7 @@ def createCard(request):
         if detail == None:
             missingCardDetails.append(nameof(detail))
 
-    if not missingCardDetails:
+    if missingCardDetails:
         return JsonResponse({
             "error": "Created Card is missing details",
             "missingDetails": missingCardDetails
