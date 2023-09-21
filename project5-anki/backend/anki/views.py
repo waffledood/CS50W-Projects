@@ -149,7 +149,7 @@ def createCollection(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
 
-    # Load JSON from request body
+    # Load JSON from request.body as a dict
     data = json.loads(request.body)
 
     # Retrieve Collection details
@@ -158,14 +158,14 @@ def createCollection(request):
     description = data.get("description")
 
     # Check for & return missing Collection details, if any
-    collectionDetails = [name, description]
+    collectionDetails = [(name, "name"), (description, "description")]
     missingCollectionDetails = []
 
-    for detail in collectionDetails:
-        if detail == None:
-            missingCollectionDetails.append(nameof(detail))
+    for collectionDetailValue, collectionDetailVarName in collectionDetails:
+        if collectionDetailValue == None:
+            missingCollectionDetails.append(collectionDetailVarName)
 
-    if not missingCollectionDetails:
+    if missingCollectionDetails:
         return JsonResponse({
             "error": "Created Collection is missing details",
             "missingDetails": missingCollectionDetails
