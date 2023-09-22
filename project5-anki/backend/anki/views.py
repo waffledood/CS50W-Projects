@@ -254,7 +254,7 @@ def createCard(request):
     answer = data.get("answer")
 
     # Check for & return missing Card details, if any
-    cardDetails = [(collection_id, "collection"),
+    cardDetails = [(collection_id, "collection_id"),
                    (question, "question"), (answer, "answer")]
     missingCardDetails = []
 
