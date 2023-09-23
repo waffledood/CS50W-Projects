@@ -32,6 +32,44 @@ const Collection = () => {
 
   const [isAddingANewCard, setIsAddingANewCard] = useState(false);
 
+  const createCardButtonHandler = () => {
+    // validate new Card details
+
+    // create new Card
+    const newCard = {
+      collection_id: collectionId,
+      question: "new question",
+      answer: "new answer",
+    };
+
+    console.log("newCard", newCard);
+
+    // submit POST request
+    fetch("http://127.0.0.1:8000/anki/createCard", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newCard),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to create Card!");
+        }
+        return response.json();
+      })
+      .then((json) => {
+        // successful creation of Card
+        console.log("json: ", json);
+      })
+      .catch((error) => {
+        // error handling for UI using error boundary
+        console.log("error: ", error.message);
+        setShowError(true);
+        setErrorMessage(error.message);
+      });
+  };
+
   const addCardButtonHandler = () => {
     // toggle the state of isAddingANewCard
     setIsAddingANewCard((prev) => {
@@ -65,6 +103,7 @@ const Collection = () => {
         <Button
           variant="success"
           className="px-1 py-1 d-inline-flex justify-content-center align-items-center"
+          onClick={createCardButtonHandler}
         >
           <PlusLg />
         </Button>
