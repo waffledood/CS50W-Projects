@@ -42,13 +42,31 @@ const Collection = () => {
     // validate new Card details
     if (!newCardQuestionValue) {
       // new Card has an empty String for the Question field
+      setErrorMessage("Question in new Card cannot be empty!");
     } else if (newCardQuestionValue.length > 400) {
       // new Card has a Question longer than 400 characters
+      setErrorMessage(
+        "Question in new Card cannot be longer than 400 characters!"
+      );
     }
     if (!newCardAnswerValue) {
       // new Card has an empty String for the Answer field
+      setErrorMessage((existingErrorMessage) => {
+        if (existingErrorMessage) {
+          existingErrorMessage += "\nAnswer in new Card cannot be empty!";
+        } else {
+          existingErrorMessage += "Answer in new Card cannot be empty!";
+        }
+      });
     } else if (newCardAnswerValue.length > 400) {
       // new Card has an Answer longer than 400 characters
+      if (existingErrorMessage) {
+        existingErrorMessage +=
+          "\nAnswer in new Card cannot be longer than 400 characters!";
+      } else {
+        existingErrorMessage +=
+          "Answer in new Card cannot be longer than 400 characters!!";
+      }
     }
 
     // create new Card
