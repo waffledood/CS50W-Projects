@@ -6,6 +6,8 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Table from "react-bootstrap/Table";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
 
 import { ThreeDots, Play, PlusLg } from "react-bootstrap-icons";
 
@@ -13,6 +15,20 @@ const Collection = () => {
   const [collectionDetails, setCollectionDetails] = useState({});
   const [cards, setCards] = useState([]);
   const collectionId = 1;
+
+  const [showError, setShowError] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  const errorToast = (
+    <ToastContainer className="p-3" position="bottom-end" style={{ zIndex: 1 }}>
+      <Toast bg="danger">
+        <Toast.Header>
+          <strong className="me-auto">System Error</strong>
+          <small>11 mins ago</small>
+        </Toast.Header>
+        <Toast.Body>{errorMessage}</Toast.Body>
+      </Toast>
+    </ToastContainer>
+  );
 
   const [isAddingANewCard, setIsAddingANewCard] = useState(false);
   const newCardToAdd = (
