@@ -31,6 +31,15 @@ const Collection = () => {
   );
 
   const [isAddingANewCard, setIsAddingANewCard] = useState(false);
+
+  const addCardButtonHandler = () => {
+    // toggle the state of isAddingANewCard
+    setIsAddingANewCard((prev) => {
+      return !prev;
+    });
+    console.log("Add card button clicked");
+  };
+
   const newCardToAdd = (
     <tr>
       <td>{cards.length + 1}</td>
@@ -62,14 +71,6 @@ const Collection = () => {
       </td>
     </tr>
   );
-
-  const addCardButtonHandler = () => {
-    // toggle the state of isAddingANewCard
-    setIsAddingANewCard((prev) => {
-      return !prev;
-    });
-    console.log("add card button clicked");
-  };
 
   useEffect(() => {
     // fetch the cards in this collection
