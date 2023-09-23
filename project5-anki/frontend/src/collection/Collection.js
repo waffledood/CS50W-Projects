@@ -35,16 +35,30 @@ const Collection = () => {
   const newCardAnswerRef = createRef();
 
   const createCardButtonHandler = () => {
+    // retrieve new Card details
+    const newCardQuestionValue = newCardQuestionRef.current.value;
+    const newCardAnswerValue = newCardAnswerRef.current.value;
+
     // validate new Card details
+    if (!newCardQuestionValue) {
+      // new Card has an empty String for the Question field
+    } else if (newCardQuestionValue.length > 400) {
+      // new Card has a Question longer than 400 characters
+    }
+    if (!newCardAnswerValue) {
+      // new Card has an empty String for the Answer field
+    } else if (newCardAnswerValue.length > 400) {
+      // new Card has an Answer longer than 400 characters
+    }
 
     // create new Card
     const newCard = {
       collection_id: collectionId,
-      question: "new question",
-      answer: "new answer",
+      question: newCardQuestionValue,
+      answer: newCardAnswerValue,
     };
 
-    console.log("newCard", newCard);
+    console.log("new Card details:", newCard);
 
     // submit POST request
     fetch("http://127.0.0.1:8000/anki/createCard", {
