@@ -156,6 +156,7 @@ const Collection = () => {
           </tbody>
         </Table>
       </Container>
+      {showError && errorToast}
     </div>
   );
 };
