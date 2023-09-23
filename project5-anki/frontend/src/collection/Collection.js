@@ -16,7 +16,7 @@ const Collection = () => {
   const [cards, setCards] = useState([]);
   const collectionId = 1;
 
-  const [showError, setShowError] = useState(true);
+  const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const errorToast = (
     <ToastContainer className="p-3" position="bottom-end" style={{ zIndex: 1 }}>
@@ -40,68 +40,79 @@ const Collection = () => {
     const newCardAnswerValue = newCardAnswerRef.current.value;
 
     // validate new Card details
+    let cardIsValid = true;
     if (!newCardQuestionValue) {
       // new Card has an empty String for the Question field
       setErrorMessage("Question in new Card cannot be empty!");
+      cardIsValid = false;
     } else if (newCardQuestionValue.length > 400) {
       // new Card has a Question longer than 400 characters
       setErrorMessage(
         "Question in new Card cannot be longer than 400 characters!"
       );
+      cardIsValid = false;
     }
     if (!newCardAnswerValue) {
       // new Card has an empty String for the Answer field
       setErrorMessage((existingErrorMessage) => {
         if (existingErrorMessage) {
-          existingErrorMessage += "\nAnswer in new Card cannot be empty!";
+          return (existingErrorMessage +=
+            "\nAnswer in new Card cannot be empty!");
         } else {
-          existingErrorMessage += "Answer in new Card cannot be empty!";
+          return (existingErrorMessage +=
+            "Answer in new Card cannot be empty!");
         }
       });
+      cardIsValid = false;
     } else if (newCardAnswerValue.length > 400) {
       // new Card has an Answer longer than 400 characters
-      if (existingErrorMessage) {
-        existingErrorMessage +=
-          "\nAnswer in new Card cannot be longer than 400 characters!";
-      } else {
-        existingErrorMessage +=
-          "Answer in new Card cannot be longer than 400 characters!!";
-      }
+      setErrorMessage((existingErrorMessage) => {
+        if (existingErrorMessage) {
+          return (existingErrorMessage +=
+            "\nAnswer in new Card cannot be longer than 400 characters!");
+        } else {
+          return (existingErrorMessage +=
+            "Answer in new Card cannot be longer than 400 characters!");
+        }
+      });
+      cardIsValid = false;
     }
 
-    // create new Card
-    const newCard = {
-      collection_id: collectionId,
-      question: newCardQuestionValue,
-      answer: newCardAnswerValue,
-    };
+    if (cardIsValid) {
+      // create new Card
+      const newCard = {
+        collection_id: collectionId,
+        question: newCardQuestionValue,
+        answer: newCardAnswerValue,
+      };
 
-    console.log("new Card details:", newCard);
-
-    // submit POST request
-    fetch("http://127.0.0.1:8000/anki/createCard", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newCard),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Unable to create Card!");
-        }
-        return response.json();
+      // submit POST request
+      fetch("http://127.0.0.1:8000/anki/createCard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newCard),
       })
-      .then((json) => {
-        // successful creation of Card
-        console.log("json: ", json);
-      })
-      .catch((error) => {
-        // error handling for UI using error boundary
-        console.log("error: ", error.message);
-        setShowError(true);
-        setErrorMessage(error.message);
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Unable to create Card!");
+          }
+          return response.json();
+        })
+        .then((json) => {
+          // successful creation of Card
+          console.log("json: ", json);
+        })
+        .catch((error) => {
+          // error handling for UI using error boundary
+          console.log("error: ", error.message);
+          setShowError(true);
+          setErrorMessage(error.message);
+        });
+    } else {
+      setShowError(true);
+    }
   };
 
   const addCardButtonHandler = () => {
@@ -231,7 +242,21 @@ const Collection = () => {
           </tbody>
         </Table>
       </Container>
-      {showError && errorToast}
+      {showError && (
+        <ToastContainer
+          className="p-3"
+          position="bottom-end"
+          style={{ zIndex: 1 }}
+        >
+          <Toast bg="danger">
+            <Toast.Header>
+              <strong className="me-auto">System Error</strong>
+              <small>11 mins ago</small>
+            </Toast.Header>
+            <Toast.Body>{errorMessage}</Toast.Body>
+          </Toast>
+        </ToastContainer>
+      )}
     </div>
   );
 };
