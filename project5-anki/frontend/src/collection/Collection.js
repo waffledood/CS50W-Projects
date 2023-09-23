@@ -257,7 +257,7 @@ const Collection = () => {
           >
             <Toast.Header>
               <strong className="me-auto">System Error</strong>
-              <small>11 mins ago</small>
+              <small>Just now</small>
             </Toast.Header>
             <Toast.Body>{errorMessage}</Toast.Body>
           </Toast>
