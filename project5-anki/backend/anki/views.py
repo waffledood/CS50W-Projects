@@ -282,7 +282,7 @@ def createCard(request):
 
     # Validate Card details
     try:
-        collection = Collection.objects.get(collection_id)
+        collection = Collection.objects.get(id=collection_id)
         if not question:
             raise ValueError("question variable is empty")
         if not answer:
