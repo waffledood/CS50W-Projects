@@ -248,7 +248,13 @@ const Collection = () => {
           position="bottom-end"
           style={{ zIndex: 1 }}
         >
-          <Toast bg="danger" show={showError} delay={3000} autohide>
+          <Toast
+            bg="danger"
+            onClose={() => setShowError(false)}
+            show={showError}
+            delay={3000}
+            autohide
+          >
             <Toast.Header>
               <strong className="me-auto">System Error</strong>
               <small>11 mins ago</small>
