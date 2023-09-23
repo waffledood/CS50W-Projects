@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createRef } from "react";
 
 import classes from "./Collection.module.css";
 
@@ -31,6 +31,8 @@ const Collection = () => {
   );
 
   const [isAddingANewCard, setIsAddingANewCard] = useState(false);
+  const newCardQuestionRef = createRef();
+  const newCardAnswerRef = createRef();
 
   const createCardButtonHandler = () => {
     // validate new Card details
@@ -88,6 +90,7 @@ const Collection = () => {
           cols="1"
           rows="1"
           placeholder="New Question..."
+          ref={newCardQuestionRef}
         ></textarea>
       </td>
       <td>
@@ -97,6 +100,7 @@ const Collection = () => {
           cols="1"
           rows="1"
           placeholder="New Answer..."
+          ref={newCardAnswerRef}
         ></textarea>
       </td>
       <td>
