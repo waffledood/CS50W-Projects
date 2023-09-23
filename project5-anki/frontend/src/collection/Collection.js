@@ -242,13 +242,13 @@ const Collection = () => {
           </tbody>
         </Table>
       </Container>
-      {showError && (
+      {
         <ToastContainer
           className="p-3"
           position="bottom-end"
           style={{ zIndex: 1 }}
         >
-          <Toast bg="danger">
+          <Toast bg="danger" show={showError} delay={3000} autohide>
             <Toast.Header>
               <strong className="me-auto">System Error</strong>
               <small>11 mins ago</small>
@@ -256,7 +256,7 @@ const Collection = () => {
             <Toast.Body>{errorMessage}</Toast.Body>
           </Toast>
         </ToastContainer>
-      )}
+      }
     </div>
   );
 };
