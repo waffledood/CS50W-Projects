@@ -253,6 +253,18 @@ def createCard(request):
     question = data.get("question")
     answer = data.get("answer")
 
+    # Validate request is coming from a User
+    if not isinstance(user, User):
+        return JsonResponse({
+            "error": "User is not a valid User"
+        }, status=400)
+
+    # Validate User making request exists
+    try:
+        User.objects.get(id=user.id)
+    except User.DoesNotExist:
+        return JsonResponse({"error": "User doesn't exist in the database"}, status=400)
+
     # Check for & return missing Card details, if any
     cardDetails = [(collection_id, "collection_id"),
                    (question, "question"), (answer, "answer")]
