@@ -112,15 +112,10 @@ const Collection = () => {
           // set isAddingANewCard to false, as new Card has been created
           setIsAddingANewCard(false);
 
-          // create new complete Card component
-          setNewCompleteCard(
-            <Card
-              id={createdCard.id}
-              cards={cards}
-              question={createdCard.question}
-              answer={createdCard.answer}
-            />
-          );
+          // add created Card to cards component
+          setCards((prevCards) => {
+            return [...prevCards, createdCard];
+          });
         })
         .catch((error) => {
           // error handling for UI using error boundary
@@ -234,6 +229,7 @@ const Collection = () => {
           </tbody>
         </Table>
       </Container>
+
       {
         <ToastContainer
           className="p-3"
