@@ -2,6 +2,7 @@ import React, { useEffect, useState, createRef } from "react";
 
 import classes from "./Collection.module.css";
 
+import CompleteCard from "../card/CompleteCard";
 import EmptyCard from "../card/EmptyCard";
 
 import Button from "react-bootstrap/Button";
@@ -209,21 +210,7 @@ const Collection = () => {
           </thead>
           <tbody>
             {cards.map((card, i) => {
-              return (
-                <tr key={card.id}>
-                  <td>{i + 1}</td>
-                  <td>{card.question}</td>
-                  <td>{card.answer}</td>
-                  <td>
-                    <Button
-                      variant="secondary"
-                      className="px-1 py-1 d-inline-flex justify-content-center align-items-center"
-                    >
-                      <ThreeDots />
-                    </Button>
-                  </td>
-                </tr>
-              );
+              return <CompleteCard key={card.id} card={card} listId={i} />;
             })}
             {isAddingANewCard && emptyCard}
           </tbody>
