@@ -123,7 +123,7 @@ const Collection = () => {
     console.log("Add card button clicked");
   };
 
-  const newCardToAdd = (
+  const emptyCard = (
     <tr>
       <td>{cards.length + 1}</td>
       <td>
@@ -238,7 +238,7 @@ const Collection = () => {
                 </tr>
               );
             })}
-            {isAddingANewCard && newCardToAdd}
+            {isAddingANewCard && emptyCard}
           </tbody>
         </Table>
       </Container>
