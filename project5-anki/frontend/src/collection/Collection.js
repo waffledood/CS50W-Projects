@@ -262,7 +262,6 @@ const Collection = () => {
               );
             })}
             {isAddingANewCard && emptyCard}
-            {hasAddedANewCard && newCompleteCard}
           </tbody>
         </Table>
       </Container>
