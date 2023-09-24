@@ -42,7 +42,7 @@ const EmptyCard = (props) => {
   return (
     <Card
       id={props.id}
-      cards={props.cards}
+      listId={props.listId}
       question={emptyCardQuestion}
       answer={emptyCardAnswer}
       button={addButton}
