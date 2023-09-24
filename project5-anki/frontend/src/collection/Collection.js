@@ -138,7 +138,7 @@ const Collection = () => {
 
   const emptyCard = (
     <EmptyCard
-      cards={cards}
+      listId={cards.length + 1}
       questionRef={emptyCardQuestionRef}
       answerRef={emptyCardAnswerRef}
       createCardHandler={createCardButtonHandler}
