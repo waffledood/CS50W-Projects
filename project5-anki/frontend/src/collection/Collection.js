@@ -2,6 +2,8 @@ import React, { useEffect, useState, createRef } from "react";
 
 import classes from "./Collection.module.css";
 
+import Card from "../card/Card";
+
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -33,6 +35,9 @@ const Collection = () => {
   const [isAddingANewCard, setIsAddingANewCard] = useState(false);
   const newCardQuestionRef = createRef();
   const newCardAnswerRef = createRef();
+
+  const [hasAddedANewCard, setHasAddedANewCard] = useState(false);
+  const [newCompleteCard, setNewCompleteCard] = useState();
 
   const createCardButtonHandler = () => {
     // retrieve new Card details
@@ -102,7 +107,25 @@ const Collection = () => {
         })
         .then((json) => {
           // successful creation of Card
-          console.log("json: ", json);
+          const createdCard = json.card;
+          const successMessage = json.message;
+
+          console.log("createdCard:", createdCard);
+
+          // set hasAddedANewCard to true, as new Card has been created
+          setHasAddedANewCard(true);
+          // set isAddingANewCard to false, as new Card has been created
+          setIsAddingANewCard(false);
+
+          // create new complete Card component
+          setNewCompleteCard(
+            <Card
+              id={createdCard.id}
+              cards={cards}
+              question={createdCard.question}
+              answer={createdCard.answer}
+            />
+          );
         })
         .catch((error) => {
           // error handling for UI using error boundary
@@ -239,6 +262,7 @@ const Collection = () => {
               );
             })}
             {isAddingANewCard && emptyCard}
+            {hasAddedANewCard && newCompleteCard}
           </tbody>
         </Table>
       </Container>
