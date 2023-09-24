@@ -2,7 +2,7 @@ import React from "react";
 
 const Card = (props) => {
   return (
-    <tr key={props.id}>
+    <tr>
       <td>{props.listId}</td>
       <td>{props.question}</td>
       <td>{props.answer}</td>

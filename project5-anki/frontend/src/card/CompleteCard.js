@@ -18,7 +18,6 @@ const CompleteCard = (props) => {
 
   return (
     <Card
-      id={props.card.id}
       listId={props.listId}
       question={props.card.question}
       answer={props.card.answer}

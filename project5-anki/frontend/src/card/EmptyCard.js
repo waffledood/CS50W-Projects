@@ -41,7 +41,6 @@ const EmptyCard = (props) => {
 
   return (
     <Card
-      id={props.id}
       listId={props.listId}
       question={emptyCardQuestion}
       answer={emptyCardAnswer}
