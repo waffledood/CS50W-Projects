@@ -2,7 +2,7 @@ import React, { useEffect, useState, createRef } from "react";
 
 import classes from "./Collection.module.css";
 
-import Card from "../card/Card";
+import EmptyCard from "../card/EmptyCard";
 
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -33,16 +33,13 @@ const Collection = () => {
   );
 
   const [isAddingANewCard, setIsAddingANewCard] = useState(false);
-  const newCardQuestionRef = createRef();
-  const newCardAnswerRef = createRef();
-
-  const [hasAddedANewCard, setHasAddedANewCard] = useState(false);
-  const [newCompleteCard, setNewCompleteCard] = useState();
+  const emptyCardQuestionRef = createRef();
+  const emptyCardAnswerRef = createRef();
 
   const createCardButtonHandler = () => {
     // retrieve new Card details
-    const newCardQuestionValue = newCardQuestionRef.current.value;
-    const newCardAnswerValue = newCardAnswerRef.current.value;
+    const newCardQuestionValue = emptyCardQuestionRef.current.value;
+    const newCardAnswerValue = emptyCardAnswerRef.current.value;
 
     // validate new Card details
     let cardIsValid = true;
@@ -112,8 +109,6 @@ const Collection = () => {
 
           console.log("createdCard:", createdCard);
 
-          // set hasAddedANewCard to true, as new Card has been created
-          setHasAddedANewCard(true);
           // set isAddingANewCard to false, as new Card has been created
           setIsAddingANewCard(false);
 
@@ -147,38 +142,12 @@ const Collection = () => {
   };
 
   const emptyCard = (
-    <tr>
-      <td>{cards.length + 1}</td>
-      <td>
-        <textarea
-          name=""
-          id=""
-          cols="1"
-          rows="1"
-          placeholder="New Question..."
-          ref={newCardQuestionRef}
-        ></textarea>
-      </td>
-      <td>
-        <textarea
-          name=""
-          id=""
-          cols="1"
-          rows="1"
-          placeholder="New Answer..."
-          ref={newCardAnswerRef}
-        ></textarea>
-      </td>
-      <td>
-        <Button
-          variant="success"
-          className="px-1 py-1 d-inline-flex justify-content-center align-items-center"
-          onClick={createCardButtonHandler}
-        >
-          <PlusLg />
-        </Button>
-      </td>
-    </tr>
+    <EmptyCard
+      cards={cards}
+      questionRef={emptyCardQuestionRef}
+      answerRef={emptyCardAnswerRef}
+      createCardHandler={createCardButtonHandler}
+    />
   );
 
   useEffect(() => {
