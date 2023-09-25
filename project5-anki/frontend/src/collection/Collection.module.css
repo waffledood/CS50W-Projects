@@ -14,3 +14,19 @@
 
 .answer {
 }
+
+textarea {
+  /* CSS properties to make textarea horizontally & vertically
+     fill the parent container.
+  */
+  display: flex;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* CSS properties to remove the textarea border. */
+  border: 1px solid transparent;
+  border-radius: 2px;
+  outline: none;
+  /* resize: none; */
+}

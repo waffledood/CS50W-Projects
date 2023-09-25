@@ -107,6 +107,7 @@ def users(request):
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
+@ csrf_exempt
 def collection(request, collectionId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
@@ -148,7 +149,7 @@ def createCollection(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
 
-    # Load JSON from request body
+    # Load JSON from request.body as a dict
     data = json.loads(request.body)
 
     # Retrieve Collection details
@@ -157,14 +158,14 @@ def createCollection(request):
     description = data.get("description")
 
     # Check for & return missing Collection details, if any
-    collectionDetails = [name, description]
+    collectionDetails = [(name, "name"), (description, "description")]
     missingCollectionDetails = []
 
-    for detail in collectionDetails:
-        if detail == None:
-            missingCollectionDetails.append(nameof(detail))
+    for collectionDetailValue, collectionDetailVarName in collectionDetails:
+        if collectionDetailValue == None:
+            missingCollectionDetails.append(collectionDetailVarName)
 
-    if not missingCollectionDetails:
+    if missingCollectionDetails:
         return JsonResponse({
             "error": "Created Collection is missing details",
             "missingDetails": missingCollectionDetails
@@ -192,6 +193,7 @@ def createCollection(request):
     return JsonResponse({"message": "Collection saved successfully.", "collection": collection.serialize()}, status=201)
 
 
+@ csrf_exempt
 def card(request, cardId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
@@ -242,24 +244,37 @@ def createCard(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
 
-    # Load JSON from request.body
+    # Load JSON from request.body as a dict
     data = json.loads(request.body)
 
     # Retrieve Card details
     user = request.user
-    collection_id = data["collection_id"]
-    question = data["question"]
-    answer = data["answer"]
+    collection_id = data.get("collection_id")
+    question = data.get("question")
+    answer = data.get("answer")
+
+    # Validate request is coming from a User
+    if not isinstance(user, User):
+        return JsonResponse({
+            "error": "User is not a valid User"
+        }, status=400)
+
+    # Validate User making request exists
+    try:
+        User.objects.get(id=user.id)
+    except User.DoesNotExist:
+        return JsonResponse({"error": "User doesn't exist in the database"}, status=400)
 
     # Check for & return missing Card details, if any
-    cardDetails = [collection_id, question, answer]
+    cardDetails = [(collection_id, "collection_id"),
+                   (question, "question"), (answer, "answer")]
     missingCardDetails = []
 
-    for detail in cardDetails:
-        if detail == None:
-            missingCardDetails.append(nameof(detail))
+    for cardDetailValue, cardDetailVarName in cardDetails:
+        if cardDetailValue == None:
+            missingCardDetails.append(cardDetailVarName)
 
-    if not missingCardDetails:
+    if missingCardDetails:
         return JsonResponse({
             "error": "Created Card is missing details",
             "missingDetails": missingCardDetails
@@ -267,7 +282,7 @@ def createCard(request):
 
     # Validate Card details
     try:
-        collection = Collection.objects.get(collection_id)
+        collection = Collection.objects.get(id=collection_id)
         if not question:
             raise ValueError("question variable is empty")
         if not answer:

@@ -1,18 +1,150 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createRef } from "react";
 
 import classes from "./Collection.module.css";
 
+import CompleteCard from "../card/CompleteCard";
+import EmptyCard from "../card/EmptyCard";
+
+import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Table from "react-bootstrap/Table";
-import { Button } from "react-bootstrap/Button";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
 
-import { ThreeDots, PlayCircleFill } from "react-bootstrap-icons";
+import { ThreeDots, Play, PlusLg } from "react-bootstrap-icons";
 
 const Collection = () => {
   const [collectionDetails, setCollectionDetails] = useState({});
   const [cards, setCards] = useState([]);
   const collectionId = 1;
+
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const errorToast = (
+    <ToastContainer className="p-3" position="bottom-end" style={{ zIndex: 1 }}>
+      <Toast bg="danger">
+        <Toast.Header>
+          <strong className="me-auto">System Error</strong>
+          <small>11 mins ago</small>
+        </Toast.Header>
+        <Toast.Body>{errorMessage}</Toast.Body>
+      </Toast>
+    </ToastContainer>
+  );
+
+  const [isAddingANewCard, setIsAddingANewCard] = useState(false);
+  const emptyCardQuestionRef = createRef();
+  const emptyCardAnswerRef = createRef();
+
+  const createCardButtonHandler = () => {
+    // retrieve new Card details
+    const newCardQuestionValue = emptyCardQuestionRef.current.value;
+    const newCardAnswerValue = emptyCardAnswerRef.current.value;
+
+    // validate new Card details
+    let cardIsValid = true;
+    if (!newCardQuestionValue) {
+      // new Card has an empty String for the Question field
+      setErrorMessage("Question in new Card cannot be empty!");
+      cardIsValid = false;
+    } else if (newCardQuestionValue.length > 400) {
+      // new Card has a Question longer than 400 characters
+      setErrorMessage(
+        "Question in new Card cannot be longer than 400 characters!"
+      );
+      cardIsValid = false;
+    }
+    if (!newCardAnswerValue) {
+      // new Card has an empty String for the Answer field
+      setErrorMessage((existingErrorMessage) => {
+        if (existingErrorMessage) {
+          return (existingErrorMessage +=
+            "\nAnswer in new Card cannot be empty!");
+        } else {
+          return (existingErrorMessage +=
+            "Answer in new Card cannot be empty!");
+        }
+      });
+      cardIsValid = false;
+    } else if (newCardAnswerValue.length > 400) {
+      // new Card has an Answer longer than 400 characters
+      setErrorMessage((existingErrorMessage) => {
+        if (existingErrorMessage) {
+          return (existingErrorMessage +=
+            "\nAnswer in new Card cannot be longer than 400 characters!");
+        } else {
+          return (existingErrorMessage +=
+            "Answer in new Card cannot be longer than 400 characters!");
+        }
+      });
+      cardIsValid = false;
+    }
+
+    if (cardIsValid) {
+      // create new Card
+      const newCard = {
+        collection_id: collectionId,
+        question: newCardQuestionValue,
+        answer: newCardAnswerValue,
+      };
+
+      // submit POST request
+      fetch("http://127.0.0.1:8000/anki/createCard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newCard),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Unable to create Card!");
+          }
+          return response.json();
+        })
+        .then((json) => {
+          // successful creation of Card
+          const createdCard = json.card;
+          const successMessage = json.message;
+
+          console.log("createdCard:", createdCard);
+
+          // set isAddingANewCard to false, as new Card has been created
+          setIsAddingANewCard(false);
+
+          // add created Card to cards component
+          setCards((prevCards) => {
+            return [...prevCards, createdCard];
+          });
+        })
+        .catch((error) => {
+          // error handling for UI using error boundary
+          console.log("error: ", error.message);
+          setShowError(true);
+          setErrorMessage(error.message);
+        });
+    } else {
+      setShowError(true);
+    }
+  };
+
+  const addCardButtonHandler = () => {
+    // toggle the state of isAddingANewCard
+    setIsAddingANewCard((prev) => {
+      return !prev;
+    });
+    console.log("Add card button clicked");
+  };
+
+  const emptyCard = (
+    <EmptyCard
+      listId={cards.length + 1}
+      questionRef={emptyCardQuestionRef}
+      answerRef={emptyCardAnswerRef}
+      createCardHandler={createCardButtonHandler}
+    />
+  );
 
   useEffect(() => {
     // fetch the cards in this collection
@@ -52,11 +184,15 @@ const Collection = () => {
             </ListGroup>
           </div>
           <div className="d-inline-flex align-items-center">
-            <button type="button" class="btn btn-primary">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={addCardButtonHandler}
+            >
               Add Card
             </button>
-            <button type="button" className="btn ms-3 px-0 py-0">
-              <PlayCircleFill size={36} color="#198754" />
+            <button type="button" className="btn btn-success ms-3 px-0 py-0">
+              <Play size={36} />
             </button>
           </div>
         </div>
@@ -74,20 +210,34 @@ const Collection = () => {
           </thead>
           <tbody>
             {cards.map((card, i) => {
-              return (
-                <tr key={card.id}>
-                  <td>{i + 1}</td>
-                  <td>{card.question}</td>
-                  <td>{card.answer}</td>
-                  <td>
-                    <ThreeDots />
-                  </td>
-                </tr>
-              );
+              return <CompleteCard key={card.id} card={card} listId={i} />;
             })}
+            {isAddingANewCard && emptyCard}
           </tbody>
         </Table>
       </Container>
+
+      {
+        <ToastContainer
+          className="p-3"
+          position="bottom-end"
+          style={{ zIndex: 1 }}
+        >
+          <Toast
+            bg="danger"
+            onClose={() => setShowError(false)}
+            show={showError}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header>
+              <strong className="me-auto">System Error</strong>
+              <small>Just now</small>
+            </Toast.Header>
+            <Toast.Body>{errorMessage}</Toast.Body>
+          </Toast>
+        </ToastContainer>
+      }
     </div>
   );
 };

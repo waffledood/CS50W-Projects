@@ -5,9 +5,9 @@ import Collection from "./collection/Collection";
 
 const App = () => {
   return (
-    <>
+    <div>
       <Collection />
-    </>
+    </div>
   );
 };
 
