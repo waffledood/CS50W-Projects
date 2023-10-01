@@ -14,7 +14,10 @@ from varname import nameof
 
 @login_required
 def index(request):
-    return render(request, "anki/index.html")
+    # Retrieve existing Collections
+    collections = list(Collection.objects.all())
+
+    return render(request, "anki/index.html", {"collections": collections})
 
 
 def register(request):
