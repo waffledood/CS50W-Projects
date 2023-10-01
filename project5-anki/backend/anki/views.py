@@ -32,15 +32,22 @@ def register(request):
         # Attempt to create new user
         try:
             user = User.objects.create_user(
-                username=username, email=email, password=password)
+                username=username, email=email, password=password
+            )
             user.save()
         except IntegrityError:
-            return JsonResponse({"error": "An account with similar username or email already exists!"}, status=400)
+            return JsonResponse(
+                {"error": "An account with similar username or email already exists!"},
+                status=400,
+            )
 
         # log the user in, after successful creation
         login(request, user)
 
-        return JsonResponse({"message": "New user registered successfully", "user": user.serialize()}, status=200)
+        return JsonResponse(
+            {"message": "New user registered successfully", "user": user.serialize()},
+            status=200,
+        )
     else:
         return render(request, "anki/register.html")
 
@@ -55,7 +62,9 @@ def login(request):
 
         # Check if authentication failed
         if user is None:
-            return render(request, "anki/login.html", {"error": "Credentials are invalid."})
+            return render(
+                request, "anki/login.html", {"error": "Credentials are invalid."}
+            )
         # If authentication is successful, log user in
         else:
             auth_login(request, user)
@@ -67,7 +76,10 @@ def login(request):
 def logout(request):
     if request.method == "POST":
         logout(request)
-        return JsonResponse({"message": "Logged out successfully", "user": request.user.serialize()}, status=200)
+        return JsonResponse(
+            {"message": "Logged out successfully", "user": request.user.serialize()},
+            status=200,
+        )
     else:
         return JsonResponse({"error": "POST request required."}, status=400)
 
@@ -94,7 +106,9 @@ def user(request, userId):
         user.delete()
         return JsonResponse({"message": "User deleted successfully"}, status=201)
 
-    return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
+    return JsonResponse(
+        {"error": "Only GET & DELETE requests are allowed."}, status=400
+    )
 
 
 def users(request):
@@ -102,12 +116,14 @@ def users(request):
         # Retrieve all users
         users = User.objects.all()
 
-        return JsonResponse([user.serialize() for user in users], safe=False, status=200)
+        return JsonResponse(
+            [user.serialize() for user in users], safe=False, status=200
+        )
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
-@ csrf_exempt
+@csrf_exempt
 def collection(request, collectionId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
@@ -131,7 +147,9 @@ def collection(request, collectionId):
         collection.delete()
         return JsonResponse({"message": "Collection deleted successfully"}, status=201)
 
-    return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
+    return JsonResponse(
+        {"error": "Only GET & DELETE requests are allowed."}, status=400
+    )
 
 
 def collections(request):
@@ -139,12 +157,16 @@ def collections(request):
         # Retrieve all Collections that exist
         collections = Collection.objects.all()
 
-        return JsonResponse([collection.serialize() for collection in collections], safe=False, status=200)
+        return JsonResponse(
+            [collection.serialize() for collection in collections],
+            safe=False,
+            status=200,
+        )
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
-@ csrf_exempt
+@csrf_exempt
 def createCollection(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
@@ -166,10 +188,13 @@ def createCollection(request):
             missingCollectionDetails.append(collectionDetailVarName)
 
     if missingCollectionDetails:
-        return JsonResponse({
-            "error": "Created Collection is missing details",
-            "missingDetails": missingCollectionDetails
-        }, status=400)
+        return JsonResponse(
+            {
+                "error": "Created Collection is missing details",
+                "missingDetails": missingCollectionDetails,
+            },
+            status=400,
+        )
 
     # Validate Collection details
     try:
@@ -183,17 +208,19 @@ def createCollection(request):
         return JsonResponse({"error": f"{e}"}, status=400)
 
     # Create & save Collection object
-    Collection = Collection(
-        user=user,
-        name=name,
-        description=description
-    )
+    Collection = Collection(user=user, name=name, description=description)
     collection.save()
 
-    return JsonResponse({"message": "Collection saved successfully.", "collection": collection.serialize()}, status=201)
+    return JsonResponse(
+        {
+            "message": "Collection saved successfully.",
+            "collection": collection.serialize(),
+        },
+        status=201,
+    )
 
 
-@ csrf_exempt
+@csrf_exempt
 def card(request, cardId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database
@@ -215,7 +242,9 @@ def card(request, cardId):
         card.delete()
         return JsonResponse({"message": "Card deleted successfully"}, status=201)
 
-    return JsonResponse({"error": "Only GET & DELETE requests are allowed."}, status=400)
+    return JsonResponse(
+        {"error": "Only GET & DELETE requests are allowed."}, status=400
+    )
 
 
 def cards(request):
@@ -223,7 +252,9 @@ def cards(request):
         # Retrieve all Cards that exist
         cards = Card.objects.all()
 
-        return JsonResponse([card.serialize() for card in cards], safe=False, status=200)
+        return JsonResponse(
+            [card.serialize() for card in cards], safe=False, status=200
+        )
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
@@ -234,12 +265,14 @@ def cardsOfCollection(request, collectionId):
         collection = Collection.objects.get(id=collectionId)
         cards = collection.cards.all()
 
-        return JsonResponse([card.serialize() for card in cards], safe=False, status=200)
+        return JsonResponse(
+            [card.serialize() for card in cards], safe=False, status=200
+        )
 
     return JsonResponse({"error": "Only GET requests are allowed."}, status=400)
 
 
-@ csrf_exempt
+@csrf_exempt
 def createCard(request):
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
@@ -255,9 +288,7 @@ def createCard(request):
 
     # Validate request is coming from a User
     if not isinstance(user, User):
-        return JsonResponse({
-            "error": "User is not a valid User"
-        }, status=400)
+        return JsonResponse({"error": "User is not a valid User"}, status=400)
 
     # Validate User making request exists
     try:
@@ -266,8 +297,11 @@ def createCard(request):
         return JsonResponse({"error": "User doesn't exist in the database"}, status=400)
 
     # Check for & return missing Card details, if any
-    cardDetails = [(collection_id, "collection_id"),
-                   (question, "question"), (answer, "answer")]
+    cardDetails = [
+        (collection_id, "collection_id"),
+        (question, "question"),
+        (answer, "answer"),
+    ]
     missingCardDetails = []
 
     for cardDetailValue, cardDetailVarName in cardDetails:
@@ -275,10 +309,13 @@ def createCard(request):
             missingCardDetails.append(cardDetailVarName)
 
     if missingCardDetails:
-        return JsonResponse({
-            "error": "Created Card is missing details",
-            "missingDetails": missingCardDetails
-        }, status=400)
+        return JsonResponse(
+            {
+                "error": "Created Card is missing details",
+                "missingDetails": missingCardDetails,
+            },
+            status=400,
+        )
 
     # Validate Card details
     try:
@@ -293,12 +330,9 @@ def createCard(request):
         return JsonResponse({"error": f"{e}"}, status=400)
 
     # Create & save Card object
-    card = Card(
-        user=user,
-        collection=collection,
-        question=question,
-        answer=answer
-    )
+    card = Card(user=user, collection=collection, question=question, answer=answer)
     card.save()
 
-    return JsonResponse({"message": "Card saved successfully", "card": card.serialize()}, status=200)
+    return JsonResponse(
+        {"message": "Card saved successfully", "card": card.serialize()}, status=200
+    )
