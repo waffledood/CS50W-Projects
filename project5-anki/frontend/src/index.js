@@ -8,8 +8,6 @@ const rootElement = document.getElementById("app");
 const collectionId = rootElement.getAttribute("data-collection-id");
 const root = createRoot(rootElement);
 
-console.log("index.js: collectionId,", collectionId);
-
 const App = () => {
   return (
     <div>
