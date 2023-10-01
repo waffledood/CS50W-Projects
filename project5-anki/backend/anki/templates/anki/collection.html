@@ -1,0 +1,10 @@
+{% extends "anki/layout.html" %}
+
+{% load static %}
+
+{% block title %}Collection {{ collectionId }} | Anki{% endblock %}
+
+{% block body %}
+    <div id="app" data-collection-id="{{ collectionId }}"></div>
+    <script src="{% static 'anki/build/main.js' %}"></script>
+{% endblock %}

@@ -87,6 +87,13 @@ def logout(request):
         return JsonResponse({"error": "POST request required."}, status=400)
 
 
+def viewCollection(request, collectionId):
+    return render(request, "anki/collection.html", {"collectionId": collectionId})
+
+
+# API endpoints
+
+
 def user(request, userId):
     if request.method == "GET":
         # Return an error if the id doesn't exist in the database

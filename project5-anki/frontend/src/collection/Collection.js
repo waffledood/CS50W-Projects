@@ -14,10 +14,10 @@ import ToastContainer from "react-bootstrap/ToastContainer";
 
 import { ThreeDots, Play, PlusLg } from "react-bootstrap-icons";
 
-const Collection = () => {
+const Collection = (props) => {
   const [collectionDetails, setCollectionDetails] = useState({});
   const [cards, setCards] = useState([]);
-  const collectionId = 1;
+  const collectionId = props.collectionId;
 
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
