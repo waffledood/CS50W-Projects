@@ -14,10 +14,10 @@ import ToastContainer from "react-bootstrap/ToastContainer";
 
 import { ThreeDots, Play, PlusLg } from "react-bootstrap-icons";
 
-const Collection = () => {
+const Collection = (props) => {
   const [collectionDetails, setCollectionDetails] = useState({});
   const [cards, setCards] = useState([]);
-  const collectionId = 1;
+  const collectionId = props.collectionId;
 
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -90,7 +90,7 @@ const Collection = () => {
       };
 
       // submit POST request
-      fetch("http://127.0.0.1:8000/anki/createCard", {
+      fetch("http://127.0.0.1:8000/anki/api/createCard", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -148,7 +148,7 @@ const Collection = () => {
 
   useEffect(() => {
     // fetch the cards in this collection
-    fetch(`http://127.0.0.1:8000/anki/cards/${collectionId}`)
+    fetch(`http://127.0.0.1:8000/anki/api/cards/${collectionId}`)
       .then((response) => {
         return response.json();
       })
@@ -157,7 +157,7 @@ const Collection = () => {
       });
 
     // fetch this collection's details
-    fetch(`http://127.0.0.1:8000/anki/collection/${collectionId}`)
+    fetch(`http://127.0.0.1:8000/anki/api/collection/${collectionId}`)
       .then((response) => {
         return response.json();
       })

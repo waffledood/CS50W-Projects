@@ -31,13 +31,14 @@ class User(AbstractBaseUser, PermissionsMixin):
             "last_login": self.last_login,
             "is_staff": self.is_staff,
             "is_active": self.is_active,
-            "date_joined": self.date_joined
+            "date_joined": self.date_joined,
         }
 
 
 class Collection(models.Model):
     user = models.ForeignKey(
-        to=User, on_delete=models.CASCADE, related_name="collections")
+        to=User, on_delete=models.CASCADE, related_name="collections"
+    )
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=128)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -53,15 +54,15 @@ class Collection(models.Model):
             "name": self.name,
             "description": self.description,
             "date_created": self.date_created,
-            "date_modified": self.date_modified
+            "date_modified": self.date_modified,
         }
 
 
 class Card(models.Model):
-    user = models.ForeignKey(
-        to=User, on_delete=models.CASCADE, related_name="cards")
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="cards")
     collection = models.ForeignKey(
-        to=Collection, on_delete=models.CASCADE, related_name="cards")
+        to=Collection, on_delete=models.CASCADE, related_name="cards"
+    )
     question = models.CharField(max_length=400)
     answer = models.CharField(max_length=400)
 
@@ -73,5 +74,5 @@ class Card(models.Model):
             "id": self.id,
             "collection_id": self.collection_id,
             "question": self.question,
-            "answer": self.answer
+            "answer": self.answer,
         }

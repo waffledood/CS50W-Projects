@@ -2,9 +2,30 @@
 
 {% load static %}
 
-{% block title %}Collection {{ collection_id }} | Anki{% endblock %}
+{% block title %}Home | Anki{% endblock %}
 
 {% block body %}
-    <div id="app"></div>
-    <script src="{% static 'anki/build/main.js' %}"></script>
+    <br>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for collection in collections %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div class="mb-3">
+                                <h5 class="card-title">{{ collection.name }}</h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">Created on: {{ collection.date_created }}</h6>
+                                <p class="card-text">{{ collection.description }}</p>
+                            </div>
+                            <div>
+                                <a href="#" class="btn btn-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div>Empty!</div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
