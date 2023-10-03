@@ -18,7 +18,7 @@
                                 <p class="card-text">{{ collection.description }}</p>
                             </div>
                             <div>
-                                <a href="#" class="btn btn-primary">View</a>
+                                <a href="{% url 'viewCollection' collection.id %}" class="btn btn-primary">View</a>
                             </div>
                         </div>
                     </div>
