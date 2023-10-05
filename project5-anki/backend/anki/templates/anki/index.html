@@ -5,7 +5,10 @@
 {% block title %}Home | Anki{% endblock %}
 
 {% block body %}
-    <br>
+    <div class="container">
+        <h1>My Collections</h1>
+    </div>
+
     <div class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for collection in collections %}
