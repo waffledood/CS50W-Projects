@@ -91,6 +91,10 @@ def viewCollection(request, collectionId):
     return render(request, "anki/collection.html", {"collectionId": collectionId})
 
 
+def addCollection(request):
+    return render(request, "anki/addCollection.html", {})
+
+
 # API endpoints
 
 

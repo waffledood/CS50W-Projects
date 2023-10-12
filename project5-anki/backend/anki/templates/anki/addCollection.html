@@ -1,0 +1,37 @@
+{% extends "anki/layout.html" %}
+
+{% load static %}
+
+{% block title %}Create Collection | Anki{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <br>
+        <h1>Add Collection</h1>
+        <form id="createCollectionForm" class="row needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="collectionName" class="form-label">Collection Name</label>
+                <input type="text" class="form-control" id="collectionName" placeholder="Enter your Collection Name here" minlength="1" maxlength="64" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Collection Name cannot be empty or longer than 64 characters!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="collectionDesc" class="form-label">Collection Description</label>
+                <textarea class="form-control" id="collectionDesc" rows="3" placeholder="Enter your Collection Description here" minlength="1" maxlength="128" required></textarea>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Collection Description cannot be empty or longer than 128 characters!
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
