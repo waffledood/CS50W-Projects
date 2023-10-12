@@ -9,6 +9,7 @@
         <br>
         <h1>Add Collection</h1>
         <form id="createCollectionForm" class="row needs-validation" novalidate method="post">
+            {% csrf_token %}
             <div class="mb-3">
                 <label for="collectionName" class="form-label">Collection Name</label>
                 <input type="text" class="form-control" id="collectionName" placeholder="Enter your Collection Name here" minlength="1" maxlength="64" required>
