@@ -1,3 +1,12 @@
+document.addEventListener("DOMContentLoaded", function () {
+  // add Bootstrap form validation functionality to createCollectionForm
+  const createCollectionForm = document.querySelector("#createCollectionForm");
+  createCollectionForm.addEventListener(
+    "submit",
+    formValidationOnSubmit(createCollectionForm),
+    false
+  );
+});
 
 function formValidationOnSubmit(form) {
   return (event) => {
