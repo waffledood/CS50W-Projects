@@ -12,7 +12,7 @@
             {% csrf_token %}
             <div class="mb-3">
                 <label for="collectionName" class="form-label">Collection Name</label>
-                <input type="text" class="form-control" id="collectionName" placeholder="Enter your Collection Name here" minlength="1" maxlength="64" required>
+                <input type="text" class="form-control" name="collectionName" id="collectionName" placeholder="Enter your Collection Name here" minlength="1" maxlength="64" required>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
@@ -22,7 +22,7 @@
             </div>
             <div class="mb-3">
                 <label for="collectionDesc" class="form-label">Collection Description</label>
-                <textarea class="form-control" id="collectionDesc" rows="3" placeholder="Enter your Collection Description here" minlength="1" maxlength="128" required></textarea>
+                <textarea class="form-control" name="collectionDesc" id="collectionDesc" rows="3" placeholder="Enter your Collection Description here" minlength="1" maxlength="128" required></textarea>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
