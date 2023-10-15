@@ -1,4 +1,8 @@
 class StringLengthTooLongError(Exception):
+    """
+    Argument value exceeds the allowed length.
+    """
+
     def __init__(self, length, max_length):
         self.length = length
         self.max_length = max_length
