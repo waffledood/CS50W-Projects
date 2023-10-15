@@ -9,6 +9,10 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, Collection, Card
 
+from .exceptions import StringLengthTooLongError
+
+from .utils import check_string_length
+
 from varname import nameof
 
 
@@ -212,13 +216,29 @@ def createCollection(request):
 
     # Validate Collection details
     try:
-        # if name is empty, raise an Error
+        # if name is an empty String '', raise an Error
         if not name:
-            raise ValueError("name variable is empty")
-        # if description is empty, raise an Error
+            raise ValueError("Collection Name is empty")
+        # if name is not a String, raise an Error
+        if type(name) is not str:
+            raise TypeError("Collection Name is not a String")
+        # if name is longer than 64 characters, raise an Error
+        check_string_length(
+            variable=name, max_length=Collection._meta.get_field("name").max_length
+        )
+
+        # if description is an empty String '', raise an Error
         if not description:
-            raise ValueError("description variable is empty")
-    except ValueError as e:
+            raise ValueError("Collection Description is empty")
+        # if description is not a String, raise an Error
+        if type(description) is not str:
+            raise TypeError("Collection Description is not a String")
+        # if description is longer than 128 characters, raise an Error
+        check_string_length(
+            variable=name,
+            max_length=Collection._meta.get_field("description").max_length,
+        )
+    except (ValueError, TypeError, StringLengthTooLongError) as e:
         return JsonResponse({"error": f"{e}"}, status=400)
 
     # Create & save Collection object
