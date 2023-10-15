@@ -120,7 +120,11 @@ def addCollection(request):
             request.session["error"] = (
                 ", ".join(missingCollectionDetails) + " is missing"
             )
-            return HttpResponseRedirect(reverse("addCollection"))
+            return render(
+                request,
+                "anki/addCollection.html",
+                {"error": ", ".join(missingCollectionDetails) + " is missing"},
+            )
 
         # Validate Collection details
         try:
@@ -148,8 +152,7 @@ def addCollection(request):
             )
 
         except (ValueError, TypeError, StringLengthTooLongError) as e:
-            request.session["error"] = str(e)
-            return HttpResponseRedirect(reverse("addCollection"))
+            return render(request, "anki/addCollection.html", {"error": str(e)})
 
         # Create & save Collection object
         collection = Collection(user=user, name=name, description=description)
