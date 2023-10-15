@@ -96,6 +96,72 @@ def viewCollection(request, collectionId):
 
 
 def addCollection(request):
+    if request.method == "POST":
+        # Load request as a QueryDict
+        requestQueryDict = request.POST
+
+        # Retrieve Collection details
+        user = request.user
+        name = requestQueryDict["collectionName"]
+        description = requestQueryDict["collectionDesc"]
+
+        # Check for & return missing Collection details, if any
+        collectionDetails = [
+            (name, "Collection Name"),
+            (description, "Collection Description"),
+        ]
+        missingCollectionDetails = []
+
+        for collectionDetailValue, collectionDetailVarName in collectionDetails:
+            if collectionDetailValue == None:
+                missingCollectionDetails.append(collectionDetailVarName)
+
+        if missingCollectionDetails:
+            request.session["error"] = (
+                ", ".join(missingCollectionDetails) + " is missing"
+            )
+            return HttpResponseRedirect(reverse("addCollection"))
+
+        # Validate Collection details
+        try:
+            # if name is an empty String '', raise an Error
+            if not name:
+                raise ValueError("Collection Name is empty")
+            # if name is not a String, raise an Error
+            if type(name) is not str:
+                raise TypeError("Collection Name is not a String")
+            # if name is longer than 64 characters, raise an Error
+            check_string_length(
+                variable=name, max_length=Collection._meta.get_field("name").max_length
+            )
+
+            # if description is an empty String '', raise an Error
+            if not description:
+                raise ValueError("Collection Description is empty")
+            # if description is not a String, raise an Error
+            if type(description) is not str:
+                raise TypeError("Collection Description is not a String")
+            # if description is longer than 128 characters, raise an Error
+            check_string_length(
+                variable=name,
+                max_length=Collection._meta.get_field("description").max_length,
+            )
+
+        except (ValueError, TypeError, StringLengthTooLongError) as e:
+            request.session["error"] = str(e)
+            return HttpResponseRedirect(reverse("addCollection"))
+
+        # Create & save Collection object
+        collection = Collection(user=user, name=name, description=description)
+        collection.save()
+
+        # Retrieve new Collecton id
+        collectionId = collection.id
+
+        return HttpResponseRedirect(
+            reverse("viewCollection", kwargs={"collectionId": collectionId})
+        )
+
     return render(request, "anki/addCollection.html", {})
 
 
