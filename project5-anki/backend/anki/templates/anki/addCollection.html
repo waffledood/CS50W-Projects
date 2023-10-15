@@ -8,6 +8,13 @@
     <div class="container">
         <br>
         <h1>Add Collection</h1>
+
+        {% if request.session.error %}
+            <div class="alert alert-danger" role="alert">
+                {{ request.session.error }}
+            </div>
+        {% endif %}
+
         <form id="createCollectionForm" class="row needs-validation" novalidate method="post">
             {% csrf_token %}
             <div class="mb-3">
