@@ -210,7 +210,7 @@ const Collection = (props) => {
           </thead>
           <tbody>
             {cards.map((card, i) => {
-              return <CompleteCard key={card.id} card={card} listId={i} />;
+              return <CompleteCard key={card.id} card={card} listId={i + 1} />;
             })}
             {isAddingANewCard && emptyCard}
           </tbody>
