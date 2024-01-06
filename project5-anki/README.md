@@ -6,6 +6,8 @@
 
 Run `npm run dev` in `frontend/` to run webpack, any changes made to `index.js` will be automatically saved to `backend/anki/static/anki/build`.
 
+The frontend is deployed on `http://localhost:8000/anki`
+
 ### Backend
 
 Run `python3 manage.py runserver` to start the Django backend server.
@@ -49,7 +51,11 @@ The following are pages/views in the Anki application:
      - Question - A text-based (text, numbers & special characters) question
      - Answer - A text-based (text, numbers & special characters) answer
 
-6. Account page
+6. "Active Recall" page
+
+   - A User will be able to perform "Active Recall" for a particular collection
+
+7. Account page
 
    - Shows the details of the current User.
 
