@@ -1,0 +1,15 @@
+{% extends "anki/layout.html" %}
+
+{% load static %}
+
+{% block title %}Active Recall: {{ collectionId }} | Anki{% endblock %}
+
+{% block body %}
+  <div id="cardId" data-card-id="">
+    <div id="cardQuestion">Placeholder Card Question</div>
+    <div id="cardAnswer">Placeholder Card Answer</div>
+    <button id="showAnswer">Show Answer</button>
+    <button id="nextCard">Next Card</button>
+  </div>
+  <script src="{% static 'anki/activeRecall.js' %}"></script>
+{% endblock %}
