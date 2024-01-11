@@ -66,8 +66,8 @@ class Card(models.Model):
     question = models.CharField(max_length=400)
     answer = models.CharField(max_length=400)
 
-    def __self__(self):
-        return f"Card ({self.id}), of Collection({self.collection_id}), question: {self.question}, answer: {self.answer}"
+    def __str__(self):
+        return f"Card ({self.id}), of Collection ({self.collection_id}), question: {self.question}, answer: {self.answer}"
 
     def serialize(self):
         return {
