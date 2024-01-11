@@ -9,6 +9,7 @@ urlpatterns = [
     path("logout", views.logout, name="logout"),
     path("collection/<int:collectionId>", views.viewCollection, name="viewCollection"),
     path("addCollection", views.addCollection, name="addCollection"),
+    path("activeRecall/<int:collectionId>", views.activeRecall, name="activeRecall"),
     # API endpoints
     path("api/user/<int:userId>", views.user, name="user"),
     path("api/users", views.users, name="users"),
