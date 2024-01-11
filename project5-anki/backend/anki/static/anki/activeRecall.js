@@ -2,33 +2,9 @@ var listOfCards = [];
 
 function initializeListOfCards() {
   // retrieve all Cards for this Collection
-  // TODO: Retrieve Cards from DB
-  listOfCards = [
-    {
-      id: 1,
-      collection_id: 1,
-      question: "question for 1",
-      answer: "answer for 1",
-    },
-    {
-      id: 2,
-      collection_id: 1,
-      question: "question for 2",
-      answer: "answer for 2",
-    },
-    {
-      id: 4,
-      collection_id: 1,
-      question: "question for 4",
-      answer: "answer for 4",
-    },
-    {
-      id: 7,
-      collection_id: 1,
-      question: "question for 7",
-      answer: "answer for 7",
-    },
-  ];
+  listOfCards = JSON.parse(
+    document.getElementById("list-of-cards").textContent
+  );
 }
 
 function initializeNewCard() {

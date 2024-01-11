@@ -12,4 +12,5 @@
     <button id="nextCard">Next Card</button>
   </div>
   <script src="{% static 'anki/activeRecall.js' %}"></script>
+  {{ listOfCards|json_script:"list-of-cards" }}
 {% endblock %}
