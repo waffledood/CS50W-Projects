@@ -168,6 +168,21 @@ def addCollection(request):
     return render(request, "anki/addCollection.html", {})
 
 
+def activeRecall(request, collectionId):
+    # TODO - validation of collectionId
+
+    querySetOfCardsInCollectionId = Card.objects.all().filter(
+        collection_id=collectionId
+    )
+    listOfCards = [card.serialize() for card in querySetOfCardsInCollectionId]
+
+    return render(
+        request,
+        "anki/activeRecall.html",
+        {"collectionId": collectionId, "listOfCards": listOfCards},
+    )
+
+
 # API endpoints
 
 
