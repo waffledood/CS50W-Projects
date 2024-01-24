@@ -46,6 +46,18 @@ function initializeNewCard() {
   document.querySelector("#cardAnswer").innerHTML = randomCard.answer;
 }
 
+function showAnswerClick() {
+  // disable "Show Answer" button after it is clicked
+  const showAnswerButton = document.querySelector("#showAnswer");
+  showAnswerButton.disabled = true;
+
+  revealCardAnswer();
+
+  // enable "Next Card" button after it is clicked
+  const nextCardButton = document.querySelector("#nextCard");
+  nextCardButton.disabled = false;
+}
+
 function nextCardClick() {
   const currentCardId = document.querySelector("#cardId").dataset.cardId;
 
