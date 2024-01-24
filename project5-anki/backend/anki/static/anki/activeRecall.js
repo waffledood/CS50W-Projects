@@ -22,6 +22,21 @@ function revealCardAnswer() {
   cardAnswerDiv.className = cardAnswerUpdatedClasses.join(" ");
 }
 
+function hideCardAnswer() {
+  const cardAnswerDiv = document.querySelector("#cardAnswer");
+  const cardAnswerClasses = cardAnswerDiv.className.split(" ");
+
+  const cardAnswerUpdatedClasses = cardAnswerClasses.map((elem) => {
+    if (elem !== "d-block") {
+      return elem;
+    } else {
+      return "d-none";
+    }
+  });
+
+  cardAnswerDiv.className = cardAnswerUpdatedClasses.join(" ");
+}
+
 function initializeNewCard() {
   const randomInt = Math.floor(Math.random() * listOfCards.length);
   const randomCard = listOfCards[randomInt];
