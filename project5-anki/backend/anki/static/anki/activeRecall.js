@@ -70,7 +70,15 @@ function nextCardClick() {
     return;
   }
 
+  hideCardAnswer();
+
   initializeNewCard();
+
+  // re-enable "Show Answer" button if it has been clicked
+  document.querySelector("#showAnswer").disabled = false;
+
+  // disable "Next Card" button
+  document.querySelector("#nextCard").disabled = true;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -80,4 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // add functionality to Active Recall
   const nextCard = document.querySelector("#nextCard");
   nextCard?.addEventListener("click", nextCardClick, false);
+
+  // add functionality to "Show Answer" button
+  const showAnswer = document.querySelector("#showAnswer");
+  showAnswer?.addEventListener("click", showAnswerClick, false);
 });
