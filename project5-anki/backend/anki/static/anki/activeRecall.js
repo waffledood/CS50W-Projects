@@ -7,6 +7,21 @@ function initializeListOfCards() {
   );
 }
 
+function revealCardAnswer() {
+  const cardAnswerDiv = document.querySelector("#cardAnswer");
+  const cardAnswerClasses = cardAnswerDiv.className.split(" ");
+
+  const cardAnswerUpdatedClasses = cardAnswerClasses.map((elem) => {
+    if (elem !== "d-none") {
+      return elem;
+    } else {
+      return "d-block";
+    }
+  });
+
+  cardAnswerDiv.className = cardAnswerUpdatedClasses.join(" ");
+}
+
 function initializeNewCard() {
   const randomInt = Math.floor(Math.random() * listOfCards.length);
   const randomCard = listOfCards[randomInt];
