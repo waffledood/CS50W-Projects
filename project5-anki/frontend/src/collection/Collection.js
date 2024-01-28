@@ -137,6 +137,8 @@ const Collection = (props) => {
     console.log("Add card button clicked");
   };
 
+  const activeRecallURL = `http://127.0.0.1:8000/anki/activeRecall/${collectionId}`;
+
   const emptyCard = (
     <EmptyCard
       listId={cards.length + 1}
@@ -191,9 +193,13 @@ const Collection = (props) => {
             >
               Add Card
             </button>
-            <button type="button" className="btn btn-success ms-3 px-0 py-0">
+            <a
+              type="button"
+              className="btn btn-success ms-3 px-0 py-0"
+              href={activeRecallURL}
+            >
               <Play size={36} />
-            </button>
+            </a>
           </div>
         </div>
       </Container>
