@@ -53,17 +53,21 @@ function showAnswerClick() {
 
   revealCardAnswer();
 
-  // enable "Next Card" button after it is clicked
-  const nextCardButton = document.querySelector("#nextCard");
-  nextCardButton.disabled = false;
-}
-
-function nextCardClick() {
   const currentCardId = document.querySelector("#cardId").dataset.cardId;
 
   // remove current Card from list of Cards
   listOfCards = listOfCards.filter((card) => card.id != currentCardId);
 
+  // enable "Next Card" button after "Show Answer" is clicked
+  const nextCardButton = document.querySelector("#nextCard");
+  if (listOfCards.length != 0) {
+    nextCardButton.disabled = false;
+  } else {
+    nextCardButton.disabled = true;
+  }
+}
+
+function nextCardClick() {
   // when all Cards have been recalled, display the success page
   if (listOfCards.length == 0) {
     // TODO: Display success page
