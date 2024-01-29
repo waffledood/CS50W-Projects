@@ -92,7 +92,11 @@ def logout(request):
 
 
 def viewCollection(request, collectionId):
-    return render(request, "anki/collection.html", {"collectionId": collectionId})
+    return render(
+        request,
+        "anki/collection.html",
+        {"collectionId": collectionId, "userId": request.user.id},
+    )
 
 
 def addCollection(request):
@@ -399,18 +403,14 @@ def createCard(request):
     data = json.loads(request.body)
 
     # Retrieve Card details
-    user = request.user
+    user_id = data.get("user_id")
     collection_id = data.get("collection_id")
     question = data.get("question")
     answer = data.get("answer")
 
-    # Validate request is coming from a User
-    if not isinstance(user, User):
-        return JsonResponse({"error": "User is not a valid User"}, status=400)
-
     # Validate User making request exists
     try:
-        User.objects.get(id=user.id)
+        user = User.objects.get(id=user_id)
     except User.DoesNotExist:
         return JsonResponse({"error": "User doesn't exist in the database"}, status=400)
 

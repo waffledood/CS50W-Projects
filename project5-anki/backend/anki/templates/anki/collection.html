@@ -6,5 +6,8 @@
 
 {% block body %}
     <div id="app" data-collection-id="{{ collectionId }}"></div>
+    <script>
+        window.userId = {{ userId }}
+    </script>
     <script src="{% static 'anki/build/main.js' %}"></script>
 {% endblock %}

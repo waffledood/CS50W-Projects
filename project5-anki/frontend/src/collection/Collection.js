@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createRef } from "react";
+import React, { useEffect, useRef, useState, createRef } from "react";
 
 import classes from "./Collection.module.css";
 
@@ -34,8 +34,8 @@ const Collection = (props) => {
   );
 
   const [isAddingANewCard, setIsAddingANewCard] = useState(false);
-  const emptyCardQuestionRef = createRef();
-  const emptyCardAnswerRef = createRef();
+  const emptyCardQuestionRef = useRef(null);
+  const emptyCardAnswerRef = useRef(null);
 
   const createCardButtonHandler = () => {
     // retrieve new Card details
@@ -84,6 +84,7 @@ const Collection = (props) => {
     if (cardIsValid) {
       // create new Card
       const newCard = {
+        user_id: window.userId,
         collection_id: collectionId,
         question: newCardQuestionValue,
         answer: newCardAnswerValue,
